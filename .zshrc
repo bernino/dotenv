@@ -1,6 +1,6 @@
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+#export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
 autoload -Uz history-search-end
 
@@ -16,9 +16,10 @@ bindkey -M viins '^[[A' history-beginning-search-backward-end \
 		 '^[[B' history-beginning-search-forward-end \
 		 '^[OB' history-beginning-search-forward-end
 
+
 # If you come from bash you might have to change your $PATH.
 #export PATH=$HOME/bin:/usr/local/bin:$HOME/.oh-my-zsh:$PATH
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.oh-my-zsh:/Users/bernino/Library/Python/3.7/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.oh-my-zsh:$PATH
 export ZSH=$HOME/.oh-my-zsh
 export TERM="xterm-256color"
 # export KEYTIMEOUT=1
@@ -30,11 +31,11 @@ export TERM="xterm-256color"
 #source /usr/local/bin/virtualenvwrapper.sh
 
 fpath=(/usr/local/share/zsh-completions $fpath)
-alias git='LANG=en_GB git'
+#alias git='LANG=en_GB git'
 alias p='python3'
 
 # For a full list of active aliases, run `alias`.
-alias l="less"
+alias l="ls -G"
 alias z="vim ~/.zshrc"
 alias v="vim ~/.vimrc"
 alias so="source ~/.oh-my-zsh/oh-my-zsh.sh"
@@ -51,8 +52,8 @@ pess () {
 }
 
 ZSH_THEME="powerlevel9k/powerlevel9k"
-# POWERLEVEL9K_MODE='awesome-fontconfig'
-POWERLEVEL9K_MODE='nerdfont-complete'
+#POWERLEVEL9K_MODE='awesome-fontconfig'
+#POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_BATTERY_CHARGING='yellow'
 POWERLEVEL9K_BATTERY_CHARGED='green'
 POWERLEVEL9K_BATTERY_DISCONNECTED='$DEFAULT_COLOR'
@@ -60,18 +61,19 @@ POWERLEVEL9K_BATTERY_LOW_THRESHOLD='10'
 POWERLEVEL9K_BATTERY_LOW_COLOR='red'
 #POWERLEVEL9K_BATTERY_ICON='\uf1e6 '
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=''
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='\uf0da'
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=''
 POWERLEVEL9K_VI_INSERT_MODE_STRING='I'
 POWERLEVEL9K_VI_COMMAND_MODE_STRING='CMD'
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon status battery context dir vcs vi_mode)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(time ram virtualenv nodeenv)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(battery context dir vcs vi_mode)
+#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon status battery context dir vcs vi_mode)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(time ram virtualenv)
 
 #POWERLEVEL9K_CUSTOM_TIME_FORMAT="%D{\uf017 %H:%M:%S}"
 #POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M \uf073 %d.%m.%y}"
 #POWERLEVEL9K_STATUS_VERBOSE=false
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-source ~/powerlevel9k/powerlevel9k.zsh-theme
+POWERLEVEL9K_PROMPT_ON_NEWLINE=false
+#source ~/powerlevel9k/powerlevel9k.zsh-theme
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -100,10 +102,14 @@ COMPLETION_WAITING_DOTS="true"
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#00FF00"
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#00FF00,bg=cyan,bold,underline"
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
 #source /usr/local/etc/profile.d/autojump.sh
 alias ls='ls -G'
 # Load Zsh tools for syntax highlighting and autosuggestions
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+#source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Oh my Zsh with plugins https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins#autojump
 # Add wisely, as too many plugins slow down shell startup.
@@ -122,10 +128,10 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # dotenv
 # git
 # sudo
-# zsh-autosuggestions 
 
 plugins=(
  vi-mode 
+ zsh-autosuggestions 
  fzf 
  zsh-navigation-tools 
  dircycle 
@@ -138,3 +144,12 @@ plugins=(
 autoload -U compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
+
+#bindkey -e
+bindkey "^[f" forward-word
+bindkey '^[b' backward-word
+
+# ctrl e opens file in vim
+bindkey -s '^e' 'vim $(fzf)\n'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
