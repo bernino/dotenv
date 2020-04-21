@@ -1,6 +1,12 @@
+# USE:
+# Most use should be intuitive and just work
+#
+# ddg <text> - search the web for text
+# wd add <alias> - wd <alias> jumps straight to this directory
+#
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-#export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
 autoload -Uz history-search-end
 
@@ -18,24 +24,15 @@ bindkey -M viins '^[[A' history-beginning-search-backward-end \
 
 
 # If you come from bash you might have to change your $PATH.
-#export PATH=$HOME/bin:/usr/local/bin:$HOME/.oh-my-zsh:$PATH
 export PATH=$HOME/bin:/usr/local/bin:$HOME/.oh-my-zsh:$PATH
 export ZSH=$HOME/.oh-my-zsh
 export TERM="xterm-256color"
-# export KEYTIMEOUT=1
-# export FZF_COMPLETION_TRIGGER='~~'
-
-# virtualenv and virtualenvwrapper
-#export WORKON_HOME=$HOME/.virtualenvs
-#export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-#source /usr/local/bin/virtualenvwrapper.sh
 
 fpath=(/usr/local/share/zsh-completions $fpath)
-#alias git='LANG=en_GB git'
-alias p='python3'
 
 # For a full list of active aliases, run `alias`.
 alias l="ls -G"
+alias p='python3'
 alias z="vim ~/.zshrc"
 alias v="vim ~/.vimrc"
 alias so="source ~/.oh-my-zsh/oh-my-zsh.sh"
@@ -73,7 +70,6 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(time ram virtualenv)
 #POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M \uf073 %d.%m.%y}"
 #POWERLEVEL9K_STATUS_VERBOSE=false
 POWERLEVEL9K_PROMPT_ON_NEWLINE=false
-#source ~/powerlevel9k/powerlevel9k.zsh-theme
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -83,7 +79,7 @@ POWERLEVEL9K_PROMPT_ON_NEWLINE=false
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=3
+#export UPDATE_ZSH_DAYS=3
 
 # Uncomment the following line to enable command auto-correction.
 #ENABLE_CORRECTION="true"
@@ -107,7 +103,6 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#00FF00"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 #source /usr/local/etc/profile.d/autojump.sh
-alias ls='ls -G'
 # Load Zsh tools for syntax highlighting and autosuggestions
 #source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
@@ -128,16 +123,17 @@ alias ls='ls -G'
 # dotenv
 # git
 # sudo
+# battery 
 
 plugins=(
  vi-mode 
+ web-search
  zsh-autosuggestions 
  fzf 
  zsh-navigation-tools 
  dircycle 
  dirhistory 
  wd 
- battery 
  osx 
  )
 
@@ -145,9 +141,9 @@ autoload -U compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
 
-#bindkey -e
-bindkey "^[f" forward-word
-bindkey '^[b' backward-word
+# keybindings to move by word
+bindkey "^[f" forward-word  # forward word esc f
+bindkey '^[b' backward-word # backward word esc b
 
 # ctrl e opens file in vim
 bindkey -s '^e' 'vim $(fzf)\n'
