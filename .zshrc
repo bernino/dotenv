@@ -51,7 +51,7 @@ pess () {
   pandoc $1 -o pdf | open -stdin
 }
 
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="agnoster"
 #POWERLEVEL9K_MODE='awesome-fontconfig'
 #POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_BATTERY_CHARGING='yellow'
