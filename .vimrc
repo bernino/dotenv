@@ -2,7 +2,7 @@
 " - UltiSnips enabled with YCM
 "
 " USE:
-" leader is:            \
+" leader is default:    \
 " commenting blocks: 	<leader> cc or cm
 " uncommenting blocks: 	<leader> cu
 " write file:		<leader> w
@@ -17,11 +17,14 @@
 " and check out:
 " https://medium.com/@sidneyliebrand/how-fzf-and-ripgrep-improved-my-workflow-61c7ca212861
 " :h fzf-vim-commands
-"
+
 " PREREQUISITES:
 " Python enabled Vim
+" Vundle do: git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+" start vim and do :PluginInstall
 " fzf installed
 " powerline installed
+" ctags installed
 
 set nocompatible              " required
 filetype off                  " required
@@ -34,42 +37,44 @@ call vundle#begin()
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'lervag/vimtex'
-Plugin 'ervandew/supertab'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-syntastic/syntastic'
+Plugin 'gmarik/Vundle.vim' 		" Plugin manager -- install first then run :PluginInstall
+Plugin 'vim-scripts/indentpython.vim' 	" PEP8 indentation of Python https://github.com/vim-scripts/indentpython.vim
+Plugin 'vim-scripts/taglist.vim' 	" browse function definitions
+Plugin 'lervag/vimtex' 			" LaTeX helpers https://github.com/lervag/vimtex
+Plugin 'ervandew/supertab' 		" Magic tab https://github.com/ervandew/supertab
+Plugin 'Valloric/YouCompleteMe' 	" Autocompletion engine
+Plugin 'vim-syntastic/syntastic' 	" checking syntax https://github.com/vim-syntastic/syntastic
 Plugin 'jnurmine/Zenburn'		" Just a color scheme
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdtree' 		" file browser \ n 
+"Plugin 'jistr/vim-nerdtree-tabs' 	" nerdtree opens in new tab
+Plugin 'tpope/vim-fugitive' 		" git commands https://github.com/tpope/vim-fugitive
 Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
-Plugin 'sjl/gundo.vim'
-Plugin 'jiangmiao/auto-pairs' 
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-Plugin 'sirver/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'tpope/vim-surround'
+Plugin 'mbbill/undotree' 		" https://github.com/mbbill/undotree
+Plugin 'jiangmiao/auto-pairs' 		" automagic double pairs of ( etc.
+Plugin 'scrooloose/nerdcommenter' 	" \cc comments see https://github.com/preservim/nerdcommenter
+Plugin 'junegunn/fzf' 			" fuzzy engine https://github.com/junegunn/fzf.vim
+Plugin 'junegunn/fzf.vim' 		" fuzzy engine https://github.com/junegunn/fzf.vim
+Plugin 'sirver/ultisnips' 		" rocket science snippet engine https://github.com/sirver/UltiSnips
+Plugin 'honza/vim-snippets' 		" snippets for ultisnips 
+Plugin 'tpope/vim-surround' 		" magic surrounding word: try ysiw: iw is a word object https://github.com/tpope/vim-surround
+Plugin 'airblade/vim-gitgutter' 	" git diff live https://github.com/airblade/vim-gitgutter
 
 call vundle#end()            " required
 
 filetype plugin indent on    " required
 
 " youcompleteme behavior
-"let g:ycm_autoclose_preview_window_after_completion=1
-"map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " various aliases
 nmap <leader>n :NERDTreeToggle<cr>	" leader n is nerdtree
-nmap <leader>t :VimtexTocOpen<cr> " leader t is latex tree
-nmap <leader>w :w<cr>		" leader w is write
-nmap <leader>q :q<cr>		" leader w is quit
-nmap <leader>/ :Lines<cr>	" search for text
+nmap <leader>t :VimtexTocOpen<cr>  	" leader t is latex tree
+nmap <leader>w :w<cr>			" leader w is write
+nmap <leader>q :q<cr>			" leader w is quit
+nmap <leader>/ :Lines<cr>		" search for text
 nmap <leader>s :source .vimrc<cr>	" leader w is write
-"nmap <leader>u :GundoToggle<CR> " toggle gundo
+nmap <leader>u :UndotreeToggle<CR> 	" toggle undo tree
 
 " fzf tweaking and shortcuts
 nnoremap <C-p> :Files<Cr>	" open fzf ctrl+p
