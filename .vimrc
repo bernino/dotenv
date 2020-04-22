@@ -44,7 +44,6 @@ Plugin 'lervag/vimtex' 			" LaTeX helpers https://github.com/lervag/vimtex
 Plugin 'ervandew/supertab' 		" Magic tab https://github.com/ervandew/supertab
 Plugin 'Valloric/YouCompleteMe' 	" Autocompletion engine
 Plugin 'vim-syntastic/syntastic' 	" checking syntax https://github.com/vim-syntastic/syntastic
-Plugin 'jnurmine/Zenburn'		" Just a color scheme
 Plugin 'scrooloose/nerdtree' 		" file browser \ n 
 "Plugin 'jistr/vim-nerdtree-tabs' 	" nerdtree opens in new tab
 Plugin 'tpope/vim-fugitive' 		" git commands https://github.com/tpope/vim-fugitive
@@ -58,10 +57,15 @@ Plugin 'sirver/ultisnips' 		" rocket science snippet engine https://github.com/s
 Plugin 'honza/vim-snippets' 		" snippets for ultisnips 
 Plugin 'tpope/vim-surround' 		" magic surrounding word: try ysiw: iw is a word object https://github.com/tpope/vim-surround
 Plugin 'airblade/vim-gitgutter' 	" git diff live https://github.com/airblade/vim-gitgutter
+Plugin 'jnurmine/Zenburn'		" Just a color scheme
+"Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()            " required
 
 filetype plugin indent on    " required
+
+set background=dark
+"colorscheme Zenburn
 
 " youcompleteme behavior
 let g:ycm_autoclose_preview_window_after_completion=1

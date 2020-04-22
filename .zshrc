@@ -3,7 +3,7 @@
 #
 # ddg <text> - search the web for text
 # wd add <alias> - wd <alias> jumps straight to this directory
-#
+# cd **<tab> does magic
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
