@@ -1,6 +1,3 @@
-" TODO:
-" - UltiSnips enabled with YCM
-"
 " USE:
 " leader is default:    \
 " commenting blocks: 	<leader> cc or cm
@@ -12,6 +9,7 @@
 " fzf search in file:	<leader> /
 " fzf search for files:	<ctrl> p
 " fzf on all commands:  <leader><tab> 
+" :UltisnipsEdit 	for more snippets
 "
 " This vim comes with powerful fzf intergrated, try the above commands
 " and check out:
@@ -189,8 +187,8 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<C-tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Use deoplete.
 "let g:deoplete#enable_at_startup = 1
