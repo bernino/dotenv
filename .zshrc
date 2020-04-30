@@ -3,13 +3,14 @@
 #
 # ddg <text> - search the web for text
 # wd add <alias> - wd <alias> jumps straight to this directory
-# cd **<tab> does magic
+#
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 autoload -Uz history-search-end
 
+# some stuff that makes arrow up down work with hist search
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 
@@ -27,10 +28,15 @@ bindkey -M viins '^[[A' history-beginning-search-backward-end \
 export PATH=$HOME/bin:/usr/local/bin:$HOME/.oh-my-zsh:$PATH
 export ZSH=$HOME/.oh-my-zsh
 export TERM="xterm-256color"
+export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOBIN
+export JIRA_PROJECT=CPIO
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 # For a full list of active aliases, run `alias`.
+alias e="vim"
 alias l="ls -G"
 alias p='python3'
 alias z="vim ~/.zshrc"
@@ -51,25 +57,25 @@ pess () {
 ZSH_THEME="agnoster"
 #POWERLEVEL9K_MODE='awesome-fontconfig'
 #POWERLEVEL9K_MODE='nerdfont-complete'
-POWERLEVEL9K_BATTERY_CHARGING='yellow'
-POWERLEVEL9K_BATTERY_CHARGED='green'
-POWERLEVEL9K_BATTERY_DISCONNECTED='$DEFAULT_COLOR'
-POWERLEVEL9K_BATTERY_LOW_THRESHOLD='10'
-POWERLEVEL9K_BATTERY_LOW_COLOR='red'
+#POWERLEVEL9K_BATTERY_CHARGING='yellow'
+#POWERLEVEL9K_BATTERY_CHARGED='green'
+#POWERLEVEL9K_BATTERY_DISCONNECTED='$DEFAULT_COLOR'
+#POWERLEVEL9K_BATTERY_LOW_THRESHOLD='10'
+#POWERLEVEL9K_BATTERY_LOW_COLOR='red'
 #POWERLEVEL9K_BATTERY_ICON='\uf1e6 '
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=''
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=''
-POWERLEVEL9K_VI_INSERT_MODE_STRING='I'
-POWERLEVEL9K_VI_COMMAND_MODE_STRING='CMD'
+#POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=''
+#POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=''
+#POWERLEVEL9K_VI_INSERT_MODE_STRING='I'
+#POWERLEVEL9K_VI_COMMAND_MODE_STRING='CMD'
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(battery context dir vcs vi_mode)
+#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(battery context dir vcs vi_mode)
 #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon status battery context dir vcs vi_mode)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(time ram virtualenv)
+#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(time ram virtualenv)
 
 #POWERLEVEL9K_CUSTOM_TIME_FORMAT="%D{\uf017 %H:%M:%S}"
 #POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M \uf073 %d.%m.%y}"
 #POWERLEVEL9K_STATUS_VERBOSE=false
-POWERLEVEL9K_PROMPT_ON_NEWLINE=false
+#POWERLEVEL9K_PROMPT_ON_NEWLINE=false
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -126,15 +132,16 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # battery 
 
 plugins=(
- vi-mode 
- web-search
- zsh-autosuggestions 
- fzf 
- zsh-navigation-tools 
- dircycle 
- dirhistory 
- wd 
- osx 
+ 	vi-mode 
+ 	web-search
+ 	zsh-autosuggestions 
+ 	fzf 
+	fzf-tab
+	zsh-navigation-tools 
+        dircycle 
+ 	dirhistory 
+ 	wd 
+ 	osx 
  )
 
 autoload -U compinit && compinit
@@ -144,6 +151,7 @@ source $ZSH/oh-my-zsh.sh
 # keybindings to move by word
 bindkey "^[f" forward-word  # forward word esc f
 bindkey '^[b' backward-word # backward word esc b
+bindkey '^b' toggle-fzf-tab
 
 # ctrl e opens file in vim
 bindkey -s '^e' 'vim $(fzf)\n'
