@@ -5,6 +5,25 @@
 # wd add <alias> - wd <alias> jumps straight to this directory
 #
 
+autoload -Uz compinit
+typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
+if [ $(date +'%j') != $updated_at ]; then
+  compinit -i
+else
+  compinit -C -i
+fi
+
+zmodload -i zsh/complist
+
+setopt auto_list # automatically list choices on ambiguous completion
+setopt auto_menu # automatically use menu completion
+setopt always_to_end # move cursor to end if word had one match
+
+zstyle ':completion:*' menu select # select completions with arrow keys
+zstyle ':completion:*' group-name '' # group results by category
+zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
+
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -31,7 +50,7 @@ export TERM="xterm-256color"
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOBIN
-export JIRA_PROJECT=CPIO
+export JIRA_PROJECT=BJT
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
@@ -40,7 +59,7 @@ alias e="vim"
 alias l="ls -G"
 alias p='python3'
 alias z="vim ~/.zshrc"
-alias v="vim ~/.vimrc"
+#alias v="vim ~/.vimrc"
 alias so="source ~/.oh-my-zsh/oh-my-zsh.sh"
 alias sz="source ~/.zshrc"
 alias sv="source ~/.vimrc"
@@ -108,9 +127,11 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#00FF00"
 #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#00FF00,bg=cyan,bold,underline"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-#source /usr/local/etc/profile.d/autojump.sh
+source /usr/local/etc/profile.d/autojump.sh
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
 # Load Zsh tools for syntax highlighting and autosuggestions
-#source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Oh my Zsh with plugins https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins#autojump
 # Add wisely, as too many plugins slow down shell startup.
@@ -130,9 +151,11 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # git
 # sudo
 # battery 
-
+# vi-mode 
 plugins=(
- 	vi-mode 
+ 	git
+	vi-mode
+	autojump
  	web-search
  	zsh-autosuggestions 
  	fzf 
@@ -143,8 +166,6 @@ plugins=(
  	wd 
  	osx 
  )
-
-autoload -U compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
 

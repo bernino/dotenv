@@ -46,7 +46,7 @@ Plugin 'vim-syntastic/syntastic' 	" checking syntax https://github.com/vim-synta
 Plugin 'scrooloose/nerdtree' 		" file browser \ n 
 "Plugin 'jistr/vim-nerdtree-tabs' 	" nerdtree opens in new tab
 Plugin 'tpope/vim-fugitive' 		" git commands https://github.com/tpope/vim-fugitive
-Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+"Plugin 'powerline/powerline' 		", {'rtp': 'powerline/bindings/vim/'}
 Plugin 'mbbill/undotree' 		" https://github.com/mbbill/undotree
 Plugin 'jiangmiao/auto-pairs' 		" automagic double pairs of ( etc.
 Plugin 'preservim/nerdcommenter' 	" \cc comments see https://github.com/preservim/nerdcommenter
@@ -66,19 +66,23 @@ Plugin 'vim-pandoc/vim-pandoc' 		" https://github.com/vim-pandoc/vim-pandoc
 Plugin 'vim-pandoc/vim-pandoc-syntax' 	" needed for pandoc above
 Plugin 'jnurmine/Zenburn'		" Just a color scheme
 Plugin 'mileszs/ack.vim'  		" https://github.com/mileszs/ack.vim for using ag
+Plugin 'vim-airline/vim-airline' 	" https://github.com/vim-airline/vim-airline
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tomasr/molokai' 		" as in the color
+Plugin 'tpope/vim-repeat'
 
-call vundle#end()            " required
+call vundle#end()            		" required
 
-filetype plugin indent on    " required
+filetype plugin indent on    		" required
 
-color solarized
+color molokai 				" molokai, zenburn and solarized are nice
 
 " youcompleteme behavior
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " various aliases
-nmap <leader>n :NERDTreeToggle<cr>	" leader n is nerdtree
+nmap <leader>f :NERDTreeToggle<cr>	" leader f is nerdtree for files
 nmap <leader>t :VimtexTocOpen<cr>  	" leader t is latex tree
 nmap <leader>w :w<cr>			" leader w is write
 nmap <leader>q :q<cr>			" leader w is quit
@@ -102,20 +106,14 @@ imap <c-p> <plug>(fzf-complete-path):
 imap <c-j> <plug>(fzf-complete-file-ag)
 imap <c-l> <plug>(fzf-complete-line)
 
-set cursorline
-"highlight Cursor guifg=green guibg=black
-"highlight iCursor guifg=green guibg=steelblue
-"set guicursor=n-v-c:block-Cursor
-"set guicursor+=i:ver100-iCursor
-"set guicursor+=n-v-c:blinkon0
-"set guicursor+=i:blinkwait10
+set cursorline 				" line where cursor is
+" cursor rectangle when normal mode and vertical line when insert mode
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 "setlocal spell
 set spelllang=en_gb
 inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
-
-"let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-"let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 set timeout timeoutlen=1500 	" timeout for command completion
 set mouse=a			" enable mouse
@@ -123,7 +121,6 @@ set clipboard=unnamed		" integrate with system clipboard
 let python_highlight_all=1
 set backspace=indent,eol,start	" enable backspace
 syntax on			" where exists, show syntax
-"syntax enable           	" enable syntax processing
 set number			" visible line numbers 
 set encoding=utf-8		" guess what... UTF-8 encoded
 set splitbelow
@@ -139,15 +136,8 @@ set laststatus=2		" always show status / powerline
 nnoremap <leader><space> :nohlsearch<CR>
 
 " setup powerline specials
-"let g:Powerline_symbols = "fancy"
+let g:airline_powerline_fonts=1
 "set fillchars+=stl:\ ,stlnc:\
-"let g:Powerline_mode_V="V·LINE"
-"let g:Powerline_mode_cv="V·BLOCK"
-"let g:Powerline_mode_S="S·LINE"
-"let g:Powerline_mode_cs="S·BLOCK"
-"python3 from powerline.vim import setup as powerline_setup
-"python3 powerline_setup()
-"python3 del powerline_setup
 
 " searching file with ag is fast
 let g:ackprg = 'ag --vimgrep'
@@ -200,15 +190,15 @@ let g:vimtex_compiler_latexmk_engines = {
 " try :NV or ctrl+n
 let g:nv_search_paths = ['~/notes', 'notes.md']
 let g:nv_default_extension = '.md'
-let g:nv_create_note_key = 'ctrl-x' 	" After searching, press ctrl-x and new note with filename
-nnoremap <silent> <c-n> :NV<CR> 	" ctrl+n searches notes
+let g:nv_create_note_key = 'ctrl-s' 	" After searching, press ctrl-s and save new note with filename
+nnoremap <silent> <leader>n :NV<CR> 	" leader n searches notes
 
-" make YCM compatible with UltiSnips (using supertab)
+"make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
-" better key bindings for UltiSnipsExpandTrigger
+"better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
