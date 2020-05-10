@@ -1,14 +1,16 @@
 " USE:
 " leader is default:    \
-" commenting blocks: 	<leader> cc or cm
+" commenting blocks: 	<leader> cc or cm or toggle: c space
 " uncommenting blocks: 	<leader> cu
 " write file:		<leader> w
 " quit:                 <leader> q
-" nerdtreee browser:	<leader> n 
+" nerdtreee browser:	<leader> b 
 " latex structure:	<leader> t 
 " fzf search in file:	<leader> /
 " fzf search for files:	<leader> f
-" fzf on all commands:  <leader> tab
+" fzf on all commands:  <leader> c
+" ctrl+p enabled - modes: ctrl+f
+" easymotion: normal mode s + two chars
 " :UltisnipsEdit 	for more snippets
 "
 " This vim comes with powerful fzf intergrated, try the above commands
@@ -69,7 +71,10 @@ Plugin 'mileszs/ack.vim'  		" https://github.com/mileszs/ack.vim for using ag
 Plugin 'vim-airline/vim-airline' 	" https://github.com/vim-airline/vim-airline
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tomasr/molokai' 		" as in the color
-Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-repeat' 		" allows for complex . repeats
+Plugin 'easymotion/vim-easymotion' 	" https://github.com/easymotion/vim-easymotion
+Plugin 'kien/ctrlp.vim' 		" https://github.com/kien/ctrlp.vim
+
 
 call vundle#end()            		" required
 
@@ -77,21 +82,42 @@ filetype plugin indent on    		" required
 
 color molokai 				" molokai, zenburn and solarized are nice
 
+" stuff for easymotion
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Turn on case-insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
 " youcompleteme behavior
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-" various aliases
-nmap <leader>f :NERDTreeToggle<cr>	" leader f is nerdtree for files
+" various aliases and maps
+nmap <leader>b :NERDTreeToggle<cr>	" leader f is nerdtree for files
 nmap <leader>t :VimtexTocOpen<cr>  	" leader t is latex tree
 nmap <leader>w :w<cr>			" leader w is write
 nmap <leader>q :q<cr>			" leader w is quit
 nmap <leader>/ :Lines<cr>		" search for text
-nmap <leader>s :source .vimrc<cr>	" leader w is write
 nmap <leader>u :UndotreeToggle<CR> 	" toggle undo tree
 nmap pr :LivedownToggle<CR> 		" preview markdown
 nmap pdf :Pandoc pdf<CR> 		" generate pdf by typing pdf
 nnoremap <leader>r :!%:p<CR> 		" run buffer with \r
+map gn :bn<cr>
+map gp :bp<cr>
+map gd :bd<cr>
+
 
 "fzf tweaking and shortcuts
 nnoremap <leader>f :Files<Cr>	" open fzf \f
@@ -106,6 +132,9 @@ imap <c-p> <plug>(fzf-complete-path):
 imap <c-j> <plug>(fzf-complete-file-ag)
 imap <c-l> <plug>(fzf-complete-line)
 
+" buffer tabbing
+nnoremap <leader><tab> :Buffers<cr>
+
 set cursorline 				" line where cursor is
 " cursor rectangle when normal mode and vertical line when insert mode
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -114,6 +143,8 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 "setlocal spell
 set spelllang=en_gb
 inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
+
+set showcmd
 
 set timeout timeoutlen=1500 	" timeout for command completion
 set mouse=a			" enable mouse
@@ -141,7 +172,7 @@ let g:airline_powerline_fonts=1
 
 " searching file with ag is fast
 let g:ackprg = 'ag --vimgrep'
-nnoremap <leader>s :Ack!<Space>
+nnoremap <leader>a :Ack!<Space>
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
