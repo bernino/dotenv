@@ -1,40 +1,41 @@
+" Inspired by https://dev.to/allanmacgregor/vim-is-the-perfect-ide-e80
+"
 " USE:
-" leader is default                        : \
-" notes in markdown                        : <leader> a
-" easymotion max search 		   : <leader><leader> /
-" commenting blocks                        : <leader> cc or cm or toggle       : c space
-" uncommenting blocks                      : <leader> cu
-" write file                               : <leader> w
-" quit                                     : <leader> q
-" nerdtreee browser                        : =
-" easymotion two char                      : s
-" latex structure                          : <leader> t
-" fzf search in file                       : <leader> /
-" fzf search for files                     : <leader> f
-" fzf on all commands                      : <leader> c
-" swap windows                             : <leader> ww
-" list of bindings                         : <leader> m
-" ctrl+p enabled - modes                   : ctrl+f
-" easymotion                               : normal mode s + two chars
-" for more snippets - snip                 : :UltisnipsEdit
+" leader is default        : \
+" leader z is zen 	   : <leader> z
+" notes in markdown        : <leader> a
+" easymotion max search    : /
+" commenting blocks        : <leader> cc or cm or toggle : c space
+" uncommenting blocks      : <leader> cu
+" write file               : <leader> w
+" quit                     : <leader> q
+" nerdtreee browser        : =
+" easymotion two char      : s
+" latex structure          : <leader> t
+" fzf search in file       : <leader> /
+" fzf search for files     : <leader> f
+" fzf on all commands      : <leader> m
+" swap windows             : <leader> ww
+" easymotion               : normal mode s + two chars
+" for more snippets - snip : :UltisnipsEdit
+"
+" Don't forget zz, zt, zb more here https://unix.stackexchange.com/questions/110251/how-to-put-current-line-at-top-center-bottom-of-screen-in-vim#110252
+"
+" And don't forget spellchecking ]s and z= https://www.linux.com/training-tutorials/using-spell-checking-vim/
 "
 " The power of Normal mode + s + two chars
-" The power of Normal mode + z/ + search
+" The power of Normal mode + / + search
 "
-" This vim comes with powerful fzf intergrated, try the above commands
-" and check out:
+" This vim comes with powerful fzf intergrated, try the above commands and check out:
 " https://medium.com/@sidneyliebrand/how-fzf-and-ripgrep-improved-my-workflow-61c7ca212861
 " :h fzf-vim-commands
 
 " PREREQUISITES:
-" Inspired by https://dev.to/allanmacgregor/vim-is-the-perfect-ide-e80
-" Python enabled Vim
-" Vundle do: git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-" start vim and do :PluginInstall
-" fzf installed
-" powerline installed
-" ctags installed
-" brew install the_silver_searcher if on mac https://github.com/ggreer/the_silver_searcher
+" - Python enabled Vim
+" - Vundle do: git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+" - start vim and do :PluginInstall
+" - fzf installed
+" - brew install the_silver_searcher if on mac https://github.com/ggreer/the_silver_searcher
 
 set nocompatible              " required
 filetype off                  " required it changes below
@@ -46,63 +47,63 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
-Plugin 'gmarik/Vundle.vim'                          " Plugin manager -- install first then run :PluginInstall
-Plugin 'vim-scripts/indentpython.vim'               " PEP8 indentation of Python https://github.com/vim-scripts/indentpython.vim
-Plugin 'vim-scripts/taglist.vim'                    " browse function definitions
-Plugin 'majutsushi/tagbar'                          " https://github.com/majutsushi/tagbar
-Plugin 'wesQ3/vim-windowswap'                       " https://github.com/wesQ3/vim-windowswap
-Plugin 'godlygeek/tabular'                          " http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
-Plugin 'jeetsukumaran/vim-buffergator'              " https://github.com/jeetsukumaran/vim-buffergator
-Plugin 'reedes/vim-pencil'  		            " https://github.com/reedes/vim-pencil
-Plugin 'lervag/vimtex'                              " LaTeX helpers https://github.com/lervag/vimtex
-Plugin 'ervandew/supertab'                          " Magic tab https://github.com/ervandew/supertab
-Plugin 'Valloric/YouCompleteMe'                     " Autocompletion engine
-Plugin 'vim-syntastic/syntastic'                    " checking syntax https://github.com/vim-syntastic/syntastic
-Plugin 'scrooloose/nerdtree'                        " file browser \ n
-"Plugin 'jistr/vim-nerdtree-tabs' 		    " nerdtree opens in new tab
-Plugin 'mbbill/undotree'                            " https://github.com/mbbill/undotree
-Plugin 'jiangmiao/auto-pairs'                       " automagic double pairs of ( etc.
-Plugin 'preservim/nerdcommenter'                    " \cc comments see https://github.com/preservim/nerdcommenter
-Plugin 'junegunn/fzf',                              " { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy engine https://github.com/junegunn/fzf.vim
-Plugin 'junegunn/fzf.vim'                           " fuzzy engine https://github.com/junegunn/fzf.vim
-Plugin 'sirver/ultisnips'                           " rocket science snippet engine https://github.com/sirver/UltiSnips
-Plugin 'honza/vim-snippets'                         " snippets for ultisnips
-Plugin 'tpope/vim-surround'                         " magic surrounding word: try ysiw: iw is a word object https://github.com/tpope/vim-surround
-Plugin 'altercation/vim-colors-solarized'  	    " color scheme
-Plugin 'https://github.com/alok/notational-fzf-vim' " nValt for vim
-Plugin 'plasticboy/vim-markdown'                    " for markdown https://github.com/plasticboy/vim-markdown
-Plugin 'jtratner/vim-flavored-markdown'
-Plugin 'shime/vim-livedown'                         " shows markdown live https://github.com/shime/vim-livedown
-Plugin 'vim-pandoc/vim-pandoc'                      " https://github.com/vim-pandoc/vim-pandoc
-Plugin 'vim-pandoc/vim-pandoc-syntax'               " needed for pandoc above
-Plugin 'jnurmine/Zenburn'                           " Just a color scheme
-Plugin 'mileszs/ack.vim'                            " https://github.com/mileszs/ack.vim for using ag
-Plugin 'vim-airline/vim-airline'                    " https://github.com/vim-airline/vim-airline
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tomasr/molokai'                             " as in the color
-Plugin 'tpope/vim-repeat'                           " allows for complex . repeats
-Plugin 'easymotion/vim-easymotion'                  " https://github.com/easymotion/vim-easymotion
-Plugin 'haya14busa/incsearch.vim'                   " building searches https://github.com/haya14busa/incsearch.vim
-Plugin 'haya14busa/incsearch-easymotion.vim'        " enables full text for easymotion
-Plugin 'kien/ctrlp.vim'                             " https://github.com/kien/ctrlp.vim
-Plugin 'terryma/vim-multiple-cursors'               " https://github.com/terryma/vim-multiple-cursors
-Plugin 'dpelle/vim-LanguageTool'                    " https://github.com/dpelle/vim-LanguageTool
-" Git Support
-Plugin 'kablamo/vim-git-log'
-Plugin 'gregsexton/gitv'
-Plugin 'tpope/vim-fugitive' 			    " git commands https://github.com/tpope/vim-fugitive
-Plugin 'airblade/vim-gitgutter'                     " git diff live https://github.com/airblade/vim-gitgutter
-Plugin 'davidhalter/jedi-vim'
-Plugin 'MattesGroeger/vim-bookmarks'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'benmills/vimux'
+Plugin 'gmarik/Vundle.vim'                          	" Plugin manager -- install first then run :PluginInstall
+Plugin 'vim-scripts/indentpython.vim'               	" PEP8 indentation of Python https://github.com/vim-scripts/indentpython.vim
+Plugin 'vim-scripts/taglist.vim'                    	" browse function definitions
+Plugin 'majutsushi/tagbar'                          	" https://github.com/majutsushi/tagbar
+Plugin 'wesQ3/vim-windowswap'                       	" https://github.com/wesQ3/vim-windowswap
+Plugin 'godlygeek/tabular'                          	" http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
+Plugin 'jeetsukumaran/vim-buffergator'              	" https://github.com/jeetsukumaran/vim-buffergator
+" Plugin 'reedes/vim-pencil'  		            	" https:github//github.com/reedes/vim-pencil does softwraps
+Plugin 'lervag/vimtex'                              	" LaTeX helpers https://github.com/lervag/vimtex
+Plugin 'ervandew/supertab'                          	" Magic tab https://github.com/ervandew/supertab
+Plugin 'Valloric/YouCompleteMe'                     	" Autocompletion engine
+Plugin 'vim-syntastic/syntastic'                    	" checking syntax https://github.com/vim-syntastic/syntastic
+Plugin 'scrooloose/nerdtree'                        	" file browser \ n
+Plugin 'jiangmiao/auto-pairs'                       	" automagic double pairs of ( etc.
+Plugin 'preservim/nerdcommenter'                    	" \cc comments see https://github.com/preservim/nerdcommenter
+Plugin 'junegunn/fzf',                              	" { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy engine https://github.com/junegunn/fzf.vim
+Plugin 'junegunn/fzf.vim'                           	" fuzzy engine https://github.com/junegunn/fzf.vim
+Plugin 'sirver/ultisnips'                           	" rocket science snippet engine https://github.com/sirver/UltiSnips
+Plugin 'honza/vim-snippets'                         	" snippets for ultisnips
+Plugin 'tpope/vim-surround'                         	" magic surrounding word: try ysiw: iw is a word object https://github.com/tpope/vim-surround
+Plugin 'altercation/vim-colors-solarized'  	    	" comlor scheme
+Plugin 'https://github.com/alok/notational-fzf-vim' 	" nValt for vim
+Plugin 'plasticboy/vim-markdown'                    	" for markdown https://github.com/plasticboy/vim-markdown
+Plugin 'jtratner/vim-flavored-markdown' 		" ditto
+Plugin 'shime/vim-livedown'                         	" shows markdown live https://github.com/shime/vim-livedown
+Plugin 'vim-pandoc/vim-pandoc'                      	" https://github.com/vim-pandoc/vim-pandoc
+Plugin 'vim-pandoc/vim-pandoc-syntax'               	" needed for pandoc above
+Plugin 'jnurmine/Zenburn'                           	" Just a color scheme
+Plugin 'mileszs/ack.vim'                            	" https://github.com/mileszs/ack.vim for using ag
+Plugin 'vim-airline/vim-airline'                    	" https://github.com/vim-airline/vim-airline
+Plugin 'vim-airline/vim-airline-themes' 		" ditto
+Plugin 'tomasr/molokai'                             	" as in the color
+Plugin 'tpope/vim-repeat'                           	" allows for complex . repeats
+Plugin 'easymotion/vim-easymotion'                  	" https://github.com/easymotion/vim-easymotion
+Plugin 'haya14busa/incsearch.vim'                   	" building searches https://github.com/haya14busa/incsearch.vim
+Plugin 'haya14busa/incsearch-easymotion.vim'        	" enables full text for easymotion
+Plugin 'kien/ctrlp.vim'                             	" https://github.com/kien/ctrlp.vim
+Plugin 'terryma/vim-multiple-cursors'               	" https://github.com/terryma/vim-multiple-cursors
+Plugin 'kablamo/vim-git-log' 			    	" https://github.com/kablamo/vim-git-log
+Plugin 'gregsexton/gitv' 			   	" https://github.commands/gregsexton/gitv
+Plugin 'tpope/vim-fugitive' 			    	" git commands https://github.com/tpope/vim-fugitive
+Plugin 'airblade/vim-gitgutter'                     	" git diff live https://github.com/airblade/vim-gitgutter
+Plugin 'MattesGroeger/vim-bookmarks' 		    	" try mm and ma
+Plugin 'christoomey/vim-tmux-navigator' 	    	" https://github.com/christoomey/vim-tmux-navigator
+Plugin 'benmills/vimux' 			    	" https://github.com/benmills/vimux
+Plugin 'junegunn/goyo.vim' 			    	" Zen mode for vim https://github.com/junegunn/goyo.vim
+Plugin 'junegunn/limelight.vim' 		    	" https://github.com/junegunn/limelight.vim
+Plugin 'jdelkins/vim-correction' 			" https://github.com/jdelkins/vim-correction
+Plugin 'tpope/vim-abolish' 				" https://github.com/tpope/vim-abolish manipulates words
 
-call vundle#end()           " required
+call vundle#end()           			    	" required
 
-filetype plugin indent on   " required
+filetype plugin indent on 				" required
+
 set omnifunc=syntaxcomplete#Complete
 
-color molokai               " molokai, zenburn and solarized are nice
+color molokai               				" molokai, zenburn and solarized are nice
 
 " bookmark settings
 highlight BookmarkSign ctermbg=NONE ctermfg=160
@@ -118,23 +119,14 @@ let g:NERDSpaceDelims = 1
 map <Leader>c :VimuxPromptCommand<CR>
 
 " Settings for Writting
-let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
+" let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 
 " Vim-pencil Configuration
-augroup pencil
-  autocmd!
-  autocmd FileType markdown,mkd,md call pencil#init()
-  " autocmd FileType text            call pencil#init()
-augroup END
-
-" Disable arrow movement, resize splits instead.
-"let g:elite_mode=1
-"if get(g:, 'elite_mode')
-    "nnoremap <Up>    :resize +2<CR>
-    "nnoremap <Down>  :resize -2<CR>
-    "nnoremap <Left>  :vertical resize +2<CR>
-    "nnoremap <Right> :vertical resize -2<CR>
-"endif
+" augroup pencil
+  " autocmd!
+  " autocmd FileType markdown,mkd,md call pencil#init()
+  " " autocmd FileType text            call pencil#init()
+" augroup END
 
 "incsearch related stuff...
 "nmap z/ <Plug>(incsearch-easymotion-/)
@@ -169,13 +161,15 @@ let g:ycm_autoclose_preview_window_after_completion=1
 " various aliases and maps
 let NERDTreeWinSize = 45
 let NERDTreeQuitOnOpen=1
-nmap = :NERDTreeToggle<cr>         " leader o is nerdtree for files
+nmap = :NERDTreeToggle<cr>         " = is nerdtree for files
 nmap <leader>t :VimtexTocOpen<cr>  " leader t is latex tree
 nmap <leader>w :w<cr>              " leader w is write
 nmap <leader>q :q<cr>              " leader q is quit
+nmap <leader>e :wq!<cr>            " leader e is write quit!
 nmap <leader><leader>q :q!<cr>     " leader leader q is quit!
 nmap <leader>/ :Lines<cr>          " search for text
-nmap <leader>u :UndotreeToggle<CR> " toggle undo tree
+nmap <leader>z :Goyo<cr>  	   " magic zen mode
+" nmap <leader>u :UndotreeToggle<CR> " toggle undo tree
 nmap pr :LivedownToggle<CR>        " preview markdown
 nmap pdf :Pandoc pdf<CR>           " generate pdf by typing pdf
 nnoremap <leader>r :!%:p<CR>       " run buffer with \r
@@ -183,6 +177,11 @@ map gn :bn<cr>
 map gp :bp<cr>
 map gd :bd<cr>
 nmap <leader>' ysiw'
+nmap <Leader>l <Plug>(Limelight)
+xmap <Leader>l <Plug>(Limelight)
+
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
 
 if exists(":Tabularize")
   nmap <Leader><Leader>a= :Tabularize /=<CR>
@@ -316,7 +315,7 @@ let g:vimtex_compiler_latexmk_engines = {
 let g:nv_search_paths = ['~/notes', 'notes.md']
 let g:nv_default_extension = '.md'
 let g:nv_create_note_key = 'n' 	" After searching, press ctrl-s and save new note with filename
-nnoremap <silent> <leader>a :NV<CR> 	" leader n searches notes
+nnoremap <silent> <leader>a :NV<CR> 	" leader a searches notes
 
 "make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
