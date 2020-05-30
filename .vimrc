@@ -1,10 +1,10 @@
-" Inspired by https://dev.to/allanmacgregor/vim-is-the-perfect-ide-e80
+" Inspired by https://dev.to/allanmacgregor/vim-is-the-perfect-ide-e80 e80
 "
 " USE:
 " leader is default        : \
 " leader z is zen 	   : <leader> z
 " notes in markdown        : <leader> a
-" easymotion max search    : /
+" easymotion max search    : \/
 " commenting blocks        : <leader> cc or cm or toggle : c space
 " uncommenting blocks      : <leader> cu
 " write file               : <leader> w
@@ -12,6 +12,7 @@
 " nerdtreee browser        : =
 " easymotion two char      : s
 " latex structure          : <leader> t
+" table mode 		   : <leader><leader> t
 " fzf search in file       : <leader> /
 " fzf search for files     : <leader> f
 " fzf on all commands      : <leader> m
@@ -24,7 +25,7 @@
 " And don't forget spellchecking ]s and z= https://www.linux.com/training-tutorials/using-spell-checking-vim/
 "
 " The power of Normal mode + s + two chars
-" The power of Normal mode + / + search
+" The power of Normal mode + \/ + search
 "
 " This vim comes with powerful fzf intergrated, try the above commands and check out:
 " https://medium.com/@sidneyliebrand/how-fzf-and-ripgrep-improved-my-workflow-61c7ca212861
@@ -49,7 +50,7 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'                          	" Plugin manager -- install first then run :PluginInstall
 Plugin 'vim-scripts/indentpython.vim'               	" PEP8 indentation of Python https://github.com/vim-scripts/indentpython.vim
-Plugin 'vim-scripts/taglist.vim'                    	" browse function definitions
+" Plugin 'vim-scripts/taglist.vim'                    	" browse function definitions
 Plugin 'majutsushi/tagbar'                          	" https://github.com/majutsushi/tagbar
 Plugin 'wesQ3/vim-windowswap'                       	" https://github.com/wesQ3/vim-windowswap
 Plugin 'godlygeek/tabular'                          	" http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
@@ -59,7 +60,7 @@ Plugin 'lervag/vimtex'                              	" LaTeX helpers https://git
 Plugin 'ervandew/supertab'                          	" Magic tab https://github.com/ervandew/supertab
 Plugin 'Valloric/YouCompleteMe'                     	" Autocompletion engine
 Plugin 'vim-syntastic/syntastic'                    	" checking syntax https://github.com/vim-syntastic/syntastic
-Plugin 'scrooloose/nerdtree'                        	" file browser \ n
+Plugin 'scrooloose/nerdtree'                        	" file browser =
 Plugin 'jiangmiao/auto-pairs'                       	" automagic double pairs of ( etc.
 Plugin 'preservim/nerdcommenter'                    	" \cc comments see https://github.com/preservim/nerdcommenter
 Plugin 'junegunn/fzf',                              	" { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy engine https://github.com/junegunn/fzf.vim
@@ -67,23 +68,19 @@ Plugin 'junegunn/fzf.vim'                           	" fuzzy engine https://gith
 Plugin 'sirver/ultisnips'                           	" rocket science snippet engine https://github.com/sirver/UltiSnips
 Plugin 'honza/vim-snippets'                         	" snippets for ultisnips
 Plugin 'tpope/vim-surround'                         	" magic surrounding word: try ysiw: iw is a word object https://github.com/tpope/vim-surround
-Plugin 'altercation/vim-colors-solarized'  	    	" comlor scheme
 Plugin 'https://github.com/alok/notational-fzf-vim' 	" nValt for vim
 Plugin 'plasticboy/vim-markdown'                    	" for markdown https://github.com/plasticboy/vim-markdown
 Plugin 'jtratner/vim-flavored-markdown' 		" ditto
 Plugin 'shime/vim-livedown'                         	" shows markdown live https://github.com/shime/vim-livedown
 Plugin 'vim-pandoc/vim-pandoc'                      	" https://github.com/vim-pandoc/vim-pandoc
 Plugin 'vim-pandoc/vim-pandoc-syntax'               	" needed for pandoc above
-Plugin 'jnurmine/Zenburn'                           	" Just a color scheme
 Plugin 'mileszs/ack.vim'                            	" https://github.com/mileszs/ack.vim for using ag
 Plugin 'vim-airline/vim-airline'                    	" https://github.com/vim-airline/vim-airline
 Plugin 'vim-airline/vim-airline-themes' 		" ditto
-Plugin 'tomasr/molokai'                             	" as in the color
 Plugin 'tpope/vim-repeat'                           	" allows for complex . repeats
 Plugin 'easymotion/vim-easymotion'                  	" https://github.com/easymotion/vim-easymotion
 Plugin 'haya14busa/incsearch.vim'                   	" building searches https://github.com/haya14busa/incsearch.vim
 Plugin 'haya14busa/incsearch-easymotion.vim'        	" enables full text for easymotion
-Plugin 'kien/ctrlp.vim'                             	" https://github.com/kien/ctrlp.vim
 Plugin 'terryma/vim-multiple-cursors'               	" https://github.com/terryma/vim-multiple-cursors
 Plugin 'kablamo/vim-git-log' 			    	" https://github.com/kablamo/vim-git-log
 Plugin 'gregsexton/gitv' 			   	" https://github.commands/gregsexton/gitv
@@ -94,8 +91,10 @@ Plugin 'christoomey/vim-tmux-navigator' 	    	" https://github.com/christoomey/v
 Plugin 'benmills/vimux' 			    	" https://github.com/benmills/vimux
 Plugin 'junegunn/goyo.vim' 			    	" Zen mode for vim https://github.com/junegunn/goyo.vim
 Plugin 'junegunn/limelight.vim' 		    	" https://github.com/junegunn/limelight.vim
-Plugin 'jdelkins/vim-correction' 			" https://github.com/jdelkins/vim-correction
 Plugin 'tpope/vim-abolish' 				" https://github.com/tpope/vim-abolish manipulates words
+Plugin 'dhruvasagar/vim-table-mode' 			" \tm table mode https://github.com/dhruvasagar/vim-table-mode
+Plugin 'vim-scripts/SearchComplete' 			" tab enabled / search - powerful
+
 
 call vundle#end()           			    	" required
 
@@ -103,7 +102,7 @@ filetype plugin indent on 				" required
 
 set omnifunc=syntaxcomplete#Complete
 
-color molokai               				" molokai, zenburn and solarized are nice
+" let g:airline_theme='molokai'   			" molokai, zenburn and solarized are nice, can also use :AirlineTheme
 
 " bookmark settings
 highlight BookmarkSign ctermbg=NONE ctermfg=160
@@ -128,13 +127,6 @@ map <Leader>c :VimuxPromptCommand<CR>
   " " autocmd FileType text            call pencil#init()
 " augroup END
 
-"incsearch related stuff...
-"nmap z/ <Plug>(incsearch-easymotion-/)
-"nmap <leader><leader>/ <Plug>(incsearch-easymotion-/)
-nmap / <Plug>(incsearch-easymotion-/)
-nmap z? <Plug>(incsearch-easymotion-?)
-nmap zg/ <Plug>(incsearch-easymotion-stay)
-
 " stuff for easymotion
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
@@ -154,6 +146,13 @@ let g:EasyMotion_smartcase = 1
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
+"incsearch related stuff...
+" nmap / <Plug>(incsearch-easymotion-/)
+" nmap z/ <Plug>(incsearch-easymotion-/)
+nmap <leader>/ <Plug>(incsearch-easymotion-/)
+nmap z? <Plug>(incsearch-easymotion-?)
+nmap zg/ <Plug>(incsearch-easymotion-stay)
+
 " youcompleteme behavior
 let g:ycm_autoclose_preview_window_after_completion=1
 "map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -167,9 +166,8 @@ nmap <leader>w :w<cr>              " leader w is write
 nmap <leader>q :q<cr>              " leader q is quit
 nmap <leader>e :wq!<cr>            " leader e is write quit!
 nmap <leader><leader>q :q!<cr>     " leader leader q is quit!
-nmap <leader>/ :Lines<cr>          " search for text
+nmap <leader><leader>/ :Lines<cr>  " search for text
 nmap <leader>z :Goyo<cr>  	   " magic zen mode
-" nmap <leader>u :UndotreeToggle<CR> " toggle undo tree
 nmap pr :LivedownToggle<CR>        " preview markdown
 nmap pdf :Pandoc pdf<CR>           " generate pdf by typing pdf
 nnoremap <leader>r :!%:p<CR>       " run buffer with \r
@@ -177,12 +175,40 @@ map gn :bn<cr>
 map gp :bp<cr>
 map gd :bd<cr>
 nmap <leader>' ysiw'
-nmap <Leader>l <Plug>(Limelight)
-xmap <Leader>l <Plug>(Limelight)
+nmap <leader>" ysiw"
+nmap t :TagbarToggle<CR>
+nmap <leader><leader>t :TableModeToggle<CR>
 
+" Goyo stuff
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
+" nmap <Leader>l <Plug>(Limelight)
+" xmap <Leader>l <Plug>(Limelight)
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
 
+" Color name (:help gui-colors) or RGB color
+let g:limelight_conceal_guifg = 'DarkGray'
+let g:limelight_conceal_guifg = '#777777'
+
+" Default: 0.5
+" let g:limelight_default_coefficient = 0.7
+
+" Number of preceding/following paragraphs to include (default: 0)
+" let g:limelight_paragraph_span = 1
+
+" Beginning/end of paragraph
+"   When there's no empty line between the paragraphs
+"   and each paragraph starts with indentation
+" let g:limelight_bop = '^\s'
+" let g:limelight_eop = '\ze\n^\s'
+
+" Highlighting priority (default: 10)
+"   Set it to -1 not to overrule hlsearch
+" let g:limelight_priority = -1
+
+" Tabularize shortcut
 if exists(":Tabularize")
   nmap <Leader><Leader>a= :Tabularize /=<CR>
   vmap <Leader><Leader>a= :Tabularize /=<CR>
@@ -195,8 +221,6 @@ let g:windowswap_map_keys = 0 "prevent default bindings
 nnoremap <silent> <leader>yw :call WindowSwap#MarkWindowSwap()<CR>
 nnoremap <silent> <leader>pw :call WindowSwap#DoWindowSwap()<CR>
 nnoremap <silent> <leader>ww :call WindowSwap#EasyWindowSwap()<CR>
-
-nmap t :TagbarToggle<CR>
 
 " fzf tweaking and shortcuts
 "let g:fzf_preview_window = 'right:60%'
@@ -229,12 +253,11 @@ set cursorline 				" line where cursor is
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
-"setlocal spell
+" setlocal spell
 set spelllang=en_gb
 inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 set showcmd
-
 set timeout timeoutlen=1500 	" timeout for command completion
 set mouse=a			" enable mouse
 set clipboard=unnamed		" integrate with system clipboard
@@ -270,20 +293,24 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " Enable folding
-set foldmethod=indent
-set foldlevel=99
+"set foldmethod=indent
+"set foldlevel=1
+"let g:vim_markdown_folding_disabled=1
+
+set nofoldenable    " disable folding
 
 " Enable folding with the spacebar
-nnoremap <space> za
+"nnoremap <space> za
 
 " fold docstring
-let g:SimpylFold_docstring_preview=1
+" let g:SimpylFold_docstring_preview=1
 
-"au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
-augroup markdown
-    au!
-    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
-augroup END
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+
+" augroup markdown
+    " au!
+    " au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+" augroup END
 
 au BufNewFile,BufRead *.py
     \ set tabstop=4
@@ -314,7 +341,7 @@ let g:vimtex_compiler_latexmk_engines = {
 " try :NV or leader+n
 let g:nv_search_paths = ['~/notes', 'notes.md']
 let g:nv_default_extension = '.md'
-let g:nv_create_note_key = 'n' 	" After searching, press ctrl-s and save new note with filename
+let g:nv_create_note_key = 'ctrl-x' 	" After searching, press ctrl-x and save new note
 nnoremap <silent> <leader>a :NV<CR> 	" leader a searches notes
 
 "make YCM compatible with UltiSnips (using supertab)
@@ -325,8 +352,9 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 "better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsEditSplit="vertical" " If you want :UltiSnipsEdit to split your window.
+" inoremap <s-tab> <C-p> 
 
 let g:ulti_expand_or_jump_res = 0 "default value, just set once
 function! Ulti_ExpandOrJump_and_getRes()
@@ -353,3 +381,5 @@ function! ToggleWindowHorizontalVerticalSplit()
 endfunction
 
 nnoremap <silent> <leader>wt :call ToggleWindowHorizontalVerticalSplit()<cr>
+
+set complete+=kspell 		" ctrl-p ctrl-n are word completion
