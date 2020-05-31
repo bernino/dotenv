@@ -88,9 +88,6 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#00FF00"
 #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#00FF00,bg=cyan,bold,underline"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-source /usr/local/etc/profile.d/autojump.sh
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-
 # tmux
 # vundle
 # droplr
