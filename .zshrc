@@ -1,22 +1,3 @@
-# 1 - Install zsh
-#
-# 2 - Install oh-my-zsh:
-# sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-# 3 - git clone https://github.com/bernino/dotenv.git
-# 4 - cp dotenv files
-
-# install oh-my-zsh autosuggestions:
-# 5 - git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-
-# Install powerlevel10k
-# 6 - git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
-
-# (and follow the installation of powerlevel10k modding)
-
-# Install fzf-tab
-# 7 - git clone https://github.com/Aloxaf/fzf-tab ~ZSH_CUSTOM/plugins/fzf-tab
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -162,3 +143,4 @@ source $ZSH/oh-my-zsh.sh
 # export PATH="$PYENV_ROOT/bin:$PATH"
 # eval "$(pyenv init -)"
 # if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+export PATH="/usr/local/sbin:$PATH"

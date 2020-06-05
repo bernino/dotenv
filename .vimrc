@@ -103,6 +103,8 @@ filetype plugin indent on 				" required
 set omnifunc=syntaxcomplete#Complete
 
 " let g:airline_theme='molokai'   			" molokai, zenburn and solarized are nice, can also use :AirlineTheme
+let g:airline#extensions#tabline#enabled = 1
+
 
 " bookmark settings
 highlight BookmarkSign ctermbg=NONE ctermfg=160
@@ -171,12 +173,20 @@ nmap <leader>z :Goyo<cr>  	   " magic zen mode
 nmap pr :LivedownToggle<CR>        " preview markdown
 nmap pdf :Pandoc pdf<CR>           " generate pdf by typing pdf
 nnoremap <leader>r :!%:p<CR>       " run buffer with \r
+
+" go through buffers
 map gn :bn<cr>
 map gp :bp<cr>
 map gd :bd<cr>
+
+" shortcuts for surrounding with ' and "
 nmap <leader>' ysiw'
 nmap <leader>" ysiw"
+
+" tagbar
 nmap t :TagbarToggle<CR>
+
+" tablemode
 nmap <leader><leader>t :TableModeToggle<CR>
 
 " Goyo stuff
@@ -341,6 +351,12 @@ let g:vimtex_compiler_latexmk_engines = {
 " try :NV or leader+n
 let g:nv_search_paths = ['~/notes', 'notes.md']
 let g:nv_default_extension = '.md'
+let g:nv_create_note_window = 'tabedit'
+" let g:nv_keymap = {
+                    " 'ctrl-s': 'split ',
+                    " 'ctrl-v': 'vertical split ',
+                    " 'ctrl-t': 'tabedit ',
+                    " })
 let g:nv_create_note_key = 'ctrl-x' 	" After searching, press ctrl-x and save new note
 nnoremap <silent> <leader>a :NV<CR> 	" leader a searches notes
 
@@ -383,3 +399,10 @@ endfunction
 nnoremap <silent> <leader>wt :call ToggleWindowHorizontalVerticalSplit()<cr>
 
 set complete+=kspell 		" ctrl-p ctrl-n are word completion
+
+if has("gui_running")
+   let s:uname = system("uname")
+   if s:uname == "Darwin\n"
+      set guifont=Meslo\ LG\ S\ for\ Powerline
+   endif
+endif
