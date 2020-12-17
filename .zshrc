@@ -73,6 +73,7 @@ alias sv="source ~/.vimrc"
 alias c="clear"
 alias de="tmux detach"
 alias a="tmux attach"
+#alias brew = "arch -x86_64 brew"
 
 mdless () {
   pandoc $1 | lynx -stdin
@@ -104,20 +105,20 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # sudo
 # battery 
 # vi-mode 
+# zsh-autosuggestions 
+# fzf-tab
+# fzf 
 plugins=(
  	git
 	tmux
 	vi-mode
-	autojump
+	# autojump
  	web-search
- 	zsh-autosuggestions 
 	zsh-navigation-tools 
         dircycle 
  	dirhistory 
  	wd 
  	osx 
-	# fzf 
-	fzf-tab
  )
 
 
@@ -132,7 +133,7 @@ plugins=(
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Load Zsh tools for syntax highlighting and autosuggestions
-source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source $ZSH/oh-my-zsh.sh
 
