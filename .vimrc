@@ -58,7 +58,7 @@ Plugin 'jeetsukumaran/vim-buffergator'              	" https://github.com/jeetsu
 " Plugin 'reedes/vim-pencil'  		            	" https:github//github.com/reedes/vim-pencil does softwraps
 Plugin 'lervag/vimtex'                              	" LaTeX helpers https://github.com/lervag/vimtex
 Plugin 'ervandew/supertab'                          	" Magic tab https://github.com/ervandew/supertab
-Plugin 'Valloric/YouCompleteMe'                     	" Autocompletion engine
+"Plugin 'Valloric/YouCompleteMe'                     	" Autocompletion engine
 Plugin 'vim-syntastic/syntastic'                    	" checking syntax https://github.com/vim-syntastic/syntastic
 Plugin 'scrooloose/nerdtree'                        	" file browser =
 Plugin 'jiangmiao/auto-pairs'                       	" automagic double pairs of ( etc.
@@ -266,6 +266,7 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " setlocal spell
 set spelllang=en_gb
 inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
+:map <F5> :setlocal spell! spelllang=en_us<CR>
 
 set showcmd
 set timeout timeoutlen=1500 	" timeout for command completion
@@ -286,7 +287,7 @@ set t_Co=256			" powerline requires colors
 set laststatus=2		" always show status / powerline
 
 " turn off search highlight
-nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <leader><space> :set invhlsearch<CR>
 
 " setup powerline specials
 let g:airline_powerline_fonts=1
@@ -349,7 +350,7 @@ let g:vimtex_compiler_latexmk_engines = {
 " for nvalt
 " see https://github.com/Alok/notational-fzf-vim
 " try :NV or leader+n
-let g:nv_search_paths = ['~/notes', 'notes.md']
+let g:nv_search_paths = ['~/notes', '~/.noteable/notes']
 let g:nv_default_extension = '.md'
 let g:nv_create_note_window = 'tabedit'
 " let g:nv_keymap = {
@@ -358,7 +359,7 @@ let g:nv_create_note_window = 'tabedit'
                     " 'ctrl-t': 'tabedit ',
                     " })
 let g:nv_create_note_key = 'ctrl-x' 	" After searching, press ctrl-x and save new note
-nnoremap <silent> <leader>a :NV<CR> 	" leader a searches notes
+nnoremap <silent> <leader>n :NV<CR> 	" leader a searches notes
 
 "make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']

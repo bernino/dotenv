@@ -63,6 +63,7 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 
 # For a full list of active aliases, run `alias`.
 alias v="vim"
+alias n="vim -c 'NV!'"
 alias l="ls -G"
 alias p='python3'
 alias z="vim ~/.zshrc"
