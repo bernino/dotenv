@@ -35,6 +35,8 @@ zstyle ':completion:::::' completer _expand _complete _ignored _approximate # en
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+export VISUAL=vim
+export EDITOR="$VISUAL"
 
 autoload -Uz history-search-end
 

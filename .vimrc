@@ -125,6 +125,7 @@ let g:NERDToggleCheckAllLines = 1
 " map <Leader>c :VimuxPromptCommand<CR>
 
 " Settings for Writting
+" just makes it nicer
 " let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 
 " Vim-pencil Configuration
@@ -145,22 +146,10 @@ map 0 ^
 
 " incsearch.vim x fuzzy x vim-easymotion
 
-function! s:config_easyfuzzymotion(...) abort
-  return extend(copy({
-  \   'converters': [incsearch#config#fuzzy#converter()],
-  \   'modules': [incsearch#config#easymotion#module()],
-  \   'keymap': {"\<CR>": '<Over>(easymotion)'},
-  \   'is_expr': 0,
-  \   'is_stay': 1
-  \ }), get(a:, 1, {}))
-endfunction
-
-noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
-
 " function! s:config_easyfuzzymotion(...) abort
   " return extend(copy({
-  " \   'converters': [incsearch#config#fuzzyword#converter()],
-  " \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+  " \   'converters': [incsearch#config#fuzzy#converter()],
+  " \   'modules': [incsearch#config#easymotion#module()],
   " \   'keymap': {"\<CR>": '<Over>(easymotion)'},
   " \   'is_expr': 0,
   " \   'is_stay': 1
@@ -168,6 +157,18 @@ noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
 " endfunction
 
 " noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
+
+function! s:config_easyfuzzymotion(...) abort
+  return extend(copy({
+  \   'converters': [incsearch#config#fuzzyword#converter()],
+  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+  \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+  \   'is_expr': 0,
+  \   'is_stay': 1
+  \ }), get(a:, 1, {}))
+endfunction
+
+noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
 " `s{char}{label}`
@@ -197,19 +198,19 @@ nmap <Leader>w <Plug>(easymotion-overwin-w)
 " use these mappings as default search and sometimes want to move cursor with
 " EasyMotion.
 
-" function! s:incsearch_config(...) abort
-  " return incsearch#util#deepextend(deepcopy({
-  " \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
-  " \   'keymap': {
-  " \     "\<CR>": '<Over>(easymotion)'
-  " \   },
-  " \   'is_expr': 0
-  " \ }), get(a:, 1, {}))
-" endfunction
+function! s:incsearch_config(...) abort
+  return incsearch#util#deepextend(deepcopy({
+  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+  \   'keymap': {
+  \     "\<CR>": '<Over>(easymotion)'
+  \   },
+  \   'is_expr': 0
+  \ }), get(a:, 1, {}))
+endfunction
 
-" noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
-" noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
-" noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
+noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
+noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
+noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 
 
 " youcompleteme behavior
