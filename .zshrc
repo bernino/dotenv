@@ -1,3 +1,6 @@
+# If you want the super nice Nord colorscheme for gnome terminal:
+# https://github.com/arcticicestudio/nord-gnome-terminal
+#
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -119,7 +122,7 @@ plugins=(
         dircycle 
  	dirhistory 
  	wd 
- 	osx 
+         # osx
  )
 
 

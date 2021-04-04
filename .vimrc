@@ -5,7 +5,7 @@
 " leader z is zen 	   : <leader> z
 " notes in markdown        : <leader> a
 " easymotion max search    : \/
-" commenting blocks        : <leader> cc or cm or toggle : c space
+" commenting blocks        : <leader>cc or cm or toggle : <leader>c+space
 " uncommenting blocks      : <leader> cu
 " write file               : <leader> w
 " quit                     : <leader> q
@@ -53,7 +53,7 @@ Plugin 'vim-scripts/indentpython.vim'               	" PEP8 indentation of Pytho
 " Plugin 'vim-scripts/taglist.vim'                    	" browse function definitions
 Plugin 'majutsushi/tagbar'                          	" https://github.com/majutsushi/tagbar
 Plugin 'wesQ3/vim-windowswap'                       	" https://github.com/wesQ3/vim-windowswap
-Plugin 'godlygeek/tabular'                          	" http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
+" Plugin 'godlygeek/tabular'                          	" http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
 Plugin 'jeetsukumaran/vim-buffergator'              	" https://github.com/jeetsukumaran/vim-buffergator
 " Plugin 'reedes/vim-pencil'  		            	" https:github//github.com/reedes/vim-pencil does softwraps
 Plugin 'lervag/vimtex'                              	" LaTeX helpers https://github.com/lervag/vimtex
@@ -62,7 +62,7 @@ Plugin 'ervandew/supertab'                          	" Magic tab https://github.
 Plugin 'vim-syntastic/syntastic'                    	" checking syntax https://github.com/vim-syntastic/syntastic
 Plugin 'scrooloose/nerdtree'                        	" file browser =
 Plugin 'jiangmiao/auto-pairs'                       	" automagic double pairs of ( etc.
-Plugin 'preservim/nerdcommenter'                    	" \cc comments see https://github.com/preservim/nerdcommenter
+Plugin 'preservim/nerdcommenter'                    	" <leader>c+space comments see https://github.com/preservim/nerdcommenter
 Plugin 'junegunn/fzf',                              	" { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy engine https://github.com/junegunn/fzf.vim
 Plugin 'junegunn/fzf.vim'                           	" fuzzy engine https://github.com/junegunn/fzf.vim
 Plugin 'sirver/ultisnips'                           	" rocket science snippet engine https://github.com/sirver/UltiSnips
@@ -81,6 +81,7 @@ Plugin 'tpope/vim-repeat'                           	" allows for complex . repe
 Plugin 'easymotion/vim-easymotion'                  	" https://github.com/easymotion/vim-easymotion
 Plugin 'haya14busa/incsearch.vim'                   	" building searches https://github.com/haya14busa/incsearch.vim
 Plugin 'haya14busa/incsearch-easymotion.vim'        	" enables full text for easymotion
+Plugin 'haya14busa/incsearch-fuzzy.vim'
 Plugin 'terryma/vim-multiple-cursors'               	" https://github.com/terryma/vim-multiple-cursors
 Plugin 'kablamo/vim-git-log' 			    	" https://github.com/kablamo/vim-git-log
 Plugin 'gregsexton/gitv' 			   	" https://github.commands/gregsexton/gitv
@@ -94,6 +95,7 @@ Plugin 'junegunn/limelight.vim' 		    	" https://github.com/junegunn/limelight.v
 Plugin 'tpope/vim-abolish' 				" https://github.com/tpope/vim-abolish manipulates words
 Plugin 'dhruvasagar/vim-table-mode' 			" \tm table mode https://github.com/dhruvasagar/vim-table-mode
 Plugin 'vim-scripts/SearchComplete' 			" tab enabled / search - powerful
+Plugin 'arcticicestudio/nord-vim'
 
 
 call vundle#end()           			    	" required
@@ -102,9 +104,10 @@ filetype plugin indent on 				" required
 
 set omnifunc=syntaxcomplete#Complete
 
+" color and such
+colorscheme nord
 " let g:airline_theme='molokai'   			" molokai, zenburn and solarized are nice, can also use :AirlineTheme
 let g:airline#extensions#tabline#enabled = 1
-
 
 " bookmark settings
 highlight BookmarkSign ctermbg=NONE ctermfg=160
@@ -112,12 +115,14 @@ highlight BookmarkLine ctermbg=194 ctermfg=NONE
 let g:bookmark_sign = '♥'
 let g:bookmark_highlight_lines = 1
 
-" commenter settings
+" NERD commenter settings
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDToggleCheckAllLines = 1
 
 " Prompt for a command to run
-map <Leader>c :VimuxPromptCommand<CR>
+" map <Leader>c :VimuxPromptCommand<CR>
 
 " Settings for Writting
 " let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
@@ -129,31 +134,83 @@ map <Leader>c :VimuxPromptCommand<CR>
   " " autocmd FileType text            call pencil#init()
 " augroup END
 
+
+" go to first char of line - could also use shift i
+map 0 ^
+
+
 " stuff for easymotion
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
+" let g:EasyMotion_do_mapping = 0 " Disable default mappings
+" map <leader>/ <Plug>(incsearch-easymotion-/)
+
+" incsearch.vim x fuzzy x vim-easymotion
+
+function! s:config_easyfuzzymotion(...) abort
+  return extend(copy({
+  \   'converters': [incsearch#config#fuzzy#converter()],
+  \   'modules': [incsearch#config#easymotion#module()],
+  \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+  \   'is_expr': 0,
+  \   'is_stay': 1
+  \ }), get(a:, 1, {}))
+endfunction
+
+noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
+
+" function! s:config_easyfuzzymotion(...) abort
+  " return extend(copy({
+  " \   'converters': [incsearch#config#fuzzyword#converter()],
+  " \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+  " \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+  " \   'is_expr': 0,
+  " \   'is_stay': 1
+  " \ }), get(a:, 1, {}))
+" endfunction
+
+" noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
 " `s{char}{label}`
-nmap s <Plug>(easymotion-overwin-f)
+" nmap s <Plug>(easymotion-overwin-f)
 " or
 " `s{char}{char}{label}`
 " Need one more keystroke, but on average, it may be more comfortable.
 nmap s <Plug>(easymotion-overwin-f2)
-nmap <leader><leader>f <Plug>(easymotion-overwin-f2)
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
+" nmap <leader><leader>f <Plug>(easymotion-overwin-f2)
 
 " Turn on case-insensitive feature
-let g:EasyMotion_smartcase = 1
+" let g:EasyMotion_smartcase = 1
 
 " JK motions: Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
+" map <Leader>j <Plug>(easymotion-j)
+" map <Leader>k <Plug>(easymotion-k)
 
-"incsearch related stuff...
+"incsearch related stuff..
 " nmap / <Plug>(incsearch-easymotion-/)
 " nmap z/ <Plug>(incsearch-easymotion-/)
-nmap <leader>/ <Plug>(incsearch-easymotion-/)
-nmap z? <Plug>(incsearch-easymotion-?)
-nmap zg/ <Plug>(incsearch-easymotion-stay)
+" nmap <leader>/ <Plug>(incsearch-easymotion-/)
+" nmap z? <Plug>(incsearch-easymotion-?)
+" nmap zg/ <Plug>(incsearch-easymotion-stay)
+" You can use other keymappings like <C-l> instead of <CR> if you want to
+" use these mappings as default search and sometimes want to move cursor with
+" EasyMotion.
+
+" function! s:incsearch_config(...) abort
+  " return incsearch#util#deepextend(deepcopy({
+  " \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+  " \   'keymap': {
+  " \     "\<CR>": '<Over>(easymotion)'
+  " \   },
+  " \   'is_expr': 0
+  " \ }), get(a:, 1, {}))
+" endfunction
+
+" noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
+" noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
+" noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
+
 
 " youcompleteme behavior
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -162,9 +219,10 @@ let g:ycm_autoclose_preview_window_after_completion=1
 " various aliases and maps
 let NERDTreeWinSize = 45
 let NERDTreeQuitOnOpen=1
+
 nmap = :NERDTreeToggle<cr>         " = is nerdtree for files
 nmap <leader>t :VimtexTocOpen<cr>  " leader t is latex tree
-nmap <leader>w :w<cr>              " leader w is write
+nmap <leader>w :w<cr>      	   " leader leader w is write
 nmap <leader>q :q<cr>              " leader q is quit
 nmap <leader>e :wq!<cr>            " leader e is write quit!
 nmap <leader><leader>q :q!<cr>     " leader leader q is quit!
@@ -260,8 +318,8 @@ let g:fzf_action = {
 
 set cursorline 				" line where cursor is
 " cursor rectangle when normal mode and vertical line when insert mode
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+" let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+" let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 " setlocal spell
 set spelllang=en_gb
@@ -286,7 +344,7 @@ set hlsearch            	" highlight matches
 set t_Co=256			" powerline requires colors
 set laststatus=2		" always show status / powerline
 
-" turn off search highlight
+" turn on/off search highlight
 nnoremap <leader><space> :set invhlsearch<CR>
 
 " setup powerline specials
@@ -295,7 +353,7 @@ let g:airline_powerline_fonts=1
 
 " searching file with ag is fast
 let g:ackprg = 'ag --vimgrep'
-"nnoremap <leader>a :Ack!<Space>
+nnoremap <leader>a :Ack!<Space>
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -308,10 +366,10 @@ nnoremap <C-H> <C-W><C-H>
 "set foldlevel=1
 "let g:vim_markdown_folding_disabled=1
 
-set nofoldenable    " disable folding
+" set nofoldenable    " disable folding
 
 " Enable folding with the spacebar
-"nnoremap <space> za
+" nnoremap <space> za
 
 " fold docstring
 " let g:SimpylFold_docstring_preview=1
@@ -350,7 +408,7 @@ let g:vimtex_compiler_latexmk_engines = {
 " for nvalt
 " see https://github.com/Alok/notational-fzf-vim
 " try :NV or leader+n
-let g:nv_search_paths = ['~/notes', '~/.noteable/notes']
+let g:nv_search_paths = ['~/notes']
 let g:nv_default_extension = '.md'
 let g:nv_create_note_window = 'tabedit'
 " let g:nv_keymap = {
@@ -359,7 +417,7 @@ let g:nv_create_note_window = 'tabedit'
                     " 'ctrl-t': 'tabedit ',
                     " })
 let g:nv_create_note_key = 'ctrl-x' 	" After searching, press ctrl-x and save new note
-nnoremap <silent> <leader>n :NV<CR> 	" leader a searches notes
+nnoremap <silent> <leader>n :NV<CR> 	" leader n searches notes
 
 "make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
@@ -407,3 +465,4 @@ if has("gui_running")
       set guifont=Meslo\ LG\ S\ for\ Powerline
    endif
 endif
+
