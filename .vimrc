@@ -19,6 +19,7 @@
 " swap windows             : <leader> ww
 " easymotion               : normal mode s + two chars
 " for more snippets - snip : :UltisnipsEdit
+" split window sizes       : <shitf>+hjkl
 "
 " Don't forget zz, zt, zb more here https://unix.stackexchange.com/questions/110251/how-to-put-current-line-at-top-center-bottom-of-screen-in-vim#110252
 "
@@ -58,7 +59,7 @@ Plugin 'jeetsukumaran/vim-buffergator'              	" https://github.com/jeetsu
 " Plugin 'reedes/vim-pencil'  		            	" https:github//github.com/reedes/vim-pencil does softwraps
 Plugin 'lervag/vimtex'                              	" LaTeX helpers https://github.com/lervag/vimtex
 Plugin 'ervandew/supertab'                          	" Magic tab https://github.com/ervandew/supertab
-"Plugin 'Valloric/YouCompleteMe'                     	" Autocompletion engine
+Plugin 'Valloric/YouCompleteMe'                     	" Autocompletion engine
 Plugin 'vim-syntastic/syntastic'                    	" checking syntax https://github.com/vim-syntastic/syntastic
 Plugin 'scrooloose/nerdtree'                        	" file browser =
 Plugin 'jiangmiao/auto-pairs'                       	" automagic double pairs of ( etc.
@@ -221,24 +222,29 @@ let g:ycm_autoclose_preview_window_after_completion=1
 let NERDTreeWinSize = 45
 let NERDTreeQuitOnOpen=1
 
-nmap = :NERDTreeToggle<cr>         " = is nerdtree for files
+nmap <leader>f :NERDTreeToggle<cr>         " = is nerdtree for files
 nmap <leader>t :VimtexTocOpen<cr>  " leader t is latex tree
 nmap <leader>w :w<cr>      	   " leader leader w is write
 nmap <leader>q :q<cr>              " leader q is quit
 nmap <leader>e :wq!<cr>            " leader e is write quit!
 nmap <leader><leader>q :q!<cr>     " leader leader q is quit!
-nmap <leader><leader>/ :Lines<cr>  " search for text
+nmap <leader><leader>/ :Lines<cr>  " search for text in fzf mode
 nmap <leader>z :Goyo<cr>  	   " magic zen mode
 nmap pr :LivedownToggle<CR>        " preview markdown
 nmap pdf :Pandoc pdf<CR>           " generate pdf by typing pdf
 nnoremap <leader>r :!%:p<CR>       " run buffer with \r
+" resize current buffer by +/- 5 
+nnoremap <S-k> :vertical resize -5<cr>
+nnoremap <S-h> :resize +5<cr>
+nnoremap <S-l> :resize -5<cr>
+nnoremap <S-j> :vertical resize +5<cr>
 
 " go through buffers
 map gn :bn<cr>
 map gp :bp<cr>
 map gd :bd<cr>
 
-" shortcuts for surrounding with ' and "
+" shortcuts for edit surrounding with ' and "
 nmap <leader>' ysiw'
 nmap <leader>" ysiw"
 
@@ -295,7 +301,7 @@ nnoremap <silent> <leader>ww :call WindowSwap#EasyWindowSwap()<CR>
 "let g:fzf_preview_window = 'right:60%'
 
 " open fzf f for files
-nnoremap <leader>f :Files<CR>		
+nnoremap <leader><leader>f :Files<CR>		
 " open fzf grep for content in file - g for grep
 nnoremap <leader>g :Rg<CR> 	
 " fzf help search all commands available
@@ -304,23 +310,23 @@ xmap <leader>m <plug>(fzf-maps-x) test what
 omap <leader>m <plug>(fzf-maps-o)
 
 " Insert mode completion
-imap <c-w> <plug>(fzf-complete-word)
-imap <c-p> <plug>(fzf-complete-path):
-imap <c-j> <plug>(fzf-complete-file-ag)
-imap <c-l> <plug>(fzf-complete-line)
+" imap <c-w> <plug>(fzf-complete-word)
+" imap <c-p> <plug>(fzf-complete-path):
+" imap <c-j> <plug>(fzf-complete-file-ag)
+" imap <c-l> <plug>(fzf-complete-line)
 
 " buffer tabbing
 nnoremap <leader><tab> :Buffers<cr>
 
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
+" let g:fzf_action = {
+  " \ 'ctrl-t': 'tab split',
+  " \ 'ctrl-x': 'split',
+  " \ 'ctrl-v': 'vsplit' }
 
 set cursorline 				" line where cursor is
 " cursor rectangle when normal mode and vertical line when insert mode
-" let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-" let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 " setlocal spell
 set spelllang=en_gb
