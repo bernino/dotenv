@@ -55,7 +55,7 @@ bindkey -M viins '^[[A' history-beginning-search-backward-end \
 
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.oh-my-zsh:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.oh-my-zsh:$PATH
 export ZSH=$HOME/.oh-my-zsh
 export TERM="xterm-256color"
 export GOPATH=$HOME/go
@@ -79,7 +79,7 @@ alias sv="source ~/.vimrc"
 alias c="clear"
 alias de="tmux detach"
 alias a="tmux attach"
-#alias brew = "arch -x86_64 brew"
+alias nn="nautilus . &"
 
 mdless () {
   pandoc $1 | lynx -stdin

@@ -2,14 +2,15 @@
 "
 " USE:
 " leader is default        : \
+" bookmark 		   : mm and ma
 " leader z is zen 	   : <leader> z
 " notes in markdown        : <leader> a
-" easymotion max search    : \/
+" easymotion fuzzy search  : \/
 " commenting blocks        : <leader>cc or cm or toggle : <leader>c+space
 " uncommenting blocks      : <leader> cu
 " write file               : <leader> w
 " quit                     : <leader> q
-" nerdtreee browser        : =
+" nerdtreee browser        : <leader>f
 " easymotion two char      : s
 " latex structure          : <leader> t
 " table mode 		   : <leader><leader> t
@@ -61,7 +62,7 @@ Plugin 'lervag/vimtex'                              	" LaTeX helpers https://git
 Plugin 'ervandew/supertab'                          	" Magic tab https://github.com/ervandew/supertab
 Plugin 'Valloric/YouCompleteMe'                     	" Autocompletion engine
 Plugin 'vim-syntastic/syntastic'                    	" checking syntax https://github.com/vim-syntastic/syntastic
-Plugin 'scrooloose/nerdtree'                        	" file browser =
+Plugin 'scrooloose/nerdtree'                        	" file browser <leader>f
 Plugin 'jiangmiao/auto-pairs'                       	" automagic double pairs of ( etc.
 Plugin 'preservim/nerdcommenter'                    	" <leader>c+space comments see https://github.com/preservim/nerdcommenter
 Plugin 'junegunn/fzf',                              	" { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy engine https://github.com/junegunn/fzf.vim
@@ -96,14 +97,19 @@ Plugin 'junegunn/limelight.vim' 		    	" https://github.com/junegunn/limelight.v
 Plugin 'tpope/vim-abolish' 				" https://github.com/tpope/vim-abolish manipulates words
 Plugin 'dhruvasagar/vim-table-mode' 			" \tm table mode https://github.com/dhruvasagar/vim-table-mode
 Plugin 'vim-scripts/SearchComplete' 			" tab enabled / search - powerful
-Plugin 'arcticicestudio/nord-vim'
+Plugin 'arcticicestudio/nord-vim' 			" a fine colorscheme
 
 
 call vundle#end()           			    	" required
 
 filetype plugin indent on 				" required
 
+set guicursor=
+set hidden
 set omnifunc=syntaxcomplete#Complete
+set termguicolors
+set signcolumn=yes
+set updatetime=50
 
 " color and such
 colorscheme nord
@@ -111,6 +117,7 @@ colorscheme nord
 let g:airline#extensions#tabline#enabled = 1
 
 " bookmark settings
+" mm sets and ma browse
 highlight BookmarkSign ctermbg=NONE ctermfg=160
 highlight BookmarkLine ctermbg=194 ctermfg=NONE
 let g:bookmark_sign = '♥'
@@ -169,7 +176,7 @@ function! s:config_easyfuzzymotion(...) abort
   \ }), get(a:, 1, {}))
 endfunction
 
-noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
+noremap <silent><expr> <leader>/ incsearch#go(<SID>config_easyfuzzymotion())
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
 " `s{char}{label}`
@@ -216,19 +223,21 @@ noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 
 " youcompleteme behavior
 let g:ycm_autoclose_preview_window_after_completion=1
-"map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+map <leader>g  :YcmCompleter GoTo<CR>
 
-" various aliases and maps
 let NERDTreeWinSize = 45
 let NERDTreeQuitOnOpen=1
 
-nmap <leader>f :NERDTreeToggle<cr>         " = is nerdtree for files
+" various aliases and maps
+nmap <leader>f :NERDTreeToggle<cr> " = is nerdtree for files
 nmap <leader>t :VimtexTocOpen<cr>  " leader t is latex tree
 nmap <leader>w :w<cr>      	   " leader leader w is write
 nmap <leader>q :q<cr>              " leader q is quit
 nmap <leader>e :wq!<cr>            " leader e is write quit!
 nmap <leader><leader>q :q!<cr>     " leader leader q is quit!
-nmap <leader><leader>/ :Lines<cr>  " search for text in fzf mode
+" search for text in fzf mode
+nmap <leader><leader>/ :Lines<cr>
 nmap <leader>z :Goyo<cr>  	   " magic zen mode
 nmap pr :LivedownToggle<CR>        " preview markdown
 nmap pdf :Pandoc pdf<CR>           " generate pdf by typing pdf
@@ -257,8 +266,8 @@ nmap <leader><leader>t :TableModeToggle<CR>
 " Goyo stuff
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
-" nmap <Leader>l <Plug>(Limelight)
-" xmap <Leader>l <Plug>(Limelight)
+nmap <Leader><leader>l <Plug>(Limelight)
+xmap <Leader><leader>l <Plug>(Limelight)
 " Color name (:help cterm-colors) or ANSI code
 let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_ctermfg = 240
@@ -303,17 +312,23 @@ nnoremap <silent> <leader>ww :call WindowSwap#EasyWindowSwap()<CR>
 " open fzf f for files
 nnoremap <leader><leader>f :Files<CR>		
 " open fzf grep for content in file - g for grep
-nnoremap <leader>g :Rg<CR> 	
+" nnoremap <leader>g :Rg<CR>
 " fzf help search all commands available
 nmap <leader>m <plug>(fzf-maps-n)
-xmap <leader>m <plug>(fzf-maps-x) test what 
+xmap <leader>m <plug>(fzf-maps-x)
 omap <leader>m <plug>(fzf-maps-o)
 
 " Insert mode completion
-" imap <c-w> <plug>(fzf-complete-word)
-" imap <c-p> <plug>(fzf-complete-path):
-" imap <c-j> <plug>(fzf-complete-file-ag)
-" imap <c-l> <plug>(fzf-complete-line)
+imap <c-w> <plug>(fzf-complete-word)
+imap <c-p> <plug>(fzf-complete-path):
+imap <c-j> <plug>(fzf-complete-file-ag)
+imap <c-l> <plug>(fzf-complete-line)
+
+" navigating
+map <leader>h :wincmd h<CR>
+map <leader>j :wincmd j<CR>
+map <leader>k :wincmd k<CR>
+map <leader>l :wincmd l<CR>
 
 " buffer tabbing
 nnoremap <leader><tab> :Buffers<cr>
@@ -330,13 +345,13 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 " setlocal spell
 set spelllang=en_gb
-inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
+" inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
 :map <F5> :setlocal spell! spelllang=en_us<CR>
 
 set showcmd
 set timeout timeoutlen=1500 	" timeout for command completion
 set mouse=a			" enable mouse
-set clipboard=unnamed		" integrate with system clipboard
+set clipboard=unnamedplus	" integrate with system clipboard
 let python_highlight_all=1
 set backspace=indent,eol,start	" enable backspace
 syntax on			" where exists, show syntax
@@ -367,6 +382,9 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+" buffer nav
+
 
 " Enable folding
 "set foldmethod=indent
@@ -415,7 +433,7 @@ let g:vimtex_compiler_latexmk_engines = {
 " for nvalt
 " see https://github.com/Alok/notational-fzf-vim
 " try :NV or leader+n
-let g:nv_search_paths = ['~/notes']
+let g:nv_search_paths = ['~/Dropbox/notes']
 let g:nv_default_extension = '.md'
 let g:nv_create_note_window = 'tabedit'
 " let g:nv_keymap = {
@@ -424,6 +442,7 @@ let g:nv_create_note_window = 'tabedit'
                     " 'ctrl-t': 'tabedit ',
                     " })
 let g:nv_create_note_key = 'ctrl-x' 	" After searching, press ctrl-x and save new note
+
 nnoremap <silent> <leader>n :NV<CR> 	" leader n searches notes
 
 "make YCM compatible with UltiSnips (using supertab)
