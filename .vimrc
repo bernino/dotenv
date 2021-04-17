@@ -1,11 +1,11 @@
 " Inspired by https://dev.to/allanmacgregor/vim-is-the-perfect-ide-e80 e80
 "
 " USE:
-" leader is default        : \
+" leader is 		   : <space>
 " bookmark 		   : mm and ma
 " leader z is zen 	   : <leader> z
-" notes in markdown        : <leader> a
-" easymotion fuzzy search  : \/
+" notes in markdown        : <leader> n
+" easymotion fuzzy search  : <leader>/
 " commenting blocks        : <leader>cc or cm or toggle : <leader>c+space
 " uncommenting blocks      : <leader> cu
 " write file               : <leader> w
@@ -57,7 +57,7 @@ Plugin 'majutsushi/tagbar'                          	" https://github.com/majuts
 Plugin 'wesQ3/vim-windowswap'                       	" https://github.com/wesQ3/vim-windowswap
 " Plugin 'godlygeek/tabular'                          	" http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
 Plugin 'jeetsukumaran/vim-buffergator'              	" https://github.com/jeetsukumaran/vim-buffergator
-" Plugin 'reedes/vim-pencil'  		            	" https:github//github.com/reedes/vim-pencil does softwraps
+" Plugin 'reedes/vim-pencil'  		            	    " https:github//github.com/reedes/vim-pencil does softwraps
 Plugin 'lervag/vimtex'                              	" LaTeX helpers https://github.com/lervag/vimtex
 Plugin 'ervandew/supertab'                          	" Magic tab https://github.com/ervandew/supertab
 Plugin 'Valloric/YouCompleteMe'                     	" Autocompletion engine
@@ -65,69 +65,134 @@ Plugin 'vim-syntastic/syntastic'                    	" checking syntax https://g
 Plugin 'scrooloose/nerdtree'                        	" file browser <leader>f
 Plugin 'jiangmiao/auto-pairs'                       	" automagic double pairs of ( etc.
 Plugin 'preservim/nerdcommenter'                    	" <leader>c+space comments see https://github.com/preservim/nerdcommenter
-Plugin 'junegunn/fzf',                              	" { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy engine https://github.com/junegunn/fzf.vim
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy engine https://github.com/junegunn/fzf.vim
 Plugin 'junegunn/fzf.vim'                           	" fuzzy engine https://github.com/junegunn/fzf.vim
 Plugin 'sirver/ultisnips'                           	" rocket science snippet engine https://github.com/sirver/UltiSnips
 Plugin 'honza/vim-snippets'                         	" snippets for ultisnips
 Plugin 'tpope/vim-surround'                         	" magic surrounding word: try ysiw: iw is a word object https://github.com/tpope/vim-surround
 Plugin 'https://github.com/alok/notational-fzf-vim' 	" nValt for vim
 Plugin 'plasticboy/vim-markdown'                    	" for markdown https://github.com/plasticboy/vim-markdown
-Plugin 'jtratner/vim-flavored-markdown' 		" ditto
-Plugin 'shime/vim-livedown'                         	" shows markdown live https://github.com/shime/vim-livedown
+" Plugin 'jtratner/vim-flavored-markdown' 		" ditto
+" Plugin 'shime/vim-livedown'                         	" shows markdown live https://github.com/shime/vim-livedown
 Plugin 'vim-pandoc/vim-pandoc'                      	" https://github.com/vim-pandoc/vim-pandoc
 Plugin 'vim-pandoc/vim-pandoc-syntax'               	" needed for pandoc above
 Plugin 'mileszs/ack.vim'                            	" https://github.com/mileszs/ack.vim for using ag
 Plugin 'vim-airline/vim-airline'                    	" https://github.com/vim-airline/vim-airline
-Plugin 'vim-airline/vim-airline-themes' 		" ditto
+Plugin 'vim-airline/vim-airline-themes' 		        " ditto
 Plugin 'tpope/vim-repeat'                           	" allows for complex . repeats
 Plugin 'easymotion/vim-easymotion'                  	" https://github.com/easymotion/vim-easymotion
 Plugin 'haya14busa/incsearch.vim'                   	" building searches https://github.com/haya14busa/incsearch.vim
 Plugin 'haya14busa/incsearch-easymotion.vim'        	" enables full text for easymotion
 Plugin 'haya14busa/incsearch-fuzzy.vim'
 Plugin 'terryma/vim-multiple-cursors'               	" https://github.com/terryma/vim-multiple-cursors
-Plugin 'kablamo/vim-git-log' 			    	" https://github.com/kablamo/vim-git-log
-Plugin 'gregsexton/gitv' 			   	" https://github.commands/gregsexton/gitv
-Plugin 'tpope/vim-fugitive' 			    	" git commands https://github.com/tpope/vim-fugitive
+Plugin 'kablamo/vim-git-log' 			    	        " https://github.com/kablamo/vim-git-log
+Plugin 'gregsexton/gitv' 			   	                " https://github.commands/gregsexton/gitv
+Plugin 'tpope/vim-fugitive' 			    	        " git commands https://github.com/tpope/vim-fugitive
 Plugin 'airblade/vim-gitgutter'                     	" git diff live https://github.com/airblade/vim-gitgutter
-Plugin 'MattesGroeger/vim-bookmarks' 		    	" try mm and ma
-Plugin 'christoomey/vim-tmux-navigator' 	    	" https://github.com/christoomey/vim-tmux-navigator
-Plugin 'benmills/vimux' 			    	" https://github.com/benmills/vimux
-Plugin 'junegunn/goyo.vim' 			    	" Zen mode for vim https://github.com/junegunn/goyo.vim
-Plugin 'junegunn/limelight.vim' 		    	" https://github.com/junegunn/limelight.vim
-Plugin 'tpope/vim-abolish' 				" https://github.com/tpope/vim-abolish manipulates words
-Plugin 'dhruvasagar/vim-table-mode' 			" \tm table mode https://github.com/dhruvasagar/vim-table-mode
-Plugin 'vim-scripts/SearchComplete' 			" tab enabled / search - powerful
-Plugin 'arcticicestudio/nord-vim' 			" a fine colorscheme
+Plugin 'MattesGroeger/vim-bookmarks' 		        	" try mm and ma
+Plugin 'christoomey/vim-tmux-navigator' 	        	" https://github.com/christoomey/vim-tmux-navigator
+Plugin 'benmills/vimux' 			    	            " https://github.com/benmills/vimux
+Plugin 'junegunn/goyo.vim' 			    	            " Zen mode for vim https://github.com/junegunn/goyo.vim
+Plugin 'junegunn/limelight.vim' 		    	        " https://github.com/junegunn/limelight.vim
+Plugin 'tpope/vim-abolish' 				                " https://github.com/tpope/vim-abolish manipulates words
+Plugin 'dhruvasagar/vim-table-mode' 			        " \tm table mode https://github.com/dhruvasagar/vim-table-mode
+Plugin 'vim-scripts/SearchComplete' 			        " tab enabled / search - powerful
+Plugin 'arcticicestudio/nord-vim' 			            " a fine colorscheme
+Plugin 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plugin 'vimwiki/vimwiki'
 
+call vundle#end()           			    	        " required
+filetype plugin indent on 				        " required
 
-call vundle#end()           			    	" required
-
-filetype plugin indent on 				" required
-
+" Some general settings
 set guicursor=
+set complete+=kspell 		" ctrl-p ctrl-n are word completion
 set hidden
 set omnifunc=syntaxcomplete#Complete
 set termguicolors
 set signcolumn=yes
 set updatetime=50
+let mapleader=" "
+set spelllang=en_gb
+map <F5> :setlocal spell! spelllang=en_us<CR>
+set cursorline 				    " line where cursor is
+set showcmd
+set timeout timeoutlen=1500 	" timeout for command completion
+set mouse=a			" enable mouse
+set clipboard=unnamedplus	" integrate with system clipboard
+" let python_highlight_all=1
+set backspace=indent,eol,start	" enable backspace
+syntax on			" where exists, show syntax
+set number			" visible line numbers 
+set encoding=utf-8		" guess what... UTF-8 encoded
+set splitbelow
+set splitright
+set wildmenu			" visual autocomplete for commands
+set showmatch 			" highlight matching [{()}]
+set incsearch           	" search as characters are entered
+set hlsearch            	" highlight matches
+set t_Co=256			" powerline requires colors
+set laststatus=2		" always show status / powerline
+set nofoldenable    		" disable folding
+set foldmethod=syntax
 
-" color and such
+" Enable folding with leader 1 (its off default)
+nnoremap <leader>1 za
+vnoremap <leader>1 zf
+
+" Color and such
 colorscheme nord
 " let g:airline_theme='molokai'   			" molokai, zenburn and solarized are nice, can also use :AirlineTheme
 let g:airline#extensions#tabline#enabled = 1
 
-" bookmark settings
-" mm sets and ma browse
+" various aliases and maps
+nmap <leader>f :NERDTreeToggle<cr> " leader f is nerdtree for files
+nmap <leader>o :so %<cr>
+nmap <leader>t :VimtexTocOpen<cr>  " leader t is latex tree
+nmap <leader>w :w<cr>      	   " leader leader w is write
+nmap <leader>q :q<cr>              " leader q is quit
+nmap <leader>e :wq!<cr>            " leader e is write quit!
+nmap <leader><leader>q :q!<cr>     " leader leader q is quit!
+" search for text in fzf mode
+nmap <leader><leader>/ :Lines<cr>
+nmap <leader>z :Goyo<cr>  	   " magic zen mode
+nmap pr :LivedownToggle<CR>        " preview markdown
+nmap pdf :Pandoc pdf<CR>           " generate pdf by typing pdf
+nnoremap <leader>r :!%:p<CR>       " run buffer with leader r
+
+" resize current buffer by +/- 5 
+nnoremap <S-l> :vertical resize -5<cr>
+nnoremap <S-h> :vertical resize +5<cr>
+nnoremap <S-j> :resize +5<cr>
+nnoremap <S-k> :resize -5<cr>
+
+" go through buffers
+map gn :bn<cr>
+map gp :bp<cr>
+map gd :bd<cr>
+
+" shortcuts for edit surrounding with ' and "
+nmap <leader>' ysiw'
+nmap <leader>" ysiw"
+
+" tagbar
+nmap t :TagbarToggle<CR>
+
+" tablemode
+nmap <leader><leader>t :TableModeToggle<CR>
+
+" Bookmark settings
+" mm sets and ma browse bookmarks
 highlight BookmarkSign ctermbg=NONE ctermfg=160
 highlight BookmarkLine ctermbg=194 ctermfg=NONE
 let g:bookmark_sign = '♥'
 let g:bookmark_highlight_lines = 1
 
-" NERD commenter settings
-" Add spaces after comment delimiters by default
+" NERDcommenter settings
 let g:NERDSpaceDelims = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
+let g:NERDDefaultAlign = 'left'
 
 " Prompt for a command to run
 " map <Leader>c :VimuxPromptCommand<CR>
@@ -143,10 +208,8 @@ let g:NERDToggleCheckAllLines = 1
   " " autocmd FileType text            call pencil#init()
 " augroup END
 
-
-" go to first char of line - could also use shift i
+" Go to first char of line - could also use shift i
 map 0 ^
-
 
 " stuff for easymotion
 " let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -185,8 +248,8 @@ noremap <silent><expr> <leader>/ incsearch#go(<SID>config_easyfuzzymotion())
 " `s{char}{char}{label}`
 " Need one more keystroke, but on average, it may be more comfortable.
 nmap s <Plug>(easymotion-overwin-f2)
-map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
+" map  w <Plug>(easymotion-bd-w)
+" nmap w <Plug>(easymotion-overwin-w)
 " nmap <leader><leader>f <Plug>(easymotion-overwin-f2)
 
 " Turn on case-insensitive feature
@@ -220,7 +283,6 @@ noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
 noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
 noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 
-
 " youcompleteme behavior
 let g:ycm_autoclose_preview_window_after_completion=1
 " map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -229,45 +291,13 @@ map <leader>g  :YcmCompleter GoTo<CR>
 let NERDTreeWinSize = 45
 let NERDTreeQuitOnOpen=1
 
-" various aliases and maps
-nmap <leader>f :NERDTreeToggle<cr> " = is nerdtree for files
-nmap <leader>t :VimtexTocOpen<cr>  " leader t is latex tree
-nmap <leader>w :w<cr>      	   " leader leader w is write
-nmap <leader>q :q<cr>              " leader q is quit
-nmap <leader>e :wq!<cr>            " leader e is write quit!
-nmap <leader><leader>q :q!<cr>     " leader leader q is quit!
-" search for text in fzf mode
-nmap <leader><leader>/ :Lines<cr>
-nmap <leader>z :Goyo<cr>  	   " magic zen mode
-nmap pr :LivedownToggle<CR>        " preview markdown
-nmap pdf :Pandoc pdf<CR>           " generate pdf by typing pdf
-nnoremap <leader>r :!%:p<CR>       " run buffer with \r
-" resize current buffer by +/- 5 
-nnoremap <S-k> :vertical resize -5<cr>
-nnoremap <S-h> :resize +5<cr>
-nnoremap <S-l> :resize -5<cr>
-nnoremap <S-j> :vertical resize +5<cr>
-
-" go through buffers
-map gn :bn<cr>
-map gp :bp<cr>
-map gd :bd<cr>
-
-" shortcuts for edit surrounding with ' and "
-nmap <leader>' ysiw'
-nmap <leader>" ysiw"
-
-" tagbar
-nmap t :TagbarToggle<CR>
-
-" tablemode
-nmap <leader><leader>t :TableModeToggle<CR>
 
 " Goyo stuff
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 nmap <Leader><leader>l <Plug>(Limelight)
 xmap <Leader><leader>l <Plug>(Limelight)
+
 " Color name (:help cterm-colors) or ANSI code
 let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_ctermfg = 240
@@ -320,11 +350,11 @@ omap <leader>m <plug>(fzf-maps-o)
 
 " Insert mode completion
 imap <c-w> <plug>(fzf-complete-word)
-imap <c-p> <plug>(fzf-complete-path):
+imap <c-f> <plug>(fzf-complete-path):
 imap <c-j> <plug>(fzf-complete-file-ag)
 imap <c-l> <plug>(fzf-complete-line)
 
-" navigating
+" navigating easier with leader hjkl
 map <leader>h :wincmd h<CR>
 map <leader>j :wincmd j<CR>
 map <leader>k :wincmd k<CR>
@@ -333,71 +363,30 @@ map <leader>l :wincmd l<CR>
 " buffer tabbing
 nnoremap <leader><tab> :Buffers<cr>
 
-" let g:fzf_action = {
-  " \ 'ctrl-t': 'tab split',
-  " \ 'ctrl-x': 'split',
-  " \ 'ctrl-v': 'vsplit' }
-
-set cursorline 				" line where cursor is
-" cursor rectangle when normal mode and vertical line when insert mode
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-
-" setlocal spell
-set spelllang=en_gb
-" inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
-:map <F5> :setlocal spell! spelllang=en_us<CR>
-
-set showcmd
-set timeout timeoutlen=1500 	" timeout for command completion
-set mouse=a			" enable mouse
-set clipboard=unnamedplus	" integrate with system clipboard
-let python_highlight_all=1
-set backspace=indent,eol,start	" enable backspace
-syntax on			" where exists, show syntax
-set number			" visible line numbers 
-set encoding=utf-8		" guess what... UTF-8 encoded
-set splitbelow
-set splitright
-set wildmenu			" visual autocomplete for commands
-set showmatch 			" highlight matching [{()}]
-set incsearch           	" search as characters are entered
-set hlsearch            	" highlight matches
-set t_Co=256			" powerline requires colors
-set laststatus=2		" always show status / powerline
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
 
 " turn on/off search highlight
-nnoremap <leader><space> :set invhlsearch<CR>
+nnoremap <leader>\ :set invhlsearch<CR>
 
 " setup powerline specials
 let g:airline_powerline_fonts=1
 "set fillchars+=stl:\ ,stlnc:\
 
-" searching file with ag is fast
-let g:ackprg = 'ag --vimgrep'
-nnoremap <leader>a :Ack!<Space>
+" searching files with ag is fast
+" let g:ackprg = 'ag --vimgrep'
+" nnoremap <leader>a :Ack!<Space>
 
 "split navigations
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-" buffer nav
-
-
-" Enable folding
-"set foldmethod=indent
-"set foldlevel=1
-"let g:vim_markdown_folding_disabled=1
-
-" set nofoldenable    " disable folding
-
-" Enable folding with the spacebar
-" nnoremap <space> za
+" nnoremap <C-J> <C-W><C-J>
+" nnoremap <C-K> <C-W><C-K>
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
 
 " fold docstring
-" let g:SimpylFold_docstring_preview=1
+let g:SimpylFold_docstring_preview=1
 
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
@@ -436,26 +425,22 @@ let g:vimtex_compiler_latexmk_engines = {
 let g:nv_search_paths = ['~/Dropbox/notes']
 let g:nv_default_extension = '.md'
 let g:nv_create_note_window = 'tabedit'
-" let g:nv_keymap = {
-                    " 'ctrl-s': 'split ',
-                    " 'ctrl-v': 'vertical split ',
-                    " 'ctrl-t': 'tabedit ',
-                    " })
 let g:nv_create_note_key = 'ctrl-x' 	" After searching, press ctrl-x and save new note
 
-nnoremap <silent> <leader>n :NV<CR> 	" leader n searches notes
+" leader n searches notes
+nnoremap <silent> <leader>n :NV<CR>
 
 "make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
 "better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
-" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsEditSplit="vertical" " If you want :UltiSnipsEdit to split your window.
-" inoremap <s-tab> <C-p> 
+inoremap <s-tab> <C-p>
 
 let g:ulti_expand_or_jump_res = 0 "default value, just set once
 function! Ulti_ExpandOrJump_and_getRes()
@@ -483,7 +468,6 @@ endfunction
 
 nnoremap <silent> <leader>wt :call ToggleWindowHorizontalVerticalSplit()<cr>
 
-set complete+=kspell 		" ctrl-p ctrl-n are word completion
 
 if has("gui_running")
    let s:uname = system("uname")

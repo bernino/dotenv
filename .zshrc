@@ -35,7 +35,7 @@ zstyle ':completion:::::' completer _expand _complete _ignored _approximate # en
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export VISUAL=vim
+export VISUAL="gvim -v"
 export EDITOR="$VISUAL"
 
 autoload -Uz history-search-end
@@ -67,13 +67,14 @@ export FZF_DEFAULT_OPTS='--height=40% --preview="cat {}" --preview-window=right:
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 # For a full list of active aliases, run `alias`.
-alias v="vim"
-alias n="vim -c 'NV!'"
+alias v="gvim -v"
+alias vim="gvim -v"
+alias n="gvim -v -c 'NV!'"
 alias l="ls -G"
 alias p='python3'
-alias z="vim ~/.zshrc"
-alias vv="vim ~/.vimrc"
-alias so="source ~/.oh-my-zsh/oh-my-zsh.sh"
+alias z="gvim -v ~/.zshrc"
+alias vv="gvim -v ~/.vimrc"
+alias zz="source ~/.oh-my-zsh/oh-my-zsh.sh"
 alias sz="source ~/.zshrc"
 alias sv="source ~/.vimrc"
 alias c="clear"
