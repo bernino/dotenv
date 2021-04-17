@@ -55,7 +55,7 @@ bindkey -M viins '^[[A' history-beginning-search-backward-end \
 
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.oh-my-zsh:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.oh-my-zsh:/opt/homebrew/bin:$PATH
 export ZSH=$HOME/.oh-my-zsh
 export TERM="xterm-256color"
 export GOPATH=$HOME/go
@@ -67,13 +67,12 @@ export FZF_DEFAULT_OPTS='--height=40% --preview="cat {}" --preview-window=right:
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 # For a full list of active aliases, run `alias`.
-alias v="gvim -v"
-alias vim="gvim -v"
-alias n="gvim -v -c 'NV!'"
+alias v="vim"
+alias n="vim -v -c 'NV!'"
 alias l="ls -G"
 alias p='python3'
-alias z="gvim -v ~/.zshrc"
-alias vv="gvim -v ~/.vimrc"
+alias z="vim -v ~/.zshrc"
+alias vv="vim -v ~/.vimrc"
 alias zz="source ~/.oh-my-zsh/oh-my-zsh.sh"
 alias sz="source ~/.zshrc"
 alias sv="source ~/.vimrc"
