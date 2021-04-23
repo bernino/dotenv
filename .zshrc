@@ -10,20 +10,21 @@ fi
 
 # USE:
 # Most use should be intuitive and just work
-#
 # ddg <text> - search the web for text
 # j dirname
 
-autoload -Uz compinit
-typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
+source ~/.oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-if [ $(date +'%j') != $updated_at ]; then
-  compinit -i
-else
-  compinit -C -i
-fi
+# autoload -Uz compinit
+# typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
 
-zmodload -i zsh/complist
+# if [ $(date +'%j') != $updated_at ]; then
+#   compinit -i
+# else
+#   compinit -C -i
+# fi
+
+# zmodload -i zsh/complist
 
 setopt auto_list     # automatically list choices on ambiguous completion
 setopt auto_menu     # automatically use menu completion
@@ -35,7 +36,7 @@ zstyle ':completion:::::' completer _expand _complete _ignored _approximate # en
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export VISUAL="gvim -v"
+export VISUAL="vim -v"
 export EDITOR="$VISUAL"
 
 autoload -Uz history-search-end
@@ -64,7 +65,7 @@ export PATH=$PATH:$GOBIN
 export JIRA_PROJECT=CPIO
 export FZF_DEFAULT_OPTS='--height=40% --preview="cat {}" --preview-window=right:60%:wrap'
 
-fpath=(/usr/local/share/zsh-completions $fpath)
+# fpath=(/usr/local/share/zsh-completions $fpath)
 
 # For a full list of active aliases, run `alias`.
 alias v="vim"
@@ -73,7 +74,7 @@ alias l="ls -G"
 alias p='python3'
 alias z="vim -v ~/.zshrc"
 alias vv="vim -v ~/.vimrc"
-alias zz="source ~/.oh-my-zsh/oh-my-zsh.sh"
+alias so="source ~/.oh-my-zsh/oh-my-zsh.sh"
 alias sz="source ~/.zshrc"
 alias sv="source ~/.vimrc"
 alias c="clear"
@@ -95,48 +96,45 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#00FF00"
 #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#00FF00,bg=cyan,bold,underline"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-# tmux
-# vundle
-# droplr
-# truffle
-# web-search
-# zsh-syntax-highlighting
-# javascript
-# common-aliases
-# history
-# brew
-# npm
-# dotenv
-# git
-# sudo
-# battery 
-# vi-mode 
-# zsh-autosuggestions 
-# fzf-tab
-# fzf 
 plugins=(
+	# vundle
+	# droplr
+	# truffle
+	# zsh-syntax-highlighting
+	# javascript
+	# common-aliases
+	# history
+	# brew
+	# npm
+	# dotenv
+	# git
+	# sudo
+	# battery 
+	zsh-autosuggestions
+	# fzf-tab
+	fzf
  	git
 	tmux
 	vi-mode
-	# autojump
+	autojump
  	web-search
 	zsh-navigation-tools 
         dircycle 
  	dirhistory 
  	wd 
-         # osx
+        # osx
  )
 
-
 # keybindings to move by word
-# bindkey "^[f" forward-word  # forward word esc f
-# bindkey '^[b' backward-word # backward word esc b
+bindkey "^[f" forward-word  # forward word esc f
+bindkey '^[b' backward-word # backward word esc b
 # bindkey '^b' toggle-fzf-tab
 
 # ctrl e opens file in vim
-# bindkey -s '^e' 'vim $(fzf)\n'
+bindkey -s '^e' 'vim $(fzf)\n'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 # Load Zsh tools for syntax highlighting and autosuggestions
 # source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -151,3 +149,19 @@ source $ZSH/oh-my-zsh.sh
 # eval "$(pyenv init -)"
 # if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 export PATH="/usr/local/sbin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/berninolind/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/berninolind/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/Users/berninolind/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/berninolind/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

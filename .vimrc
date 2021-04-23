@@ -64,9 +64,9 @@ Plugin 'Valloric/YouCompleteMe'                     	" Autocompletion engine
 Plugin 'vim-syntastic/syntastic'                    	" checking syntax https://github.com/vim-syntastic/syntastic
 Plugin 'scrooloose/nerdtree'                        	" file browser <leader>f
 Plugin 'jiangmiao/auto-pairs'                       	" automagic double pairs of ( etc.
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'junegunn/fzf.vim'
 Plugin 'preservim/nerdcommenter'                    	" <leader>c+space comments see https://github.com/preservim/nerdcommenter
-Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy engine https://github.com/junegunn/fzf.vim
-Plugin 'junegunn/fzf.vim'                           	" fuzzy engine https://github.com/junegunn/fzf.vim
 Plugin 'sirver/ultisnips'                           	" rocket science snippet engine https://github.com/sirver/UltiSnips
 Plugin 'honza/vim-snippets'                         	" snippets for ultisnips
 Plugin 'tpope/vim-surround'                         	" magic surrounding word: try ysiw: iw is a word object https://github.com/tpope/vim-surround
@@ -78,33 +78,37 @@ Plugin 'vim-pandoc/vim-pandoc'                      	" https://github.com/vim-pa
 Plugin 'vim-pandoc/vim-pandoc-syntax'               	" needed for pandoc above
 Plugin 'mileszs/ack.vim'                            	" https://github.com/mileszs/ack.vim for using ag
 Plugin 'vim-airline/vim-airline'                    	" https://github.com/vim-airline/vim-airline
-Plugin 'vim-airline/vim-airline-themes' 		        " ditto
+Plugin 'vim-airline/vim-airline-themes' 		" ditto
 Plugin 'tpope/vim-repeat'                           	" allows for complex . repeats
 Plugin 'easymotion/vim-easymotion'                  	" https://github.com/easymotion/vim-easymotion
 Plugin 'haya14busa/incsearch.vim'                   	" building searches https://github.com/haya14busa/incsearch.vim
 Plugin 'haya14busa/incsearch-easymotion.vim'        	" enables full text for easymotion
 Plugin 'haya14busa/incsearch-fuzzy.vim'
 Plugin 'terryma/vim-multiple-cursors'               	" https://github.com/terryma/vim-multiple-cursors
-Plugin 'kablamo/vim-git-log' 			    	        " https://github.com/kablamo/vim-git-log
-Plugin 'gregsexton/gitv' 			   	                " https://github.commands/gregsexton/gitv
-Plugin 'tpope/vim-fugitive' 			    	        " git commands https://github.com/tpope/vim-fugitive
+Plugin 'kablamo/vim-git-log' 			    	" https://github.com/kablamo/vim-git-log
+Plugin 'gregsexton/gitv' 			   	" https://github.commands/gregsexton/gitv
+Plugin 'tpope/vim-fugitive' 			    	" git commands https://github.com/tpope/vim-fugitive
 Plugin 'airblade/vim-gitgutter'                     	" git diff live https://github.com/airblade/vim-gitgutter
-Plugin 'MattesGroeger/vim-bookmarks' 		        	" try mm and ma
-Plugin 'christoomey/vim-tmux-navigator' 	        	" https://github.com/christoomey/vim-tmux-navigator
-Plugin 'benmills/vimux' 			    	            " https://github.com/benmills/vimux
-Plugin 'junegunn/goyo.vim' 			    	            " Zen mode for vim https://github.com/junegunn/goyo.vim
-Plugin 'junegunn/limelight.vim' 		    	        " https://github.com/junegunn/limelight.vim
-Plugin 'tpope/vim-abolish' 				                " https://github.com/tpope/vim-abolish manipulates words
-Plugin 'dhruvasagar/vim-table-mode' 			        " \tm table mode https://github.com/dhruvasagar/vim-table-mode
-Plugin 'vim-scripts/SearchComplete' 			        " tab enabled / search - powerful
-Plugin 'arcticicestudio/nord-vim' 			            " a fine colorscheme
+Plugin 'MattesGroeger/vim-bookmarks' 		        " try mm and ma
+" Plugin 'christoomey/vim-tmux-navigator' 	        " https://github.com/christoomey/vim-tmux-navigator
+" Plugin 'benmills/vimux' 			    	" https://github.com/benmills/vimux
+Plugin 'junegunn/goyo.vim' 			    	" Zen mode for vim https://github.com/junegunn/goyo.vim
+Plugin 'junegunn/limelight.vim' 		    	" https://github.com/junegunn/limelight.vim
+Plugin 'tpope/vim-abolish' 				" https://github.com/tpope/vim-abolish manipulates words
+Plugin 'dhruvasagar/vim-table-mode' 			" \tm table mode https://github.com/dhruvasagar/vim-table-mode
+Plugin 'vim-scripts/SearchComplete' 			" tab enabled / search - powerful
+Plugin 'arcticicestudio/nord-vim' 			" a fine colorscheme
 Plugin 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plugin 'vimwiki/vimwiki'
+Plugin 'luochen1990/rainbow'
 
 call vundle#end()           			    	        " required
 filetype plugin indent on 				        " required
 
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
 " Some general settings
+set belloff=all
 set guicursor=
 set complete+=kspell 		" ctrl-p ctrl-n are word completion
 set hidden
@@ -119,7 +123,12 @@ set cursorline 				    " line where cursor is
 set showcmd
 set timeout timeoutlen=1500 	" timeout for command completion
 set mouse=a			" enable mouse
-set clipboard=unnamedplus	" integrate with system clipboard
+
+if system('uname -s') == "Darwin\n"
+  set clipboard=unnamed
+else
+  set clipboard=unnamedplus
+endif
 " let python_highlight_all=1
 set backspace=indent,eol,start	" enable backspace
 syntax on			" where exists, show syntax
@@ -149,7 +158,7 @@ let g:airline#extensions#tabline#enabled = 1
 nmap <leader>f :NERDTreeToggle<cr> " leader f is nerdtree for files
 nmap <leader>o :so %<cr>
 nmap <leader>t :VimtexTocOpen<cr>  " leader t is latex tree
-nmap <leader>w :w<cr>      	   " leader leader w is write
+nmap <leader>w :w<cr>      	   " leader w is write
 nmap <leader>q :q<cr>              " leader q is quit
 nmap <leader>e :wq!<cr>            " leader e is write quit!
 nmap <leader><leader>q :q!<cr>     " leader leader q is quit!
@@ -169,7 +178,7 @@ nnoremap <S-k> :resize -5<cr>
 " go through buffers
 map gn :bn<cr>
 map gp :bp<cr>
-map gd :bd<cr>
+" map gd :bd<cr>
 
 " shortcuts for edit surrounding with ' and "
 nmap <leader>' ysiw'
@@ -285,12 +294,12 @@ noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 
 " youcompleteme behavior
 let g:ycm_autoclose_preview_window_after_completion=1
-" map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-map <leader>g  :YcmCompleter GoTo<CR>
+map <leader>gd  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nmap <leader>gr :YcmCompleter GoToReferences<CR>
 
+" nerdtree defaults
 let NERDTreeWinSize = 45
 let NERDTreeQuitOnOpen=1
-
 
 " Goyo stuff
 autocmd! User GoyoEnter Limelight
@@ -425,7 +434,10 @@ let g:vimtex_compiler_latexmk_engines = {
 let g:nv_search_paths = ['~/Dropbox/notes']
 let g:nv_default_extension = '.md'
 let g:nv_create_note_window = 'tabedit'
-let g:nv_create_note_key = 'ctrl-x' 	" After searching, press ctrl-x and save new note
+" After searching, press ctrl-x and save new note
+" String. Must be in the form 'ctrl-KEY' or 'alt-KEY'
+let g:nv_create_note_key = 'ctrl-n'
+let g:nv_wrap_preview_text = 1
 
 " leader n searches notes
 nnoremap <silent> <leader>n :NV<CR>
