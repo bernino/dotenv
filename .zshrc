@@ -38,6 +38,8 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export VISUAL="vim -v"
 export EDITOR="$VISUAL"
+export ZVM_VI_EDITOR="vim -v"
+ZVM_CURSOR_STYLE_ENABLED=false
 
 autoload -Uz history-search-end
 
@@ -115,7 +117,8 @@ plugins=(
 	fzf
  	git
 	tmux
-	vi-mode
+	# vi-mode
+	zsh-vi-mode
 	autojump
  	web-search
 	zsh-navigation-tools 
@@ -133,7 +136,10 @@ bindkey '^[b' backward-word # backward word esc b
 # ctrl e opens file in vim
 bindkey -s '^e' 'vim $(fzf)\n'
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Append a command directly
+zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 # Load Zsh tools for syntax highlighting and autosuggestions

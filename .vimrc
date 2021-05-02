@@ -52,7 +52,6 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'                          	" Plugin manager -- install first then run :PluginInstall
 Plugin 'vim-scripts/indentpython.vim'               	" PEP8 indentation of Python https://github.com/vim-scripts/indentpython.vim
-" Plugin 'vim-scripts/taglist.vim'                    	" browse function definitions
 Plugin 'majutsushi/tagbar'                          	" https://github.com/majutsushi/tagbar
 Plugin 'wesQ3/vim-windowswap'                       	" https://github.com/wesQ3/vim-windowswap
 " Plugin 'godlygeek/tabular'                          	" http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
@@ -90,8 +89,8 @@ Plugin 'gregsexton/gitv' 			   	" https://github.commands/gregsexton/gitv
 Plugin 'tpope/vim-fugitive' 			    	" git commands https://github.com/tpope/vim-fugitive
 Plugin 'airblade/vim-gitgutter'                     	" git diff live https://github.com/airblade/vim-gitgutter
 Plugin 'MattesGroeger/vim-bookmarks' 		        " try mm and ma
-" Plugin 'christoomey/vim-tmux-navigator' 	        " https://github.com/christoomey/vim-tmux-navigator
-" Plugin 'benmills/vimux' 			    	" https://github.com/benmills/vimux
+Plugin 'christoomey/vim-tmux-navigator' 	        " https://github.com/christoomey/vim-tmux-navigator
+Plugin 'benmills/vimux' 			    	" https://github.com/benmills/vimux
 Plugin 'junegunn/goyo.vim' 			    	" Zen mode for vim https://github.com/junegunn/goyo.vim
 Plugin 'junegunn/limelight.vim' 		    	" https://github.com/junegunn/limelight.vim
 Plugin 'tpope/vim-abolish' 				" https://github.com/tpope/vim-abolish manipulates words
@@ -101,6 +100,7 @@ Plugin 'arcticicestudio/nord-vim' 			" a fine colorscheme
 Plugin 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plugin 'vimwiki/vimwiki'
 Plugin 'luochen1990/rainbow'
+Plugin 'machakann/vim-sandwich'
 
 call vundle#end()           			    	        " required
 filetype plugin indent on 				        " required
@@ -178,7 +178,9 @@ nnoremap <S-k> :resize -5<cr>
 " go through buffers
 map gn :bn<cr>
 map gp :bp<cr>
-" map gd :bd<cr>
+
+" Go to first char of line - could also use shift i
+map 0 ^
 
 " shortcuts for edit surrounding with ' and "
 nmap <leader>' ysiw'
@@ -216,9 +218,6 @@ let g:NERDDefaultAlign = 'left'
   " autocmd FileType markdown,mkd,md call pencil#init()
   " " autocmd FileType text            call pencil#init()
 " augroup END
-
-" Go to first char of line - could also use shift i
-map 0 ^
 
 " stuff for easymotion
 " let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -364,10 +363,10 @@ imap <c-j> <plug>(fzf-complete-file-ag)
 imap <c-l> <plug>(fzf-complete-line)
 
 " navigating easier with leader hjkl
-map <leader>h :wincmd h<CR>
-map <leader>j :wincmd j<CR>
-map <leader>k :wincmd k<CR>
-map <leader>l :wincmd l<CR>
+nmap <leader>h :wincmd h<CR>
+nmap <leader>j :wincmd j<CR>
+nmap <leader>k :wincmd k<CR>
+nmap <leader>l :wincmd l<CR>
 
 " buffer tabbing
 nnoremap <leader><tab> :Buffers<cr>
