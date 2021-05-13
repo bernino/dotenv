@@ -6,7 +6,7 @@
 " leader z is zen 	   : <leader> z
 " notes in markdown        : <leader> n
 " easymotion fuzzy search  : <leader>/
-" commenting blocks        : <leader>cc or cm or toggle : <leader>c+space
+" commenting blocks        : <leader>cc or cm or toggle : <leader>c+space or C+]
 " uncommenting blocks      : <leader> cu
 " write file               : <leader> w
 " quit                     : <leader> q
@@ -23,6 +23,7 @@
 " split window sizes       : <shitf>+hjkl
 "
 " Don't forget zz, zt, zb more here https://unix.stackexchange.com/questions/110251/how-to-put-current-line-at-top-center-bottom-of-screen-in-vim#110252
+" Don't forget gd (go to definition) and gr (references)
 "
 " And don't forget spellchecking ]s and z= https://www.linux.com/training-tutorials/using-spell-checking-vim/
 "
@@ -53,13 +54,13 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'                          	" Plugin manager -- install first then run :PluginInstall
 Plugin 'vim-scripts/indentpython.vim'               	" PEP8 indentation of Python https://github.com/vim-scripts/indentpython.vim
 Plugin 'majutsushi/tagbar'                          	" https://github.com/majutsushi/tagbar
-Plugin 'wesQ3/vim-windowswap'                       	" https://github.com/wesQ3/vim-windowswap
+" Plugin 'wesQ3/vim-windowswap'                       	" https://github.com/wesQ3/vim-windowswap
 " Plugin 'godlygeek/tabular'                          	" http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
 Plugin 'jeetsukumaran/vim-buffergator'              	" https://github.com/jeetsukumaran/vim-buffergator
 " Plugin 'reedes/vim-pencil'  		            	    " https:github//github.com/reedes/vim-pencil does softwraps
 Plugin 'lervag/vimtex'                              	" LaTeX helpers https://github.com/lervag/vimtex
 Plugin 'ervandew/supertab'                          	" Magic tab https://github.com/ervandew/supertab
-Plugin 'Valloric/YouCompleteMe'                     	" Autocompletion engine
+" Plugin 'Valloric/YouCompleteMe'                     	" Autocompletion engine
 Plugin 'vim-syntastic/syntastic'                    	" checking syntax https://github.com/vim-syntastic/syntastic
 Plugin 'scrooloose/nerdtree'                        	" file browser <leader>f
 Plugin 'jiangmiao/auto-pairs'                       	" automagic double pairs of ( etc.
@@ -75,32 +76,33 @@ Plugin 'plasticboy/vim-markdown'                    	" for markdown https://gith
 " Plugin 'shime/vim-livedown'                         	" shows markdown live https://github.com/shime/vim-livedown
 Plugin 'vim-pandoc/vim-pandoc'                      	" https://github.com/vim-pandoc/vim-pandoc
 Plugin 'vim-pandoc/vim-pandoc-syntax'               	" needed for pandoc above
-Plugin 'mileszs/ack.vim'                            	" https://github.com/mileszs/ack.vim for using ag
-Plugin 'vim-airline/vim-airline'                    	" https://github.com/vim-airline/vim-airline
-Plugin 'vim-airline/vim-airline-themes' 		" ditto
+" Plugin 'mileszs/ack.vim'                            	" https://github.com/mileszs/ack.vim for using ag
+" Plugin 'vim-airline/vim-airline'                    	" https://github.com/vim-airline/vim-airline
+" Plugin 'vim-airline/vim-airline-themes' 		" ditto
 Plugin 'tpope/vim-repeat'                           	" allows for complex . repeats
 Plugin 'easymotion/vim-easymotion'                  	" https://github.com/easymotion/vim-easymotion
 Plugin 'haya14busa/incsearch.vim'                   	" building searches https://github.com/haya14busa/incsearch.vim
 Plugin 'haya14busa/incsearch-easymotion.vim'        	" enables full text for easymotion
 Plugin 'haya14busa/incsearch-fuzzy.vim'
 Plugin 'terryma/vim-multiple-cursors'               	" https://github.com/terryma/vim-multiple-cursors
-Plugin 'kablamo/vim-git-log' 			    	" https://github.com/kablamo/vim-git-log
-Plugin 'gregsexton/gitv' 			   	" https://github.commands/gregsexton/gitv
-Plugin 'tpope/vim-fugitive' 			    	" git commands https://github.com/tpope/vim-fugitive
-Plugin 'airblade/vim-gitgutter'                     	" git diff live https://github.com/airblade/vim-gitgutter
+" Plugin 'kablamo/vim-git-log' 			    	" https://github.com/kablamo/vim-git-log
+" Plugin 'gregsexton/gitv' 			   	" https://github.commands/gregsexton/gitv
+" Plugin 'tpope/vim-fugitive' 			    	" git commands https://github.com/tpope/vim-fugitive
+" Plugin 'airblade/vim-gitgutter'                     	" git diff live https://github.com/airblade/vim-gitgutter
 Plugin 'MattesGroeger/vim-bookmarks' 		        " try mm and ma
-Plugin 'christoomey/vim-tmux-navigator' 	        " https://github.com/christoomey/vim-tmux-navigator
-Plugin 'benmills/vimux' 			    	" https://github.com/benmills/vimux
+" Plugin 'christoomey/vim-tmux-navigator' 	        " https://github.com/christoomey/vim-tmux-navigator
+" Plugin 'benmills/vimux' 			    	" https://github.com/benmills/vimux
 Plugin 'junegunn/goyo.vim' 			    	" Zen mode for vim https://github.com/junegunn/goyo.vim
 Plugin 'junegunn/limelight.vim' 		    	" https://github.com/junegunn/limelight.vim
-Plugin 'tpope/vim-abolish' 				" https://github.com/tpope/vim-abolish manipulates words
+" Plugin 'tpope/vim-abolish' 				" https://github.com/tpope/vim-abolish manipulates words
 Plugin 'dhruvasagar/vim-table-mode' 			" \tm table mode https://github.com/dhruvasagar/vim-table-mode
-Plugin 'vim-scripts/SearchComplete' 			" tab enabled / search - powerful
+" Plugin 'vim-scripts/SearchComplete' 			" tab enabled / search - powerful
 Plugin 'arcticicestudio/nord-vim' 			" a fine colorscheme
-Plugin 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+" Plugin 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plugin 'vimwiki/vimwiki'
 Plugin 'luochen1990/rainbow'
 Plugin 'machakann/vim-sandwich'
+Plugin 'codota/tabnine-vim'
 
 call vundle#end()           			    	        " required
 filetype plugin indent on 				        " required
@@ -110,7 +112,7 @@ let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowTo
 " Some general settings
 set belloff=all
 set guicursor=
-set complete+=kspell 		" ctrl-p ctrl-n are word completion
+" set complete+=kspell 		" ctrl-p ctrl-n are word completion
 set hidden
 set omnifunc=syntaxcomplete#Complete
 set termguicolors
@@ -129,7 +131,9 @@ if system('uname -s') == "Darwin\n"
 else
   set clipboard=unnamedplus
 endif
-" let python_highlight_all=1
+
+let python_highlight_all=1
+
 set backspace=indent,eol,start	" enable backspace
 syntax on			" where exists, show syntax
 set number			" visible line numbers 
@@ -149,6 +153,19 @@ set foldmethod=syntax
 nnoremap <leader>1 za
 vnoremap <leader>1 zf
 
+" alt backspace to delete previous word
+" this doesn't work though
+imap <M-BS> <C-w>
+nmap <M-BS> db
+
+" handy stuff
+" yank current word
+nmap <leader>y yiw
+" delete current word
+nmap <leader>d diw
+"delete word then paste
+nnoremap <leader>cp "_diwP
+
 " Color and such
 colorscheme nord
 " let g:airline_theme='molokai'   			" molokai, zenburn and solarized are nice, can also use :AirlineTheme
@@ -156,8 +173,9 @@ let g:airline#extensions#tabline#enabled = 1
 
 " various aliases and maps
 nmap <leader>f :NERDTreeToggle<cr> " leader f is nerdtree for files
+
 nmap <leader>o :so %<cr>
-nmap <leader>t :VimtexTocOpen<cr>  " leader t is latex tree
+" nmap <leader>t :VimtexTocOpen<cr>  " leader t is latex tree
 nmap <leader>w :w<cr>      	   " leader w is write
 nmap <leader>q :q<cr>              " leader q is quit
 nmap <leader>e :wq!<cr>            " leader e is write quit!
@@ -170,10 +188,10 @@ nmap pdf :Pandoc pdf<CR>           " generate pdf by typing pdf
 nnoremap <leader>r :!%:p<CR>       " run buffer with leader r
 
 " resize current buffer by +/- 5 
-nnoremap <S-l> :vertical resize -5<cr>
-nnoremap <S-h> :vertical resize +5<cr>
-nnoremap <S-j> :resize +5<cr>
-nnoremap <S-k> :resize -5<cr>
+" nnoremap <S-l> :vertical resize -5<cr>
+" nnoremap <S-h> :vertical resize +5<cr>
+" nnoremap <S-j> :resize +5<cr>
+" nnoremap <S-k> :resize -5<cr>
 
 " go through buffers
 map gn :bn<cr>
@@ -187,7 +205,7 @@ nmap <leader>' ysiw'
 nmap <leader>" ysiw"
 
 " tagbar
-nmap t :TagbarToggle<CR>
+nmap <leader>t :TagbarToggle<CR>
 
 " tablemode
 nmap <leader><leader>t :TableModeToggle<CR>
@@ -204,6 +222,9 @@ let g:NERDSpaceDelims = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 let g:NERDDefaultAlign = 'left'
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+map <C-]> <plug>NERDCommenterToggle
 
 " Prompt for a command to run
 " map <Leader>c :VimuxPromptCommand<CR>
@@ -357,7 +378,7 @@ xmap <leader>m <plug>(fzf-maps-x)
 omap <leader>m <plug>(fzf-maps-o)
 
 " Insert mode completion
-imap <c-w> <plug>(fzf-complete-word)
+" imap <c-w> <plug>(fzf-complete-word)
 imap <c-f> <plug>(fzf-complete-path):
 imap <c-j> <plug>(fzf-complete-file-ag)
 imap <c-l> <plug>(fzf-complete-line)
@@ -442,9 +463,9 @@ let g:nv_wrap_preview_text = 1
 nnoremap <silent> <leader>n :NV<CR>
 
 "make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
+" let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+" let g:SuperTabDefaultCompletionType = '<C-n>'
 
 "better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger="<tab>"
