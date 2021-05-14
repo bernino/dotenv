@@ -378,16 +378,17 @@ xmap <leader>m <plug>(fzf-maps-x)
 omap <leader>m <plug>(fzf-maps-o)
 
 " Insert mode completion
-" imap <c-w> <plug>(fzf-complete-word)
+imap <c-w> <plug>(fzf-complete-word)
 imap <c-f> <plug>(fzf-complete-path):
 imap <c-j> <plug>(fzf-complete-file-ag)
 imap <c-l> <plug>(fzf-complete-line)
 
-" navigating easier with leader hjkl
-nmap <leader>h :wincmd h<CR>
-nmap <leader>j :wincmd j<CR>
-nmap <leader>k :wincmd k<CR>
-nmap <leader>l :wincmd l<CR>
+" navigating easier with ctrl hjkl
+" also available is ctrl+w hjkl
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
+nnoremap <C-L> <C-W>l
+nnoremap <C-H> <C-W>h
 
 " buffer tabbing
 nnoremap <leader><tab> :Buffers<cr>
