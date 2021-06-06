@@ -183,8 +183,8 @@ nmap <leader><leader>q :q!<cr>     " leader leader q is quit!
 " search for text in fzf mode
 nmap <leader><leader>/ :Lines<cr>
 nmap <leader>z :Goyo<cr>  	   " magic zen mode
-nmap pr :LivedownToggle<CR>        " preview markdown
-nmap pdf :Pandoc pdf<CR>           " generate pdf by typing pdf
+" nmap pr :LivedownToggle<CR>        " preview markdown
+" nmap pdf :Pandoc pdf<CR>           " generate pdf by typing pdf
 nnoremap <leader>r :!%:p<CR>       " run buffer with leader r
 
 " resize current buffer by +/- 5 
