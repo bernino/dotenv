@@ -55,20 +55,17 @@ Plugin 'gmarik/Vundle.vim'                          	" Plugin manager -- install
 Plugin 'vim-scripts/indentpython.vim'               	" PEP8 indentation of Python https://github.com/vim-scripts/indentpython.vim
 Plugin 'majutsushi/tagbar'                          	" https://github.com/majutsushi/tagbar
 " Plugin 'wesQ3/vim-windowswap'                       	" https://github.com/wesQ3/vim-windowswap
-" Plugin 'godlygeek/tabular'                          	" http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
+Plugin 'godlygeek/tabular'                          	" http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
 Plugin 'jeetsukumaran/vim-buffergator'              	" https://github.com/jeetsukumaran/vim-buffergator
 " Plugin 'reedes/vim-pencil'  		            	    " https:github//github.com/reedes/vim-pencil does softwraps
 Plugin 'lervag/vimtex'                              	" LaTeX helpers https://github.com/lervag/vimtex
 Plugin 'ervandew/supertab'                          	" Magic tab https://github.com/ervandew/supertab
-" Plugin 'Valloric/YouCompleteMe'                     	" Autocompletion engine
 Plugin 'vim-syntastic/syntastic'                    	" checking syntax https://github.com/vim-syntastic/syntastic
 Plugin 'scrooloose/nerdtree'                        	" file browser <leader>f
 Plugin 'jiangmiao/auto-pairs'                       	" automagic double pairs of ( etc.
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plugin 'junegunn/fzf.vim'
 Plugin 'preservim/nerdcommenter'                    	" <leader>c+space comments see https://github.com/preservim/nerdcommenter
-Plugin 'sirver/ultisnips'                           	" rocket science snippet engine https://github.com/sirver/UltiSnips
-Plugin 'honza/vim-snippets'                         	" snippets for ultisnips
 Plugin 'tpope/vim-surround'                         	" magic surrounding word: try ysiw: iw is a word object https://github.com/tpope/vim-surround
 Plugin 'https://github.com/alok/notational-fzf-vim' 	" nValt for vim
 Plugin 'plasticboy/vim-markdown'                    	" for markdown https://github.com/plasticboy/vim-markdown
@@ -77,8 +74,8 @@ Plugin 'plasticboy/vim-markdown'                    	" for markdown https://gith
 Plugin 'vim-pandoc/vim-pandoc'                      	" https://github.com/vim-pandoc/vim-pandoc
 Plugin 'vim-pandoc/vim-pandoc-syntax'               	" needed for pandoc above
 " Plugin 'mileszs/ack.vim'                            	" https://github.com/mileszs/ack.vim for using ag
-" Plugin 'vim-airline/vim-airline'                    	" https://github.com/vim-airline/vim-airline
-" Plugin 'vim-airline/vim-airline-themes' 		" ditto
+Plugin 'vim-airline/vim-airline'                    	" https://github.com/vim-airline/vim-airline
+Plugin 'vim-airline/vim-airline-themes' 		" ditto
 Plugin 'tpope/vim-repeat'                           	" allows for complex . repeats
 Plugin 'easymotion/vim-easymotion'                  	" https://github.com/easymotion/vim-easymotion
 Plugin 'haya14busa/incsearch.vim'                   	" building searches https://github.com/haya14busa/incsearch.vim
@@ -96,13 +93,16 @@ Plugin 'junegunn/goyo.vim' 			    	" Zen mode for vim https://github.com/junegun
 Plugin 'junegunn/limelight.vim' 		    	" https://github.com/junegunn/limelight.vim
 " Plugin 'tpope/vim-abolish' 				" https://github.com/tpope/vim-abolish manipulates words
 Plugin 'dhruvasagar/vim-table-mode' 			" \tm table mode https://github.com/dhruvasagar/vim-table-mode
-" Plugin 'vim-scripts/SearchComplete' 			" tab enabled / search - powerful
+Plugin 'vim-scripts/SearchComplete' 			" tab enabled / search - powerful
 Plugin 'arcticicestudio/nord-vim' 			" a fine colorscheme
 " Plugin 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-Plugin 'vimwiki/vimwiki'
+" Plugin 'vimwiki/vimwiki' 				" conflicts with ultisnips
 Plugin 'luochen1990/rainbow'
 Plugin 'machakann/vim-sandwich'
-Plugin 'codota/tabnine-vim'
+" Plugin 'codota/tabnine-vim'				" autocompletion engine cant exist with ultisnips
+Plugin 'sirver/ultisnips'                           	" rocket science snippet engine https://github.com/sirver/UltiSnips
+Plugin 'honza/vim-snippets'                         	" snippets for ultisnips
+Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 
 call vundle#end()           			    	        " required
 filetype plugin indent on 				        " required
@@ -114,7 +114,7 @@ set belloff=all
 set guicursor=
 " set complete+=kspell 		" ctrl-p ctrl-n are word completion
 set hidden
-set omnifunc=syntaxcomplete#Complete
+" set omnifunc=syntaxcomplete#Complete 	"destroys ultisnips
 set termguicolors
 set signcolumn=yes
 set updatetime=50
@@ -137,6 +137,7 @@ let python_highlight_all=1
 set backspace=indent,eol,start	" enable backspace
 syntax on			" where exists, show syntax
 set number			" visible line numbers 
+set rnu				" relative numbers
 set encoding=utf-8		" guess what... UTF-8 encoded
 set splitbelow
 set splitright
@@ -146,7 +147,7 @@ set incsearch           	" search as characters are entered
 set hlsearch            	" highlight matches
 set t_Co=256			" powerline requires colors
 set laststatus=2		" always show status / powerline
-set nofoldenable    		" disable folding
+" set nofoldenable    		" disable folding
 set foldmethod=syntax
 
 " Enable folding with leader 1 (its off default)
@@ -194,8 +195,8 @@ nnoremap <leader>r :!%:p<CR>       " run buffer with leader r
 " nnoremap <S-k> :resize -5<cr>
 
 " go through buffers
-map gn :bn<cr>
-map gp :bp<cr>
+" map gn :bn<cr>
+" map gp :bp<cr>
 
 " Go to first char of line - could also use shift i
 map 0 ^
@@ -205,10 +206,10 @@ nmap <leader>' ysiw'
 nmap <leader>" ysiw"
 
 " tagbar
-nmap <leader>t :TagbarToggle<CR>
+nmap <leader>= :TagbarToggle<CR>
 
 " tablemode
-nmap <leader><leader>t :TableModeToggle<CR>
+" nmap <leader><leader>t :TableModeToggle<CR>
 
 " Bookmark settings
 " mm sets and ma browse bookmarks
@@ -282,7 +283,7 @@ nmap s <Plug>(easymotion-overwin-f2)
 " nmap <leader><leader>f <Plug>(easymotion-overwin-f2)
 
 " Turn on case-insensitive feature
-" let g:EasyMotion_smartcase = 1
+let g:EasyMotion_smartcase = 1
 
 " JK motions: Line motions
 " map <Leader>j <Plug>(easymotion-j)
@@ -313,9 +314,15 @@ noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
 noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 
 " youcompleteme behavior
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>gd  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nmap <leader>gr :YcmCompleter GoToReferences<CR>
+" let g:ycm_autoclose_preview_window_after_completion=1
+" map <leader>gd  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" nmap <leader>gr :YcmCompleter GoToReferences<CR>
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " nerdtree defaults
 let NERDTreeWinSize = 45
@@ -363,7 +370,7 @@ endif
 let g:windowswap_map_keys = 0 "prevent default bindings
 nnoremap <silent> <leader>yw :call WindowSwap#MarkWindowSwap()<CR>
 nnoremap <silent> <leader>pw :call WindowSwap#DoWindowSwap()<CR>
-nnoremap <silent> <leader>ww :call WindowSwap#EasyWindowSwap()<CR>
+nnoremap <silent> <leader>] :call WindowSwap#EasyWindowSwap()<CR>
 
 " fzf tweaking and shortcuts
 "let g:fzf_preview_window = 'right:60%'
@@ -469,11 +476,12 @@ nnoremap <silent> <leader>n :NV<CR>
 " let g:SuperTabDefaultCompletionType = '<C-n>'
 
 "better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-let g:UltiSnipsEditSplit="vertical" " If you want :UltiSnipsEdit to split your window.
-inoremap <s-tab> <C-p>
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger = "<tab>"
+" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+" let g:UltiSnipsEditSplit="vertical" " If you want :UltiSnipsEdit to split your window.
+" let g:UltiSnipsListSnippets="<c-l>"
+" inoremap <s-tab> <C-p>
 
 let g:ulti_expand_or_jump_res = 0 "default value, just set once
 function! Ulti_ExpandOrJump_and_getRes()
@@ -499,7 +507,7 @@ function! ToggleWindowHorizontalVerticalSplit()
   endif
 endfunction
 
-nnoremap <silent> <leader>wt :call ToggleWindowHorizontalVerticalSplit()<cr>
+nnoremap <silent> <leader>h :call ToggleWindowHorizontalVerticalSplit()<cr>
 
 
 if has("gui_running")
