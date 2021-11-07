@@ -2,22 +2,24 @@
 "
 " USE:
 " leader is 		   : <space>
+" TagBar	           : <leader>=
+" buffers                  : <leader>tab
 " bookmark 		   : mm and ma
 " leader z is zen 	   : <leader> z
 " notes in markdown        : <leader> n
 " easymotion fuzzy search  : <leader>/
-" commenting blocks        : <leader>cc or cm or toggle : <leader>c+space or C+]
+" comenting blocks        : <leader>cc or cm or toggle : <leader>c+space or C+]
 " uncommenting blocks      : <leader> cu
 " write file               : <leader> w
 " quit                     : <leader> q
-" nerdtreee browser        : <leader>f
+" nerdtreee browser        : <leader> (next to 1)
 " easymotion two char      : s
-" latex structure          : <leader> t
-" table mode 		   : <leader><leader> t
-" fzf search in file       : <leader> /
-" fzf search for files     : <leader> f
-" fzf on all commands      : <leader> m
-" swap windows             : <leader> ww
+" latex structure          : <leader>
+" table mode 		   : <leader><leader>
+" fzf search in file       : <leader><leader>/
+" fzf search for files     : <leader><leader>f
+" fzf on all commands      : <leader>m
+" swap windows             : <leader>ww
 " easymotion               : normal mode s + two chars
 " for more snippets - snip : :UltisnipsEdit
 " split window sizes       : <shitf>+hjkl
@@ -111,6 +113,7 @@ let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowTo
 
 " Some general settings
 set belloff=all
+set rtp+=/opt/homebrew/opt/fzf
 set guicursor=
 " set complete+=kspell 		" ctrl-p ctrl-n are word completion
 set hidden
@@ -147,12 +150,12 @@ set incsearch           	" search as characters are entered
 set hlsearch            	" highlight matches
 set t_Co=256			" powerline requires colors
 set laststatus=2		" always show status / powerline
-" set nofoldenable    		" disable folding
+set nofoldenable    		" disable folding
 set foldmethod=syntax
 
 " Enable folding with leader 1 (its off default)
 nnoremap <leader>1 za
-vnoremap <leader>1 zf
+vnoremap <leader>2 zf
 
 " alt backspace to delete previous word
 " this doesn't work though
@@ -165,7 +168,7 @@ nmap <leader>y yiw
 " delete current word
 nmap <leader>d diw
 "delete word then paste
-nnoremap <leader>cp "_diwP
+" nnoremap <leader>cp "_diwP
 
 " Color and such
 colorscheme nord
@@ -173,7 +176,8 @@ colorscheme nord
 let g:airline#extensions#tabline#enabled = 1
 
 " various aliases and maps
-nmap <leader>f :NERDTreeToggle<cr> " leader f is nerdtree for files
+" leader f is nerdtree for files
+nmap <leader>§ :NERDTreeToggle<cr> 
 
 nmap <leader>o :so %<cr>
 " nmap <leader>t :VimtexTocOpen<cr>  " leader t is latex tree
@@ -360,10 +364,10 @@ let g:limelight_conceal_guifg = '#777777'
 
 " Tabularize shortcut
 if exists(":Tabularize")
-  nmap <Leader><Leader>a= :Tabularize /=<CR>
-  vmap <Leader><Leader>a= :Tabularize /=<CR>
-  nmap <Leader><Leader>a: :Tabularize /:\zs<CR>
-  vmap <Leader><Leader>a: :Tabularize /:\zs<CR>
+  nmap <leader><leader>a :Tabularize /=<CR>
+  vmap <leader><leader>a :Tabularize /=<CR>
+  nmap <leader><leader>a: :Tabularize /:\zs<CR>
+  vmap <leader><leader>a: :Tabularize /:\zs<CR>
 endif
 
 " leader ww swaps windows
