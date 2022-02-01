@@ -1,4 +1,11 @@
 " Inspired by https://dev.to/allanmacgregor/vim-is-the-perfect-ide-e80 e80
+" PREREQUISITES:
+" - Python enabled Vim
+" - Vundle do: git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+" - start vim and do :PluginInstall
+" - fzf installed
+" - brew install the_silver_searcher if on mac https://github.com/ggreer/the_silver_searcher
+
 "
 " USE:
 " leader is 		   : <space>
@@ -35,13 +42,6 @@
 " This vim comes with powerful fzf intergrated, try the above commands and check out:
 " https://medium.com/@sidneyliebrand/how-fzf-and-ripgrep-improved-my-workflow-61c7ca212861
 " :h fzf-vim-commands
-
-" PREREQUISITES:
-" - Python enabled Vim
-" - Vundle do: git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-" - start vim and do :PluginInstall
-" - fzf installed
-" - brew install the_silver_searcher if on mac https://github.com/ggreer/the_silver_searcher
 
 set nocompatible              " required
 filetype off                  " required it changes below

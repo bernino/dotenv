@@ -107,7 +107,7 @@ plugins=(
         dircycle 
  	dirhistory 
  	wd 
-	osx
+	macos
         zsh-history-substring-search	
  )
 
