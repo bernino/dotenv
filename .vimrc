@@ -54,6 +54,7 @@ call vundle#begin()
 "call vundle#begin('~/some/path/here')
 
 Plugin 'gmarik/Vundle.vim'                          	" Plugin manager -- install first then run :PluginInstall
+Plugin 'preservim/vim-wordy.git'
 Plugin 'vim-scripts/indentpython.vim'               	" PEP8 indentation of Python https://github.com/vim-scripts/indentpython.vim
 Plugin 'majutsushi/tagbar'                          	" https://github.com/majutsushi/tagbar
 " Plugin 'wesQ3/vim-windowswap'                       	" https://github.com/wesQ3/vim-windowswap
@@ -66,7 +67,7 @@ Plugin 'vim-syntastic/syntastic'                    	" checking syntax https://g
 Plugin 'scrooloose/nerdtree'                        	" file browser <leader>f
 Plugin 'jiangmiao/auto-pairs'                       	" automagic double pairs of ( etc.
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plugin 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
+" Plugin 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
 Plugin 'junegunn/fzf.vim'
 Plugin 'preservim/nerdcommenter'                    	" <leader>c+space comments see https://github.com/preservim/nerdcommenter
 Plugin 'tpope/vim-surround'                         	" magic surrounding word: try ysiw: iw is a word object https://github.com/tpope/vim-surround
@@ -110,20 +111,17 @@ Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 call vundle#end()           			    	        " required
 filetype plugin indent on 				        " required
 
+" rainbow
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
-
-" Create default mappings for nerdcommenter
-let g:NERDCreateDefaultMappings = 1
 
 " coc tab next snippet placeholder
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<s-tab>'
 
-
 " Some general settings
 " set virtualedit=block
 set belloff=all
-" set rtp+=/opt/homebrew/opt/fzf
+set rtp+=/opt/homebrew/opt/fzf
 set guicursor=
 set complete+=kspell 		" ctrl-p ctrl-n are word completion
 set hidden
@@ -193,14 +191,14 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " alt backspace to delete previous word
 " this doesn't work though
-imap <M-BS> <C-w>
-nmap <M-BS> db
+" imap <M-BS> <C-w>
+" nmap <M-BS> db
 
 " handy stuff
 " yank current word
-nmap <leader>yw yiw
+" nmap <leader>yw yiw
 " delete current word
-nmap <leader>dw diw
+" nmap <leader>dw diw
 "delete word then paste
 " nnoremap <leader>cp "_diwP
 
@@ -218,7 +216,6 @@ nmap <leader>o :so %<cr>
 nmap <leader>w :w<cr>      	   " leader w is write
 nmap <leader>q :q<cr>              " leader q is quit
 nmap <leader>e :wq!<cr>            " leader e is write quit!
-nmap <leader><leader>q :q!<cr>     " leader leader q is quit!
 " search for text in fzf mode
 nmap <leader><leader>/ :Lines<cr>
 nmap <leader>z :Goyo<cr>  	   " magic zen mode
@@ -263,7 +260,6 @@ let g:NERDToggleCheckAllLines = 1
 let g:NERDDefaultAlign = 'left'
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
-map <C-]> <plug>NERDCommenterToggle
 
 " Prompt for a command to run
 " map <Leader>c :VimuxPromptCommand<CR>
@@ -351,12 +347,7 @@ noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
 noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
 noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 
-" youcompleteme behavior
-" let g:ycm_autoclose_preview_window_after_completion=1
-" map <leader>gd  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" nmap <leader>gr :YcmCompleter GoToReferences<CR>
-
-" GoTo code navigation.
+" GoTo code navigation CoC
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
@@ -423,7 +414,7 @@ nmap <leader>m <plug>(fzf-maps-n)
 xmap <leader>m <plug>(fzf-maps-x)
 omap <leader>m <plug>(fzf-maps-o)
 
-" Insert mode completion
+" Insert mode completion 
 imap <c-w> <plug>(fzf-complete-word)
 imap <c-f> <plug>(fzf-complete-path):
 imap <c-j> <plug>(fzf-complete-file-ag)
@@ -439,10 +430,10 @@ nnoremap <C-H> <C-W>h
 " buffer tabbing
 nnoremap <leader><tab> :Buffers<cr>
 
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
+" let g:fzf_action = {
+"   \ 'ctrl-t': 'tab split',
+"   \ 'ctrl-x': 'split',
+"   \ 'ctrl-v': 'vsplit' }
 
 " turn on/off search highlight
 nnoremap <leader>\ :set invhlsearch<CR>
@@ -482,22 +473,23 @@ au BufNewFile,BufRead *.py
 
 let g:vimtex_view_method='skim'
 let g:tex_flavor = 'latex'
-let g:vimtex_view_general_options = '-r @line @pdf @tex'
+" let g:vimtex_view_general_options = '-r @line @pdf @tex'
 
-let g:vimtex_compiler_latexmk_engines = {
-    \ '_'                : '-xelatex',
-    \ 'pdflatex'         : '-pdf',
-    \ 'dvipdfex'         : '-pdfdvi',
-    \ 'lualatex'         : '-lualatex',
-    \ 'xelatex'          : '-xelatex',
-    \ 'context (pdftex)' : '-pdf -pdflatex=texexec',
-    \ 'context (luatex)' : '-pdf -pdflatex=context',
-    \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
-    \}
+" let g:vimtex_compiler_latexmk_engines = {
+"     \ '_'                : '-xelatex',
+"     \ 'pdflatex'         : '-pdf',
+"     \ 'dvipdfex'         : '-pdfdvi',
+"     \ 'lualatex'         : '-lualatex',
+"     \ 'xelatex'          : '-xelatex',
+"     \ 'context (pdftex)' : '-pdf -pdflatex=texexec',
+"     \ 'context (luatex)' : '-pdf -pdflatex=context',
+"     \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
+"     \}
 
 " for nvalt
 " see https://github.com/Alok/notational-fzf-vim
 " try :NV or leader+n
+" leader n searches notes
 let g:nv_search_paths = ['~/Dropbox/notes']
 let g:nv_default_extension = '.md'
 let g:nv_create_note_window = 'tabedit'
@@ -505,30 +497,7 @@ let g:nv_create_note_window = 'tabedit'
 " String. Must be in the form 'ctrl-KEY' or 'alt-KEY'
 let g:nv_create_note_key = 'ctrl-n'
 let g:nv_wrap_preview_text = 1
-
-" leader n searches notes
 nnoremap <silent> <leader>n :NV<CR>
-
-"make YCM compatible with UltiSnips (using supertab)
-" let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
-" let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
-" let g:SuperTabDefaultCompletionType = '<C-n>'
-
-"better key bindings for UltiSnipsExpandTrigger
-" let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsJumpForwardTrigger = "<tab>"
-" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-" let g:UltiSnipsEditSplit="vertical" " If you want :UltiSnipsEdit to split your window.
-" let g:UltiSnipsListSnippets="<c-l>"
-" inoremap <s-tab> <C-p>
-
-" let g:ulti_expand_or_jump_res = 0 "default value, just set once
-" function! Ulti_ExpandOrJump_and_getRes()
-"     call UltiSnips#ExpandSnippetOrJump()
-"     return g:ulti_expand_or_jump_res
-" endfunction
-
-" inoremap <CR> <C-R>=(Ulti_ExpandOrJump_and_getRes() > 0)?"":"\n"<CR>
 
 " toggles vertical to horizontal split with leader wt
 function! ToggleWindowHorizontalVerticalSplit()

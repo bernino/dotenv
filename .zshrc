@@ -8,7 +8,6 @@
 #   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
 
-
 # USE:
 # Most use should be intuitive and just work
 # ddg <text> - search the web for text
@@ -95,7 +94,7 @@ plugins=(
 	# sudo
 	# battery 
 	zsh-autosuggestions
-	droplr
+	# droplr
 	# fzf-tab
 	fzf
  	git
@@ -112,6 +111,7 @@ plugins=(
  )
 
 source $ZSH/oh-my-zsh.sh
+
 # must go below source oh-my...
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
