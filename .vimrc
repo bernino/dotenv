@@ -1,4 +1,5 @@
 " Inspired by https://dev.to/allanmacgregor/vim-is-the-perfect-ide-e80 e80
+
 " PREREQUISITES:
 " - Python enabled Vim
 " - Vundle do: git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -6,7 +7,6 @@
 " - fzf installed
 " - brew install the_silver_searcher if on mac https://github.com/ggreer/the_silver_searcher
 
-"
 " USE:
 " leader is 		   : <space>
 " TagBar	           : <leader>=
@@ -61,11 +61,12 @@ Plugin 'godlygeek/tabular'                          	" http://vimcasts.org/episo
 Plugin 'jeetsukumaran/vim-buffergator'              	" https://github.com/jeetsukumaran/vim-buffergator
 " Plugin 'reedes/vim-pencil'  		            	    " https:github//github.com/reedes/vim-pencil does softwraps
 Plugin 'lervag/vimtex'                              	" LaTeX helpers https://github.com/lervag/vimtex
-Plugin 'ervandew/supertab'                          	" Magic tab https://github.com/ervandew/supertab
+" Plugin 'ervandew/supertab'                          	" Magic tab https://github.com/ervandew/supertab
 Plugin 'vim-syntastic/syntastic'                    	" checking syntax https://github.com/vim-syntastic/syntastic
 Plugin 'scrooloose/nerdtree'                        	" file browser <leader>f
 Plugin 'jiangmiao/auto-pairs'                       	" automagic double pairs of ( etc.
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
 Plugin 'junegunn/fzf.vim'
 Plugin 'preservim/nerdcommenter'                    	" <leader>c+space comments see https://github.com/preservim/nerdcommenter
 Plugin 'tpope/vim-surround'                         	" magic surrounding word: try ysiw: iw is a word object https://github.com/tpope/vim-surround
@@ -102,7 +103,7 @@ Plugin 'arcticicestudio/nord-vim' 			" a fine colorscheme
 Plugin 'luochen1990/rainbow'
 Plugin 'machakann/vim-sandwich'
 " Plugin 'codota/tabnine-vim'				" autocompletion engine cant exist with ultisnips
-Plugin 'sirver/ultisnips'                           	" rocket science snippet engine https://github.com/sirver/UltiSnips
+" Plugin 'sirver/ultisnips'                          	" rocket science snippet engine https://github.com/sirver/UltiSnips
 Plugin 'honza/vim-snippets'                         	" snippets for ultisnips
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -111,11 +112,20 @@ filetype plugin indent on 				        " required
 
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
+" Create default mappings for nerdcommenter
+let g:NERDCreateDefaultMappings = 1
+
+" coc tab next snippet placeholder
+let g:coc_snippet_next = '<tab>'
+let g:coc_snippet_prev = '<s-tab>'
+
+
 " Some general settings
+" set virtualedit=block
 set belloff=all
-set rtp+=/opt/homebrew/opt/fzf
+" set rtp+=/opt/homebrew/opt/fzf
 set guicursor=
-" set complete+=kspell 		" ctrl-p ctrl-n are word completion
+set complete+=kspell 		" ctrl-p ctrl-n are word completion
 set hidden
 " set omnifunc=syntaxcomplete#Complete 	"destroys ultisnips
 set termguicolors
@@ -153,9 +163,33 @@ set laststatus=2		" always show status / powerline
 set nofoldenable    		" disable folding
 set foldmethod=syntax
 
+" <leader>c to nerdcommenter toggle
+map <leader>c <Plug>NERDCommenterToggle
+
 " Enable folding with leader 1 (its off default)
 nnoremap <leader>1 za
 vnoremap <leader>2 zf
+
+" coc-yank list
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
+
+"Completion settings
+"Use complete_info() if you need confirm completion only when there's selected complete item
+if exists('*complete_info')
+    inoremap <silent><expr> <cr> complete_info(['selected'])['selected'] != -1 ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+"Use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<Tab>" :
+            \ coc#refresh()
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " alt backspace to delete previous word
 " this doesn't work though
@@ -164,9 +198,9 @@ nmap <M-BS> db
 
 " handy stuff
 " yank current word
-nmap <leader>y yiw
+nmap <leader>yw yiw
 " delete current word
-nmap <leader>d diw
+nmap <leader>dw diw
 "delete word then paste
 " nnoremap <leader>cp "_diwP
 
@@ -379,8 +413,9 @@ nnoremap <silent> <leader>] :call WindowSwap#EasyWindowSwap()<CR>
 " fzf tweaking and shortcuts
 "let g:fzf_preview_window = 'right:60%'
 
-" open fzf f for files
-nnoremap <leader><leader>f :Files<CR>		
+" open fzf f for files with ctrl-p
+nnoremap <c-p> :Files<CR>
+
 " open fzf grep for content in file - g for grep
 " nnoremap <leader>g :Rg<CR>
 " fzf help search all commands available
@@ -487,13 +522,13 @@ nnoremap <silent> <leader>n :NV<CR>
 " let g:UltiSnipsListSnippets="<c-l>"
 " inoremap <s-tab> <C-p>
 
-let g:ulti_expand_or_jump_res = 0 "default value, just set once
-function! Ulti_ExpandOrJump_and_getRes()
-    call UltiSnips#ExpandSnippetOrJump()
-    return g:ulti_expand_or_jump_res
-endfunction
+" let g:ulti_expand_or_jump_res = 0 "default value, just set once
+" function! Ulti_ExpandOrJump_and_getRes()
+"     call UltiSnips#ExpandSnippetOrJump()
+"     return g:ulti_expand_or_jump_res
+" endfunction
 
-inoremap <CR> <C-R>=(Ulti_ExpandOrJump_and_getRes() > 0)?"":"\n"<CR>
+" inoremap <CR> <C-R>=(Ulti_ExpandOrJump_and_getRes() > 0)?"":"\n"<CR>
 
 " toggles vertical to horizontal split with leader wt
 function! ToggleWindowHorizontalVerticalSplit()
@@ -513,11 +548,9 @@ endfunction
 
 nnoremap <silent> <leader>h :call ToggleWindowHorizontalVerticalSplit()<cr>
 
-
 if has("gui_running")
    let s:uname = system("uname")
    if s:uname == "Darwin\n"
       set guifont=Meslo\ LG\ S\ for\ Powerline
    endif
 endif
-
