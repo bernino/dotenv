@@ -1,257 +1,412 @@
-" Inspired by https://dev.to/allanmacgregor/vim-is-the-perfect-ide-e80 e80
+" README
+" This .vimrc intends to make it easier to write Python, LaTeX and Markdown as
+" well as making Vim faster to use in general along the lines of VSCode, such
+" as binding quit, write and other frequently used things to <leader>q. See
+" below for more info.
+"
+" TODO: refactor entire file that each plugin has its configs just after it.
+" And test:
+" https://github.com/t9md/vim-textmanip
+"
+" Autocomplete: It offers autocomplete via CoC and using ultisnips; tab and enter are your friends here.
+" It takes a while to get use to but becomes a super power real quick.
+"
+" Autopairs: and surrounding are automatic for (),[],{} etc. (via CoC coc-pairs)
+"
+" EasyMotion: is enabled to jump around with chars, try s and / making it much
+" faster to search and jump. <tab> also goes through search results.
+"
+" Wordobjects: Smart word objects such as delete word: diw and a more powerful . repeater.
+"
+" FZF: is also integrated see below shortcuts and below :
+" https://medium.com/@sidneyliebrand/how-fzf-and-ripgrep-improved-my-workflow-61c7ca212861
+"
+" Notes: Its got a notetaker with fuzzy search that can be integrated with Dropbox,
+" so notes are in Markdown and available everywhere.
+"
+" Jumps: This is standard Vim stuff, but do have a reminder of jumping to last
+" edits, namely CTRL+o and CTRL+i amongst other things... :help jumplist. I
+" guess shortcuts are your friend: https://vim.rtorr.com/
+"
+" LaTeX: Vimtex gives some commands such as:
+" cse/dse change delete environment
+" csc/dsc change delete command
+" \ll \lv and \lc - compile, open, clear
+" ctrl-] ctrl-t jump tags
+"
+" See below for instructions on all the smart stuff and their keybindings.
 
 " PREREQUISITES:
+" No power comes without dependencies... standing on the shoulders of giants:
+"
 " - Python enabled Vim
 " - Vundle do: git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 " - start vim and do :PluginInstall
-" - fzf installed
-" - brew install the_silver_searcher if on mac https://github.com/ggreer/the_silver_searcher
+" - fzf and other apps installed - it will spit errors...
+" - Mac: brew install the_silver_searcher if on mac https://github.com/ggreer/the_silver_searcher
+"   similar tools needed on UNIX but don't worry, it spits errors, then
+"   install.
+" - Do also install some CoC plugins like CocInstall ultisnips; search around
+"   for more...
+" TODO: try a clean install and find all dependencies
 
 " USE:
-" leader is 		   : <space>
-" TagBar	           : <leader>=
-" buffers                  : <leader>tab
-" bookmark 		   : mm and ma
-" leader z is zen 	   : <leader> z
-" notes in markdown        : <leader> n
-" easymotion fuzzy search  : <leader>/
-" comenting blocks        : <leader>cc or cm or toggle : <leader>c+space or C+]
-" uncommenting blocks      : <leader> cu
-" write file               : <leader> w
-" quit                     : <leader> q
-" nerdtreee browser        : <leader> (next to 1)
-" easymotion two char      : s
-" latex structure          : <leader>
-" table mode 		   : <leader><leader>
-" fzf search in file       : <leader><leader>/
-" fzf search for files     : <leader><leader>f
-" fzf on all commands      : <leader>m
-" swap windows             : <leader>ww
-" easymotion               : normal mode s + two chars
-" for more snippets - snip : :UltisnipsEdit
-" split window sizes       : <shitf>+hjkl
-"
-" Don't forget zz, zt, zb more here https://unix.stackexchange.com/questions/110251/how-to-put-current-line-at-top-center-bottom-of-screen-in-vim#110252
-" Don't forget gd (go to definition) and gr (references)
-"
-" And don't forget spellchecking ]s and z= https://www.linux.com/training-tutorials/using-spell-checking-vim/
-"
-" The power of Normal mode + s + two chars
-" The power of Normal mode + \/ + search
-"
-" This vim comes with powerful fzf intergrated, try the above commands and check out:
-" https://medium.com/@sidneyliebrand/how-fzf-and-ripgrep-improved-my-workflow-61c7ca212861
-" :h fzf-vim-commands
+" leader                  : <space>
+" source current file     : <leader>o - nice for .vimrc testing
+" jump windows            : ctrl+ww
+" Last Prev edit          : ctrl+o and i
+" zen writing mode        : <leader>z to toggle
+" easymotion search       : / - don't enter but <tab> through then enter then
+" quit                    : <leader> q - making life easy
+" write file              : <leader> w - making life easy
+" easymotion two char     : s for quick easymotion navigation
+" latex structure         : \lt
+" latex compile           : \ll
+" latex clear             : \lc
+" nerdtreee browser       : <leader> (next to 1)
+" TagBar                  : <leader>= to toggle
+" bookmark                : mm and ma
+" notes in markdown       : <leader>n and <c-v> to open note in split view, <c-n> to create new note
+" toggle commenting       : <leader>c to toggle.. <leader>cc or cm
+" table mode              : <leader><leader>t
+" fzf search in file      : <leader>l (: Lines) for when searching is hard
+" fzf search in file      : <leader>h (: History) of past files opened
+" fzf search for files    : <leader>f (: Files) fuzzy search files
+" list buffers            : <leader>b (: Buffer) fuzzy see buffers
+" fzf on all commands     : <leader>m map of all vim commands
+" swap windows            : <c-w>r TODO: remap swap windows
+" go to references        : gr as part of CoC
+" go to definition        : gd as part od CoC
+" center screen           : zz as part od CoC
+" delete word             : <ctrl> backspace based on diwi
+" insert last entered     : <ctrl> r . - might depend on plugin repeat
+" pg fwd/bwd reminder     : <ctrl> f and b
+" add '' around word      : <leader>' - remember u to undo...
+" add "" around word      : <leader><leader>' (because its faster than shift ')
+" vsplit buffers          : <leader>arrows - this splits buffers to vsplit
+" mark all words for easy : <leader>j
+" tabularize text         : <leader><leader>a visual select text first (tAbularize maybe lame)
+" turn off search light   : <leader>\
+" check diff since last w : <leader>d - for diff
+" zoom tab toggle         : <leader><leader>z
 
-set nocompatible              " required
-filetype off                  " required it changes below
+" USE end
+
+" Required settings for Vundle
+set nocompatible
+filetype off
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-Plugin 'gmarik/Vundle.vim'                          	" Plugin manager -- install first then run :PluginInstall
-Plugin 'preservim/vim-wordy.git'
-Plugin 'vim-scripts/indentpython.vim'               	" PEP8 indentation of Python https://github.com/vim-scripts/indentpython.vim
+" TODO:  order plugin by topic
+" The order matters!
+Plugin 'gmarik/Vundle.vim'                          	" The manager -- install first then run :PluginInstall
+Plugin 'neoclide/coc.nvim', {'branch': 'release'}       " autocomplete and language server https://github.com/neoclide/coc.nvim
+Plugin 'preservim/vim-wordy.git'                        " https://github.com/preservim/vim-wordy
 Plugin 'majutsushi/tagbar'                          	" https://github.com/majutsushi/tagbar
-" Plugin 'wesQ3/vim-windowswap'                       	" https://github.com/wesQ3/vim-windowswap
 Plugin 'godlygeek/tabular'                          	" http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
-Plugin 'jeetsukumaran/vim-buffergator'              	" https://github.com/jeetsukumaran/vim-buffergator
-" Plugin 'reedes/vim-pencil'  		            	    " https:github//github.com/reedes/vim-pencil does softwraps
-Plugin 'lervag/vimtex'                              	" LaTeX helpers https://github.com/lervag/vimtex
-" Plugin 'ervandew/supertab'                          	" Magic tab https://github.com/ervandew/supertab
+Plugin 'preservim/vim-markdown'                         " https://github.com/preservim/vim-markdown
+Plugin 'jeetsukumaran/vim-buffergator'              	" https://github.com/jeetsukumaran/vim-buffergator prob not needed with :Buffer as well?
+Plugin 'reedes/vim-pencil'  		                	" https://github.com/reedes/vim-pencil does softwraps TODO: settings and test
 Plugin 'vim-syntastic/syntastic'                    	" checking syntax https://github.com/vim-syntastic/syntastic
-Plugin 'scrooloose/nerdtree'                        	" file browser <leader>f
-Plugin 'jiangmiao/auto-pairs'                       	" automagic double pairs of ( etc.
-Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
-" Plugin 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
-Plugin 'junegunn/fzf.vim'
-Plugin 'preservim/nerdcommenter'                    	" <leader>c+space comments see https://github.com/preservim/nerdcommenter
-Plugin 'tpope/vim-surround'                         	" magic surrounding word: try ysiw: iw is a word object https://github.com/tpope/vim-surround
+Plugin 'scrooloose/nerdtree'                        	" file browser <leader>f https://github.com/preservim/nerdtree
+" Plugin 'tpope/vim-surround'                         	" ysiw iw a word object https://github.com/tpope/vim-surround
+                                                        " ysaw is also cool https://weibeld.net/vim/surround-plugin.html
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } } 	" fzf integration https://github.com/junegunn/fzf
+Plugin 'junegunn/fzf.vim'                               " https://github.com/junegunn/fzf.vim
+Plugin 'preservim/nerdcommenter'                    	" https://github.com/preservim/nerdcommenter
 Plugin 'https://github.com/alok/notational-fzf-vim' 	" nValt for vim
-Plugin 'plasticboy/vim-markdown'                    	" for markdown https://github.com/plasticboy/vim-markdown
-" Plugin 'jtratner/vim-flavored-markdown' 		" ditto
-" Plugin 'shime/vim-livedown'                         	" shows markdown live https://github.com/shime/vim-livedown
 Plugin 'vim-pandoc/vim-pandoc'                      	" https://github.com/vim-pandoc/vim-pandoc
 Plugin 'vim-pandoc/vim-pandoc-syntax'               	" needed for pandoc above
-" Plugin 'mileszs/ack.vim'                            	" https://github.com/mileszs/ack.vim for using ag
-Plugin 'vim-airline/vim-airline'                    	" https://github.com/vim-airline/vim-airline
-Plugin 'vim-airline/vim-airline-themes' 		" ditto
-Plugin 'tpope/vim-repeat'                           	" allows for complex . repeats
+Plugin 'conornewton/vim-pandoc-markdown-preview'    	" https://github.com/conornewton/vim-pandoc-markdown-preview
+Plugin 'vim-airline/vim-airline' 	            		" https://github.com/vim-airline/vim-airline
+Plugin 'vim-airline/vim-airline-themes'         		" https://github.com/vim-airline/vim-airline-themes
+Plugin 'tpope/vim-repeat'                           	" https://github.com/tpope/vim-repeat allows for complex . repeats
 Plugin 'easymotion/vim-easymotion'                  	" https://github.com/easymotion/vim-easymotion
-Plugin 'haya14busa/incsearch.vim'                   	" building searches https://github.com/haya14busa/incsearch.vim
-Plugin 'haya14busa/incsearch-easymotion.vim'        	" enables full text for easymotion
-Plugin 'haya14busa/incsearch-fuzzy.vim'
-Plugin 'terryma/vim-multiple-cursors'               	" https://github.com/terryma/vim-multiple-cursors
-" Plugin 'kablamo/vim-git-log' 			    	" https://github.com/kablamo/vim-git-log
-" Plugin 'gregsexton/gitv' 			   	" https://github.commands/gregsexton/gitv
-" Plugin 'tpope/vim-fugitive' 			    	" git commands https://github.com/tpope/vim-fugitive
+Plugin 'mg979/vim-visual-multi', {'branch': 'master'}   " <c-n> on top of word magic https://github.com/mg979/vim-visual-multi
+" TODO: git integration
+" Plugin 'kablamo/vim-git-log' 			            	" https://github.com/kablamo/vim-git-log
+" Plugin 'gregsexton/gitv' 			                	" https://github.commands/gregsexton/gitv
+" Plugin 'tpope/vim-fugitive' 			            	" git commands https://github.com/tpope/vim-fugitive
 " Plugin 'airblade/vim-gitgutter'                     	" git diff live https://github.com/airblade/vim-gitgutter
-Plugin 'MattesGroeger/vim-bookmarks' 		        " try mm and ma
-" Plugin 'christoomey/vim-tmux-navigator' 	        " https://github.com/christoomey/vim-tmux-navigator
-" Plugin 'benmills/vimux' 			    	" https://github.com/benmills/vimux
-Plugin 'junegunn/goyo.vim' 			    	" Zen mode for vim https://github.com/junegunn/goyo.vim
-Plugin 'junegunn/limelight.vim' 		    	" https://github.com/junegunn/limelight.vim
-" Plugin 'tpope/vim-abolish' 				" https://github.com/tpope/vim-abolish manipulates words
-Plugin 'dhruvasagar/vim-table-mode' 			" \tm table mode https://github.com/dhruvasagar/vim-table-mode
-Plugin 'vim-scripts/SearchComplete' 			" tab enabled / search - powerful
-Plugin 'arcticicestudio/nord-vim' 			" a fine colorscheme
-" Plugin 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-" Plugin 'vimwiki/vimwiki' 				" conflicts with ultisnips
-Plugin 'luochen1990/rainbow'
-Plugin 'machakann/vim-sandwich'
-" Plugin 'codota/tabnine-vim'				" autocompletion engine cant exist with ultisnips
-" Plugin 'sirver/ultisnips'                          	" rocket science snippet engine https://github.com/sirver/UltiSnips
-Plugin 'honza/vim-snippets'                         	" snippets for ultisnips
-Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+Plugin 'MattesGroeger/vim-bookmarks' 		            " try mm and ma https://github.com/mattesgroeger/vim-bookmarks
+" Plugin 'christoomey/vim-tmux-navigator' 	            " https://github.com/christoomey/vim-tmux-navigator
+" Plugin 'benmills/vimux' 			                 	" https://github.com/benmills/vimux
+Plugin 'junegunn/goyo.vim' 			                	" Zen mode for vim https://github.com/junegunn/goyo.vim
+Plugin 'junegunn/limelight.vim' 		            	" https://github.com/junegunn/limelight.vim
+Plugin 'dhruvasagar/vim-table-mode' 	        		" table mode https://github.com/dhruvasagar/vim-table-mode
+Plugin 'arcticicestudio/nord-vim' 		            	" https://github.com/arcticicestudio/nord-vim my fav colorscheme
+Plugin 'luochen1990/rainbow'                            " colored nested parenthesis https://github.com/luochen1990/rainbow
+Plugin 'https://github.com/tpope/vim-surround'          " https://github.com/tpope/vim-surround.git
+Plugin 'machakann/vim-sandwich'		                	" https://github.com/machakann/vim-sandwich change surroundings of a sandwiched textobject
+Plugin 'lervag/vimtex'                              	" LaTeX helpers https://github.com/lervag/vimtex
+Plugin 'ludovicchabant/vim-gutentags'                   " https://github.com/ludovicchabant/vim-gutentags.git
+Plugin 'sirver/ultisnips'                            	" rocket science snippet engine https://github.com/sirver/UltiSnips
+Plugin 'honza/vim-snippets'                         	" snippets for ultisnips https://github.com/honza/vim-snippets
+Plugin 'ntpeters/vim-better-whitespace' 	        	" https://vimawesome.com/plugin/better-whitespace
+Plugin 'ryanoasis/vim-devicons' 	            		" https://github.com/ryanoasis/vim-devicons
+Plugin 'troydm/zoomwintab.vim'                          " zooms tabs https://github.com/troydm/zoomwintab.vim
+Plugin 'lambdalisue/battery.vim'                        " https://github.com/lambdalisue/battery.vim
+Plugin 'sheerun/vim-polyglot'                           " https://github.com/sheerun/vim-polyglot
+Plugin 'Chiel92/vim-autoformat'                         " https://github.com/vim-autoformat/vim-autoformat
 
-call vundle#end()           			    	        " required
-filetype plugin indent on 				        " required
+" CoC installation
+" CoC allows for its own plugins and you could consider:
+"   - coc-snippets (multiple snippets support) https://github.com/neoclide/coc-snippets
+"   - coc-ultisnips (support ultisnips) https://www.npmjs.com/package/coc-ultisnips
+"   - coc-ltex (spellchecking) https://valentjn.github.io/ltex/index.html
+"   - coc-yank (yank history and autocomplete) https://github.com/neoclide/coc-yank
+"   - coc-webview (external browser to support webview) https://github.com/weirongxu/coc-webview
+"   - coc-marketplace (list all extensions) https://github.com/fannheyward/coc-marketplace
+"   - coc-browser (autocomplete words from browser) https://github.com/voldikss/coc-browser
+"   - coc-vimtex (integration with  vimtex) https://github.com/neoclide/coc-vimtex
+"   - coc-texlab (LaTeX more completion) https://github.com/fannheyward/coc-texlab
+"   see https://github.com/latex-lsp/texlab-vscode for demo
+"
+"   - coc-pyright (python linter) https://github.com/fannheyward/coc-pyright
+"   - coc-markdown-preview-enhanced (markdown preview) https://github.com/weirongxu/coc-markdown-preview-enhanced
+"   :CocCommand markdown-preview-enhanced.openPreview TODO: keybindings
+"
+"   - coc-diagnostic (another linter) https://github.com/iamcco/coc-diagnostic
+"   - coc-lightbulb (codeactions notifier) https://github.com/xiyaowong/coc-lightbulb-
+"   - coc-pairs (auto pairs) https://github.com/neoclide/coc-pairs
+"
+" Note you can add extension names to the g:coc_global_extensions
+" variable, and coc will install the missing extensions after coc.nvim service started. For example:
+"
+let g:coc_global_extensions = [
+            \ 'coc-snippets',
+            \ 'coc-ultisnips',
+            \ 'coc-ltex',
+            \ 'coc-yank',
+            \ 'coc-webview',
+            \ 'coc-marketplace',
+            \ 'coc-browser',
+            \ 'coc-vimtex',
+            \ 'coc-texlab',
+            \ 'coc-pyright',
+            \ 'coc-diagnostic',
+            \ 'coc-lightbulb',
+            \ 'coc-pairs',
+            \ 'coc-tag'
+            \ ]
 
-" rainbow
-let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+" Or you can install by ':CocList marketplace' or :CocInstall coc-lightbulb
 
-" coc tab next snippet placeholder
-let g:coc_snippet_next = '<tab>'
-let g:coc_snippet_prev = '<s-tab>'
+" Handy stuff to edit snippets:
+" :CocList snippets to open snippets list.
+" :CocCommand snippets.editSnippets to edit user snippet of current filetype.
+" :CocCommand snippets.openSnippetFiles to open snippet files of current filetype.
 
-" Some general settings
-" set virtualedit=block
+" required for vundle
+call vundle#end()
+filetype plugin indent on
+
+" Configuration of Plugins and general settings below
+"
+" <leader> is space which is fast and easy for me because my thumb rests
+let mapleader=" "
+
+autocmd FileType markdown let b:coc_pairs_disabled = ['`']
+
+" Airline, Color and tabline settings
+colorscheme nord
+let g:airline_theme='nord_minimal'
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#battery#enabled = 1
+let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#coc#show_coc_status = 1
+let g:airline#extensions#fzf#enabled = 1
+
+" rainbow - colored nested () turned on
+let g:rainbow_active = 1
+
+" use 4 spaces for tabs
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set shiftround
+
+" make MacVim font awesome work
+set guifont=MesloLGS\ NF:h14
+" set virtualedit=all
 set belloff=all
-set rtp+=/opt/homebrew/opt/fzf
-set guicursor=
-set complete+=kspell 		" ctrl-p ctrl-n are word completion
+set complete+=kspell
+" set hidden allows for unsaved buffers
 set hidden
-" set omnifunc=syntaxcomplete#Complete 	"destroys ultisnips
+" no wrapping; get's set by filetype at end
+set nowrap
 set termguicolors
 set signcolumn=yes
-set updatetime=50
-let mapleader=" "
+set updatetime=750
 set spelllang=en_gb
-map <F5> :setlocal spell! spelllang=en_us<CR>
-set cursorline 				    " line where cursor is
+set cursorline
 set showcmd
-set timeout timeoutlen=1500 	" timeout for command completion
-set mouse=a			" enable mouse
-
+" timeout for command completion
+set timeout timeoutlen=500
+" enable mouse
+set mouse=a
+" clipboard on mac
 if system('uname -s') == "Darwin\n"
   set clipboard=unnamed
 else
   set clipboard=unnamedplus
 endif
-
 let python_highlight_all=1
-
-set backspace=indent,eol,start	" enable backspace
-syntax on			" where exists, show syntax
-set number			" visible line numbers 
-set rnu				" relative numbers
-set encoding=utf-8		" guess what... UTF-8 encoded
+" enable backspace
+set backspace=indent,eol,start
+" where exists, show syntax
+syntax on
+syntax enable
+" visible line numbers
+set number
+" relative numbers so its easy to eg 10j
+set rnu
+" guess what... UTF-8 encoded
+set encoding=utf-8
+set fileencodings=utf-8
 set splitbelow
 set splitright
-set wildmenu			" visual autocomplete for commands
-set showmatch 			" highlight matching [{()}]
-set incsearch           	" search as characters are entered
-set hlsearch            	" highlight matches
-set t_Co=256			" powerline requires colors
-set laststatus=2		" always show status / powerline
-set nofoldenable    		" disable folding
-set foldmethod=syntax
+" visual autocomplete for commands
+set wildmenu
+" highlight matching [{()}]
+set showmatch
+" search as characters are entered
+set incsearch
+" highlight matches
+" set hlsearch
+" powerline requires colors
+set t_Co=256
+" always show status / powerline
+set laststatus=2
+" disable folding
+" set nofoldenable
+" set foldmethod=indent
 
-" <leader>c to nerdcommenter toggle
-map <leader>c <Plug>NERDCommenterToggle
+" Markdown previewer
+let g:md_pdf_viewer="open -a Skim"
+let g:vim_markdown_folding_disabled = 1
 
-" Enable folding with leader 1 (its off default)
-nnoremap <leader>1 za
-vnoremap <leader>2 zf
+" CoC setup is tricky to configure with <tab> and <cr>
+" first get rid of ultisnips tab expansion
+let g:UltiSnipsExpandTrigger = "<Nop>"
+" let g:UltiSnipsJumpForwardTrigger = "<TAB>"
+" let g:UltiSnipsJumpBackwardTrigger = "<TAB>"
 
-" coc-yank list
-nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
 
-"Completion settings
-"Use complete_info() if you need confirm completion only when there's selected complete item
-if exists('*complete_info')
-    inoremap <silent><expr> <cr> complete_info(['selected'])['selected'] != -1 ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
-"Use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
 
-inoremap <silent><expr> <Tab>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<Tab>" :
-            \ coc#refresh()
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
 
-" alt backspace to delete previous word
-" this doesn't work though
-" imap <M-BS> <C-w>
-" nmap <M-BS> db
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
 
-" handy stuff
-" yank current word
-" nmap <leader>yw yiw
-" delete current word
-" nmap <leader>dw diw
-"delete word then paste
-" nnoremap <leader>cp "_diwP
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
 
-" Color and such
-colorscheme nord
-" let g:airline_theme='molokai'   			" molokai, zenburn and solarized are nice, can also use :AirlineTheme
-let g:airline#extensions#tabline#enabled = 1
+inoremap <expr> <tab>
+   \ pumvisible() ? "\<c-n>" :
+   \ coc#jumpable() ? "\<c-r>=coc#rpc#request('snippetNext', [])<cr>" :
+   \ "\<tab>"
 
-" various aliases and maps
-" leader f is nerdtree for files
-nmap <leader>§ :NERDTreeToggle<cr> 
+" shit tab reverse completion menu
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+" <CR> is select if pumvisible
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                  \: "\<c-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use <c-space> to trigger completion menu
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+
+" Use [g and ]g to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a <Plug>(coc-codeaction-selected)
+nmap <leader>a <Plug>(coc-codeaction-selected)
+
+" CoC references
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+"
+"
+" KEYBINDINGS GENERAL
+"
+"
+nmap <leader>d :w !diff % - <CR>
+
+
+" put \begin{} \end{} tags tags around the current word
+" map  <C-B>      YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>kA
+" map! <C-B> <ESC>YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>kA
+
+" double "" (( around visual adds them
+" vnoremap (( "sc(<C-r>s)<Esc>
+" vnoremap "" "sc"<C-r>s"<Esc>
+" delete current word in insert mode
+inoremap <C-w> <ESC>diwi
+" ctrl backspace to delete current word in insert mode
+imap <C-BS> <C-w>
+" backspace delete word in normal mode
+nmap <C-BS> diw
+map <F5> :setlocal spell! spelllang=en_us<CR>
+nmap <leader>§ :NERDTreeToggle<cr>
 nmap <leader>o :so %<cr>
-" nmap <leader>t :VimtexTocOpen<cr>  " leader t is latex tree
-nmap <leader>w :w<cr>      	   " leader w is write
-nmap <leader>q :q<cr>              " leader q is quit
-nmap <leader>e :wq!<cr>            " leader e is write quit!
-" search for text in fzf mode
-nmap <leader><leader>/ :Lines<cr>
-nmap <leader>z :Goyo<cr>  	   " magic zen mode
-" nmap pr :LivedownToggle<CR>        " preview markdown
-" nmap pdf :Pandoc pdf<CR>           " generate pdf by typing pdf
-nnoremap <leader>r :!%:p<CR>       " run buffer with leader r
-
-" resize current buffer by +/- 5 
-" nnoremap <S-l> :vertical resize -5<cr>
-" nnoremap <S-h> :vertical resize +5<cr>
-" nnoremap <S-j> :resize +5<cr>
-" nnoremap <S-k> :resize -5<cr>
-
-" go through buffers
-" map gn :bn<cr>
-" map gp :bp<cr>
-
+" nmap <leader>t :VimtexTocOpen<cr>
+nmap <leader>w :w<cr>
+nmap <leader>q :q<cr>
+nmap <leader>Q :q!<cr>
+nmap <leader>e :edit<space>
+nmap <leader>l :Lines<cr>
+nnoremap <leader>f :Files<CR>
+map <c-p> :Files<CR>
+nnoremap <C-g> :Rg<Cr>
+nnoremap <leader><leader>b :Buffers<cr>
+map <c-e> :Buffers<cr>
+nmap <silent> <leader>h :History<CR>
+nmap <leader>m <plug>(fzf-maps-n)
+xmap <leader>m <plug>(fzf-maps-x)
+omap <leader>m <plug>(fzf-maps-o)
+nmap <leader><leader>z :ZoomWinTabToggle<CR>
+nmap <leader>= :TagbarToggle<CR>
 " Go to first char of line - could also use shift i
 map 0 ^
-
 " shortcuts for edit surrounding with ' and "
+" TODO toggle ' with cs'
 nmap <leader>' ysiw'
-nmap <leader>" ysiw"
-
-" tagbar
-nmap <leader>= :TagbarToggle<CR>
-
+nmap <leader><leader>' ysiw"
+nmap <leader>} ysiw}
+"turn on/off search highlight
+nnoremap <leader>\ :set invhlsearch<CR>
+" nerdcommenter toggle set to / almost like VSCode
+map <leader>/ <Plug>NERDCommenterToggle
+" folding with leader 1
+nnoremap <leader>1 za
+vnoremap <leader>1 zf
+" coc-yank history list
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 " tablemode
-" nmap <leader><leader>t :TableModeToggle<CR>
+nmap <leader><leader>t :TableModeToggle<CR>
 
 " Bookmark settings
-" mm sets and ma browse bookmarks
-highlight BookmarkSign ctermbg=NONE ctermfg=160
-highlight BookmarkLine ctermbg=194 ctermfg=NONE
 let g:bookmark_sign = '♥'
-let g:bookmark_highlight_lines = 1
 
 " NERDcommenter settings
 let g:NERDSpaceDelims = 1
@@ -261,14 +416,11 @@ let g:NERDDefaultAlign = 'left'
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
 
-" Prompt for a command to run
+" vimux prompt for a command to run
 " map <Leader>c :VimuxPromptCommand<CR>
 
-" Settings for Writting
-" just makes it nicer
-" let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
-
 " Vim-pencil Configuration
+" let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 " augroup pencil
   " autocmd!
   " autocmd FileType markdown,mkd,md call pencil#init()
@@ -276,116 +428,26 @@ let g:NERDTrimTrailingWhitespace = 1
 " augroup END
 
 " stuff for easymotion
-" let g:EasyMotion_do_mapping = 0 " Disable default mappings
-" map <leader>/ <Plug>(incsearch-easymotion-/)
-
-" incsearch.vim x fuzzy x vim-easymotion
-
-" function! s:config_easyfuzzymotion(...) abort
-  " return extend(copy({
-  " \   'converters': [incsearch#config#fuzzy#converter()],
-  " \   'modules': [incsearch#config#easymotion#module()],
-  " \   'keymap': {"\<CR>": '<Over>(easymotion)'},
-  " \   'is_expr': 0,
-  " \   'is_stay': 1
-  " \ }), get(a:, 1, {}))
-" endfunction
-
-" noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
-
-function! s:config_easyfuzzymotion(...) abort
-  return extend(copy({
-  \   'converters': [incsearch#config#fuzzyword#converter()],
-  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
-  \   'keymap': {"\<CR>": '<Over>(easymotion)'},
-  \   'is_expr': 0,
-  \   'is_stay': 1
-  \ }), get(a:, 1, {}))
-endfunction
-
-noremap <silent><expr> <leader>/ incsearch#go(<SID>config_easyfuzzymotion())
-
-" Jump to anywhere you want with minimal keystrokes, with just one key binding.
-" `s{char}{label}`
-" nmap s <Plug>(easymotion-overwin-f)
-" or
-" `s{char}{char}{label}`
-" Need one more keystroke, but on average, it may be more comfortable.
-nmap s <Plug>(easymotion-overwin-f2)
-" map  w <Plug>(easymotion-bd-w)
-" nmap w <Plug>(easymotion-overwin-w)
-" nmap <leader><leader>f <Plug>(easymotion-overwin-f2)
-
+map  <Leader>j <Plug>(easymotion-bd-w)
+nmap <Leader>j <Plug>(easymotion-overwin-w)
+nmap s <Plug>(easymotion-overwin-f)
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
 " Turn on case-insensitive feature
-let g:EasyMotion_smartcase = 1
-
+" let g:EasyMotion_smartcase = 1
 " JK motions: Line motions
 " map <Leader>j <Plug>(easymotion-j)
 " map <Leader>k <Plug>(easymotion-k)
-
-"incsearch related stuff..
-" nmap / <Plug>(incsearch-easymotion-/)
-" nmap z/ <Plug>(incsearch-easymotion-/)
-" nmap <leader>/ <Plug>(incsearch-easymotion-/)
-" nmap z? <Plug>(incsearch-easymotion-?)
-" nmap zg/ <Plug>(incsearch-easymotion-stay)
-" You can use other keymappings like <C-l> instead of <CR> if you want to
-" use these mappings as default search and sometimes want to move cursor with
-" EasyMotion.
-
-function! s:incsearch_config(...) abort
-  return incsearch#util#deepextend(deepcopy({
-  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
-  \   'keymap': {
-  \     "\<CR>": '<Over>(easymotion)'
-  \   },
-  \   'is_expr': 0
-  \ }), get(a:, 1, {}))
-endfunction
-
-noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
-noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
-noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
-
-" GoTo code navigation CoC
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
 
 " nerdtree defaults
 let NERDTreeWinSize = 45
 let NERDTreeQuitOnOpen=1
 
-" Goyo stuff
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
-nmap <Leader><leader>l <Plug>(Limelight)
-xmap <Leader><leader>l <Plug>(Limelight)
-
-" Color name (:help cterm-colors) or ANSI code
+" zen/limelight settins
 let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_ctermfg = 240
-
-" Color name (:help gui-colors) or RGB color
 let g:limelight_conceal_guifg = 'DarkGray'
 let g:limelight_conceal_guifg = '#777777'
-
-" Default: 0.5
-" let g:limelight_default_coefficient = 0.7
-
-" Number of preceding/following paragraphs to include (default: 0)
-" let g:limelight_paragraph_span = 1
-
-" Beginning/end of paragraph
-"   When there's no empty line between the paragraphs
-"   and each paragraph starts with indentation
-" let g:limelight_bop = '^\s'
-" let g:limelight_eop = '\ze\n^\s'
-
-" Highlighting priority (default: 10)
-"   Set it to -1 not to overrule hlsearch
-" let g:limelight_priority = -1
 
 " Tabularize shortcut
 if exists(":Tabularize")
@@ -395,88 +457,79 @@ if exists(":Tabularize")
   vmap <leader><leader>a: :Tabularize /:\zs<CR>
 endif
 
-" leader ww swaps windows
-let g:windowswap_map_keys = 0 "prevent default bindings
-nnoremap <silent> <leader>yw :call WindowSwap#MarkWindowSwap()<CR>
-nnoremap <silent> <leader>pw :call WindowSwap#DoWindowSwap()<CR>
-nnoremap <silent> <leader>] :call WindowSwap#EasyWindowSwap()<CR>
-
-" fzf tweaking and shortcuts
-"let g:fzf_preview_window = 'right:60%'
-
-" open fzf f for files with ctrl-p
-nnoremap <c-p> :Files<CR>
-
-" open fzf grep for content in file - g for grep
-" nnoremap <leader>g :Rg<CR>
-" fzf help search all commands available
-nmap <leader>m <plug>(fzf-maps-n)
-xmap <leader>m <plug>(fzf-maps-x)
-omap <leader>m <plug>(fzf-maps-o)
-
-" Insert mode completion 
-imap <c-w> <plug>(fzf-complete-word)
+" Insert mode completion for fzf
+" imap <c-w> <plug>(fzf-complete-word)
 imap <c-f> <plug>(fzf-complete-path):
-imap <c-j> <plug>(fzf-complete-file-ag)
-imap <c-l> <plug>(fzf-complete-line)
+imap <c-a> <plug>(fzf-complete-file-ag)
+" imap <c-l> <plug>(fzf-complete-line)
 
-" navigating easier with ctrl hjkl
-" also available is ctrl+w hjkl
-nnoremap <C-J> <C-W>j
-nnoremap <C-K> <C-W>k
-nnoremap <C-L> <C-W>l
-nnoremap <C-H> <C-W>h
+" navigating splits easier with ctrl hjkl
+" nnoremap <C-H> <C-W>h
+" nnoremap <C-J> <C-W>j
+" nnoremap <C-K> <C-W>k
+" nnoremap <C-L> <C-W>l
 
-" buffer tabbing
-nnoremap <leader><tab> :Buffers<cr>
-
-" let g:fzf_action = {
-"   \ 'ctrl-t': 'tab split',
-"   \ 'ctrl-x': 'split',
-"   \ 'ctrl-v': 'vsplit' }
-
-" turn on/off search highlight
-nnoremap <leader>\ :set invhlsearch<CR>
-
-" setup powerline specials
-let g:airline_powerline_fonts=1
-"set fillchars+=stl:\ ,stlnc:\
-
-" searching files with ag is fast
-" let g:ackprg = 'ag --vimgrep'
-" nnoremap <leader>a :Ack!<Space>
-
-"split navigations
-" nnoremap <C-J> <C-W><C-J>
-" nnoremap <C-K> <C-W><C-K>
-" nnoremap <C-L> <C-W><C-L>
-" nnoremap <C-H> <C-W><C-H>
+" ctrl-v to vsplit files in fzf and ctrl-e ctrl-e magic
+  " \ 'ctrl-t': 'tab split',
+  " \ 'ctrl-x': 'split',
+let g:fzf_action = {
+  \ 'ctrl-e': 'edit',
+  \ 'ctrl-v': 'vsplit' }
 
 " fold docstring
 let g:SimpylFold_docstring_preview=1
 
-au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+" wrap markdown and tex
+au BufNewFile,BufFilePre,BufRead *.tex
+    \ set filetype=tex
+    \ wrap
+    \ autoindent
 
-" augroup markdown
-    " au!
-    " au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
-" augroup END
+au BufNewFile,BufFilePre,BufRead *.md
+    \ set filetype=markdown
+    \ wrap
+    \ autoindent
 
-au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \  softtabstop=4
-    \  shiftwidth=4
-    \  textwidth=79
-    \  expandtab
-    \  autoindent
-    \  fileformat=unix
+" is this needed versus python3 plugin?
+" au BufNewFile,BufRead *.py
+"     \ set tabstop=4
+"     \  softtabstop=4
+"     \  shiftwidth=4
+"     \  textwidth=79
+"     \  expandtab
+"     \  autoindent
+"     \  fileformat=unix
 
+" vimtex settings
 let g:vimtex_view_method='skim'
+" ignore some warnings (regex based)
+let g:vimtex_quickfix_ignore_filters = [
+          \ 'Overfull',
+          \ 'Underfull',
+          \ 'hyperindex',
+          \ 'global',
+          \ 'inputenc',
+          \]
+" focus quick fix
+let g:vimtex_quickfix_mode = 1
 let g:tex_flavor = 'latex'
-" let g:vimtex_view_general_options = '-r @line @pdf @tex'
+let g:vimtex_compiler_latexmk = {
+        \ 'executable' : 'latexmk',
+        \ 'build_dir' : 'metafiles',
+        \ 'callback' : 1,
+        \ 'continuous' : 1,
+        \ 'options' : [
+        \   '-file-line-error',
+        \   '-synctex=1',
+        \   '-interaction=nonstopmode',
+        \   '-shell-escape',
+        \   '-8bit',
+        \ ],
+        \}
 
+" let g:vimtex_view_general_options = '-r @line @pdf @tex'
 " let g:vimtex_compiler_latexmk_engines = {
-"     \ '_'                : '-xelatex',
+    " \ '_'                : '-xelatex',
 "     \ 'pdflatex'         : '-pdf',
 "     \ 'dvipdfex'         : '-pdfdvi',
 "     \ 'lualatex'         : '-lualatex',
@@ -486,20 +539,15 @@ let g:tex_flavor = 'latex'
 "     \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
 "     \}
 
-" for nvalt
-" see https://github.com/Alok/notational-fzf-vim
-" try :NV or leader+n
-" leader n searches notes
+" Notes in nvalt (notational velocity)
 let g:nv_search_paths = ['~/Dropbox/notes']
 let g:nv_default_extension = '.md'
-let g:nv_create_note_window = 'tabedit'
-" After searching, press ctrl-x and save new note
-" String. Must be in the form 'ctrl-KEY' or 'alt-KEY'
+let g:nv_create_note_window = 'vertical split'
 let g:nv_create_note_key = 'ctrl-n'
 let g:nv_wrap_preview_text = 1
 nnoremap <silent> <leader>n :NV<CR>
 
-" toggles vertical to horizontal split with leader wt
+" function to toggles vertical to horizontal window split
 function! ToggleWindowHorizontalVerticalSplit()
   if !exists('t:splitType')
     let t:splitType = 'vertical'
@@ -517,9 +565,19 @@ endfunction
 
 nnoremap <silent> <leader>h :call ToggleWindowHorizontalVerticalSplit()<cr>
 
-if has("gui_running")
-   let s:uname = system("uname")
-   if s:uname == "Darwin\n"
-      set guifont=Meslo\ LG\ S\ for\ Powerline
-   endif
-endif
+" magic zen mode
+function! s:goyo_enter()
+  set scrolloff=999
+  set wrap
+  Limelight
+endfunction
+
+function! s:goyo_leave()
+  set scrolloff=5
+  set nowrap
+  Limelight!
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+nmap <leader>z :Goyo<cr>
